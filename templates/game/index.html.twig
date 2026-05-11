@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeux{% endblock %}
+
+{% block body %}
+    <div class="collectionSearchDiv">
+        <form class="collectionSearch" action="/home" method="GET">
+            <input id="collectionNameSearch" type="text" name="search" value="{{ app.request.query.get('search') }}">
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+
+    <h2 id="collectionNombreJeux" >Total : {{ games|length }} jeux</h2>
+    
+    <div class="collectionJeuxVideos">
+        {% for game in games %}
+            <a href="{{ path('app_game', {'id': game.id}) }}" class="collectionJeuVideo">
+                <h3 class="nom-jeu">{{ game.nom }}</h3>
+                <img src="{{ game.getImage() }}" alt="">
+                <p>{{ game.getDescription() }}</p>
+                <p>Âge Minimum : {{ game.getAge() }}</p>
+                <p>Date de sortie : {{ game.getDate() }}</p>
+                <p>Nombres de ventes : {{ game.getVentes() }}</p>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="collectionAjouterButtonDiv">
+        <a href="/game/add"><button id="collectionAjouterButton">Ajouter un jeu</button></a>
+    </div>
+    
+    <script src="{{ asset('script.js') }}" defer></script>
+{% endblock %}
