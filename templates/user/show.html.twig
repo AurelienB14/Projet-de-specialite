@@ -8,5 +8,9 @@
         <img class ="avatar-detail" src="{{ asset('uploads/avatars/' ~ user.avatar) }}" alt="avatar">
              <h1>{{ user.pseudo }}</h1> 
              <span class="light">{{ user.prenom }} </span>
+
+             <a href= {{ path('app_logout') }}>
+             <button class="btn-danger">Se deconnecter</button>
+             </a>
     </div>
 {% endblock %}

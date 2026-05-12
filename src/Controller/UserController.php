@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 final class UserController extends AbstractController
 {
@@ -33,7 +35,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/user/create', name: 'app_user_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response
     {
         $user = new User();
 
@@ -41,6 +43,9 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
 
             /** @var UploadedFile $avatarFile */
             $avatarFile = $form->get('avatar')->getData();
@@ -55,6 +60,7 @@ final class UserController extends AbstractController
 
                 $user->setAvatar($newFilename);
             }
+
 
             $em->persist($user);
             $em->flush();

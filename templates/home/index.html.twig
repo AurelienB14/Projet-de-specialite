@@ -9,12 +9,13 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/elysabeth/StudioGaming/StudioGaming/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/Users/elysabeth/StudioGaming/StudioGaming/templates/home/index.html.twig</code></li>
-    </ul>
+{% if app.user %}
+    <h1> Hello {{ app.user.pseudo }} !</h1>
+{% else %}
+    <h1>Hello</h1>
+{% endif %}
+
+   
 </div>
 {% endblock %}

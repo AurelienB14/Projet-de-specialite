@@ -11,8 +11,8 @@
                     <a href="/">
                         <img class="nav-logo" src="{{ asset('images/logo.png') }}" alt="logo">
                     </a>
-                    <a href="{{ path('app_games') }}"><li class="nav-items">JEUX</li></a>
-                    <li class="nav-items">ACTUALITÉS</li>
+                    <a href="{{ path('app_games') }}"><li class="nav-items">JEUX</li>
+                    <li class="nav-items">ACTUALITÉS</li></a>
                     <li class="nav-items">VÉRIFIER MON SETUP</li>
 
                 </ul>
@@ -21,7 +21,11 @@
             <ul class="nav-list">
                 <li class="nav-btn">MA BIBLIOTHÈQUE</li>
                 <a class="align">
-                    <i class="nav-icons" data-lucide="user"></i>  
+                    {% if app.user %}
+                    <a href="{{ path('app_user_show', {'id_user': app.user.id_user}) }}"><i class="nav-icons" data-lucide="user"></i></a>
+                    {% else %}
+                    <a href="{{ path('app_login') }}"><i class="nav-icons" data-lucide="user"></i></a>
+                    {% endif %}
                     <i data-lucide="chevron-down"></i>               
              
                 </a>
