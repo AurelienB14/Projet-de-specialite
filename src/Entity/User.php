@@ -2,13 +2,17 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping as ORM; 
+use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
 
-class User {
+class User implements UserInterface, PasswordAuthenticatedUserInterface
+{
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,58 +37,93 @@ class User {
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
+    #[ORM\Column]
+    private array $roles = [];
 
 
-// CONSTRUCTEUR
-    public function __construct( ) {
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
 
-// GETTERS
-    public function getId_user(): ?int {
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
+    public function eraseCredentials(): void
+    {
+    }
+    // GETTERS
+    public function getId_user(): ?int
+    {
         return $this->id_user;
     }
-    
-    public function getPseudo(): string {
+
+    public function getPseudo(): string
+    {
         return $this->pseudo;
     }
 
-    public function getNom(): ?string {
+    public function getNom(): ?string
+    {
         return $this->nom;
     }
 
-    public function getPrenom(): string {
+    public function getPrenom(): string
+    {
         return $this->prenom;
     }
 
-    public function getEmail(): string {
+    public function getEmail(): string
+    {
         return $this->email;
     }
-    public function getPassword(): string {
-        return $this -> password;
+    public function getPassword(): string
+    {
+        return $this->password;
     }
-    public function getAvatar(): ?string {
+    public function getAvatar(): ?string
+    {
         return $this->avatar;
     }
 
-//SETTERS
-    public function setPseudo(string $pseudo): void{
+    //SETTERS
+    public function setPseudo(string $pseudo): void
+    {
         $this->pseudo = $pseudo;
     }
-    public function setNom(?string $nom): void {
+    public function setNom(?string $nom): void
+    {
         $this->nom = $nom;
     }
-    public function setPrenom(string $prenom): void {
+    public function setPrenom(string $prenom): void
+    {
         $this->prenom = $prenom;
     }
-    public function setEmail(string $email): void {
+    public function setEmail(string $email): void
+    {
         $this->email = $email;
     }
-    public function setPassword(string $password): void {
+    public function setPassword(string $password): void
+    {
         $this->password = $password;
     }
-    public function setAvatar(?string $avatar): void {
-        $this-> avatar = $avatar;
+    public function setAvatar(?string $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
+
+    public function getIdUser(): ?int
+    {
+        return $this->id_user;
     }
 
 

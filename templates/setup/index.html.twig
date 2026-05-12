@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les setups de nos setups{% endblock %}
+
+{% block body %}
+
+    <h1>Listes des setups de nos utlisateurs</h1>
+
+    <a href="/setup/create">Ajouter un ordinateur</a>
+
+{% if setups is empty %}
+    <p>Aucun ordinateur trouvé.</p>
+{% else %}
+
+    <div class="setup_list">
+    {% for setup in setups %}
+
+        <div class="setup_preview">
+            <p>{{ setup.processeur }}</p>
+            <p>{{ setup.memoire }} Go RAM</p>
+            <p>{{ setup.carteGraphique }}</p>
+            <p>{{ setup.stockage }} Go</p>
+
+            <div class="icons-list">
+                <form method="POST" action="/setup/{{ setup.id }}/delete">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn-hidden"><i data-lucide="trash-2" class="setup-icon"></i></button>
+                </form>
+                <a href="/setup/{{ setup.id }}/edit"><i data-lucide="pencil" class="setup-icon"></i></a>
+            </div>
+            <a href="/setup/{{ setup.id }}">Voir la composition</a>
+        </div>
+
+    {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}
