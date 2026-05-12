@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+
+    <h1>Listes des utilisateurs de StudioGaming</h1>
+
+    <a href="/user/create">Ajouter un utilisateur</a>
+
+
+{% if users is empty %}
+    <p>Aucun utilisateur trouvé.</p>
+{% else %}
+
+    <div class="user_list">
+    {% for user in users %}
+
+        <div class="user_preview">
+                <img class ="avatar" src="{{ asset('uploads/avatars/' ~ user.avatar) }}" alt="avatar">
+                <p>{{ user.pseudo }}</p> 
+       
+       <div class="icons-list">
+            <form method="POST" action="/user/{{user.id_user}}/delete">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn-hidden">  <i data-lucide="trash-2" class="user-icon"></i>  </button>
+            </form>
+            <a href="/user/{{ user.id_user }}/edit"><i data-lucide="pencil" class="user-icon"></i></a>
+        </div>
+        <button href="">Voir le profil</button>
+        </div>
+
+    {% endfor %}
+</div>
+{% endif %}
+
+
+{% endblock %}

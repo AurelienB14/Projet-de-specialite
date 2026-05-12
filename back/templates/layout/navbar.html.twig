@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div class="nav">
+            <nav class="nav-left">
+
+                <ul class="nav-list">
+                    <a href="/">
+                        <img class="nav-logo" src="{{ asset('images/logo.png') }}" alt="logo">
+                    </a>
+                    <a href="{{ path('app_games') }}"><li class="nav-items">JEUX</li>
+                    <li class="nav-items">ACTUALITÉS</li></a>
+                    <li class="nav-items">VÉRIFIER MON SETUP</li>
+
+                </ul>
+            </nav>
+            <nav class"nav-right">
+            <ul class="nav-list">
+                <li class="nav-btn">MA BIBLIOTHÈQUE</li>
+                <a class="align">
+                    {% if app.user %}
+                    <a href="{{ path('app_user_show', {'id_user': app.user.id_user}) }}"><i class="nav-icons" data-lucide="user"></i></a>
+                    {% else %}
+                    <a href="{{ path('app_login') }}"><i class="nav-icons" data-lucide="user"></i></a>
+                    {% endif %}
+                    <i data-lucide="chevron-down"></i>               
+             
+                </a>
+                </ul>
+            </nav>
+        </div>
+    <script>lucide.createIcons();</script>
+
+    </body>
+
+</html>
