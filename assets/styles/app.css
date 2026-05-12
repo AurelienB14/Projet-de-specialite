@@ -140,3 +140,123 @@ button:hover {
 h1{
     line-height: 0;
 }
+
+
+/* ----- PAGE GAMES ----- */
+
+
+.collectionJeuxVideos {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 50px 50px;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.collectionJeuVideo {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border: 4px solid black;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.collectionJeuVideo img {
+    width: 100%;
+    height: auto;
+}
+
+.collectionJeuVideo:hover {
+    transform: scale(1.05);
+}
+
+.collectionJeuVideo p {
+    font-size: 12px;
+}
+
+.collectionJeuVideo h3 {
+    width: 300px;
+    font-size: clamp(0.5rem, 1rem, 1rem);
+}
+
+.collectionJeuVideo a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* ----- PAGE GAME ----- */
+
+
+.detailP {
+    font-size: 18px;
+}
+
+.detailJeu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 50px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.detailJeuBase {
+    display: flex;
+    flex-direction: row;
+}
+
+.detailJeuBase1 {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.detailJeuBase1 img {
+    max-width: 100%;
+    height: auto;
+}
+
+.detailJeuBase2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 50%
+}
+
+.detailJeuBase2 h2 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.detailDescription {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detailButtonDiv {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+
+/* ----- PAGE CREATE EDIT ----- */
+
+
+#formulaireimg {
+    max-width: 200px;
+    height: auto;
+}
