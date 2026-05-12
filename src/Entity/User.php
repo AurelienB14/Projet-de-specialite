@@ -87,5 +87,10 @@ class User {
         $this-> avatar = $avatar;
     }
 
+    public function getIdUser(): ?int
+    {
+        return $this->id_user;
+    }
+
 
 }
