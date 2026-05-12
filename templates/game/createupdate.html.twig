@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeux{% endblock %}
+
+{% block body %}
+    <a id="flecheArriere" href="{{ lienback }}">◄</a>
+    <form class="formulaire" action="{{lien}}" method="POST" enctype="multipart/form-data">
+        <div class="inputdiv">
+            <h4>Nom :</h4>
+            <input type="text" name="nom" value="{{ jeu.getNom() }}">
+            <p class="createeditError">{{ verification["nom"] ?? ''}}</p>
+        </div>
+        
+        <div class="inputdiv">
+            <h4>Description :</h4>
+            <textarea name="description">{{ jeu.getDescription() }}</textarea>
+            <p class="createeditError">{{ verification["description"] ?? '' }}</p>
+        </div>
+        
+        <div class="inputdiv">
+            <h4>Âge minimum :</h4>
+            <input type="number" name="age" value="{{ jeu.getAge() }}">
+            <p class="createeditError">{{ verification["age"] ?? '' }}</p>
+        </div>
+
+        <div class="inputdiv">
+            <h4>Date de sortie :</h4>
+            <input type="number" name="date" value="{{ jeu.getDate() }}">
+            <p class="createeditError">{{ verification["date"] ?? '' }}</p>
+        </div>
+
+        <div class="inputdiv">
+            <h4>Nombre de ventes :</h4>
+            <input type="number" name="ventes" value="{{ jeu.getVentes() }}">
+            <p class="createeditError">{{ verification["ventes"] ?? '' }}</p>
+        </div>
+
+        <div class="inputdiv">
+            <h4>Image :</h4>
+            <input id="formulaireimage" type="file" name="image">
+            <p class="createeditError">{{ verification["image"] ?? '' }}</p>
+            <img id="formulaireimg" src="{{ jeu.getImage() ?? '' }}" alt="">
+        </div>
+
+        <button type="submit">{{btn}}</button>
+    </form>
+
+    <script src="{{ asset('script.js') }}" defer></script>
+{% endblock %}
