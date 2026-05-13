@@ -708,6 +708,10 @@ class __TwigTemplate_72af20db908a58cad2e87076284c5698 extends Template
         {% endif %}
     </div>
 {% endblock %}
+<<<<<<< HEAD
 ", "@WebProfiler/Collector/http_client.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\http_client.html.twig");
+=======
+", "@WebProfiler/Collector/http_client.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\http_client.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

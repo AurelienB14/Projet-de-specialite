@@ -1731,6 +1731,10 @@ $context["event"], "message", [], "any", false, false, false, 293), "headers", [
         {%- endif -%}
     {% endmacro %}
 {% endblock %}
+<<<<<<< HEAD
 ", "@WebProfiler/Collector/mailer.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\mailer.html.twig");
+=======
+", "@WebProfiler/Collector/mailer.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\mailer.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

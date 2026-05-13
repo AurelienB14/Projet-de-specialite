@@ -472,6 +472,10 @@ class __TwigTemplate_3ded561778749557649663706e646c42 extends Template
         </div>
     {% endfor %}
 {% endblock %}
+<<<<<<< HEAD
 ", "@Debug/Profiler/dump.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\debug-bundle\\Resources\\views\\Profiler\\dump.html.twig");
+=======
+", "@Debug/Profiler/dump.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\debug-bundle\\Resources\\views\\Profiler\\dump.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

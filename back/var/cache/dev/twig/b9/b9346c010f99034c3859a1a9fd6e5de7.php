@@ -1119,6 +1119,10 @@ class __TwigTemplate_59b293f1a88d3e361afd67f902723d0f extends Template
         </table>
     {% endif %}
 {% endblock %}
+<<<<<<< HEAD
 ", "@WebProfiler/Collector/config.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\config.html.twig");
+=======
+", "@WebProfiler/Collector/config.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\config.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

@@ -174,6 +174,10 @@ class __TwigTemplate_76abe281cf7fc0fdc0376dc06bd5b18a extends Template
 
     </body>
 
+<<<<<<< HEAD
 </html>", "layout/navbar.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\templates\\layout\\navbar.html.twig");
+=======
+</html>", "layout/navbar.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\templates\\layout\\navbar.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

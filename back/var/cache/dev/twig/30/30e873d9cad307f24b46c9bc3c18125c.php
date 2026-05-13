@@ -269,6 +269,10 @@ class __TwigTemplate_ccfc167c2228185fc111953f51a62b7a extends Template
         </div>
     {% endif %}
 {% endblock %}
+<<<<<<< HEAD
 ", "@WebProfiler/Collector/exception.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\exception.html.twig");
+=======
+", "@WebProfiler/Collector/exception.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\exception.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

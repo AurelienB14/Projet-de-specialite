@@ -1003,6 +1003,10 @@ class __TwigTemplate_7e4161b65cee025c94f1c39429a8bd6d extends Template
         {% endautoescape %}</script>
     </div>
 {% endmacro %}
+<<<<<<< HEAD
 ", "@WebProfiler/Collector/time.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\time.html.twig");
+=======
+", "@WebProfiler/Collector/time.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\time.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

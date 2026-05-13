@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-:root {
+@theme {
     --color-primary: #00FFAA;
+    --color-primary-transparent: #00ffaaad;
     --color-background: #1E1E1E;
     --color-surface: #2E2E2E;
     --color-surface-alt: #3E3E3E;
@@ -9,11 +10,11 @@
     --color-text-muted: #A0A0A0;
     --color-danger: #FF4444;
 
-    --font-sans: 'Inter', Arial, sans-serif;
-
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 20px;
+
+    --font-sans: 'Inter', Arial, sans-serif;
 }
 
 body {

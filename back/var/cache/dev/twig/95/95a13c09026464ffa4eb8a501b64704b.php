@@ -178,6 +178,10 @@ class __TwigTemplate_aef4dc6589edfbba4477fef6caa53644 extends Template
    
 </div>
 {% endblock %}
+<<<<<<< HEAD
 ", "home/index.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\templates\\home\\index.html.twig");
+=======
+", "home/index.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\templates\\home\\index.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

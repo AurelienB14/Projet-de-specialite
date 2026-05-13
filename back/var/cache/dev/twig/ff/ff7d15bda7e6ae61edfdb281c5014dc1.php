@@ -463,6 +463,10 @@ class __TwigTemplate_1cd5b153bd9c7073e8d7584f2c21ba9f extends Template
         </div>
     </div>
 {% endblock %}
+<<<<<<< HEAD
 ", "@WebProfiler/Profiler/layout.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\layout.html.twig");
+=======
+", "@WebProfiler/Profiler/layout.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\layout.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

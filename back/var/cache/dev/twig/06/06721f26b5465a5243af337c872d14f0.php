@@ -1489,6 +1489,10 @@ class __TwigTemplate_c84d816951ba0154b23bdd471695576c extends Template
         <span>{{ route|default(controller) }}</span>
     {%- endif %}
 {% endmacro %}
+<<<<<<< HEAD
 ", "@WebProfiler/Collector/request.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\request.html.twig");
+=======
+", "@WebProfiler/Collector/request.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\request.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

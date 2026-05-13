@@ -339,6 +339,10 @@ class __TwigTemplate_a9fda5e6dd9345d2ab0e46464b30e515 extends Template
         {% block body '' %}
     </body>
 </html>
+<<<<<<< HEAD
 ", "@WebProfiler/Profiler/base.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\base.html.twig");
+=======
+", "@WebProfiler/Profiler/base.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\base.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

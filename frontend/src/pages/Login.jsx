@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
 
+import  Button  from '../components/ui/Button'
+
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -55,9 +57,9 @@ export default function Login() {
                         required
                         className="input"
                     />
-                    <button type="submit" disabled={loading} className="btn-primary" style={{ cursor: 'pointer' }}>
-                        {loading ? 'Connexion...' : 'Se connecter'}
-                    </button>
+                    <Button type="submit" disabled={loading} loading={loading}>
+                        Se connecter
+                    </Button>
                 </form>
 
                 <p style={{ marginTop: '24px', fontSize: '0.875rem', textAlign: 'center', color: 'rgba(255,255,255,0.5)' }}>

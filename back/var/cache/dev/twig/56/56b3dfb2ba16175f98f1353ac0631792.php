@@ -290,6 +290,10 @@ class __TwigTemplate_6258d686a1cbe99cf5ad6f7dcdf67300 extends Template
 
     </body>
 </html>
+<<<<<<< HEAD
 ", "base.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\templates\\base.html.twig");
+=======
+", "base.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\templates\\base.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

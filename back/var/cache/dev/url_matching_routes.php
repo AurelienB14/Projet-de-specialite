@@ -15,6 +15,10 @@ return [
         '/_profiler/phpinfo' => [[['_route' => '_profiler_phpinfo', '_controller' => 'web_profiler.controller.profiler::phpinfoAction'], null, null, null, false, false, null]],
         '/_profiler/xdebug' => [[['_route' => '_profiler_xdebug', '_controller' => 'web_profiler.controller.profiler::xdebugAction'], null, null, null, false, false, null]],
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
+        '/api/setups' => [
+            [['_route' => 'api_setup_index', '_controller' => 'App\\Controller\\ApiSetupController::index'], null, ['GET' => 0], null, false, false, null],
+            [['_route' => 'api_setup_create', '_controller' => 'App\\Controller\\ApiSetupController::create'], null, ['POST' => 0], null, false, false, null],
+        ],
         '/games' => [[['_route' => 'app_games', '_controller' => 'App\\Controller\\GameController::index'], null, null, null, false, false, null]],
         '/api/games' => [[['_route' => 'api_games', '_controller' => 'App\\Controller\\GameControllerApi::index'], null, null, null, false, false, null]],
         '/' => [[['_route' => 'app_home', '_controller' => 'App\\Controller\\HomeController::index'], null, null, null, false, false, null]],
@@ -52,12 +56,8 @@ return [
                         .')'
                     .')'
                 .')'
-                .'|/game/(?'
-                    .'|([^/]++)(*:219)'
-                    .'|createupdate(?:/([^/]++))?(*:253)'
-                    .'|delete/([^/]++)(*:276)'
-                .')'
                 .'|/api/(?'
+<<<<<<< HEAD
                     .'|game/(?'
                         .'|([^/]++)(*:309)'
                         .'|createupdate(?:/([^/]++))?(*:343)'
@@ -65,9 +65,23 @@ return [
                     .')'
                     .'|users/([^/]++)(?'
                         .'|(*:392)'
+=======
+                    .'|setups/([^/]++)(?'
+                        .'|(*:228)'
+                    .')'
+                    .'|game/([^/]++)(*:250)'
+                    .'|users/([^/]++)(?'
+                        .'|(*:275)'
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
                     .')'
                 .')'
+                .'|/game/(?'
+                    .'|([^/]++)(*:302)'
+                    .'|createupdate(?:/([^/]++))?(*:336)'
+                    .'|delete/([^/]++)(*:359)'
+                .')'
                 .'|/setup/([^/]++)(?'
+<<<<<<< HEAD
                     .'|(*:420)'
                     .'|/(?'
                         .'|delete(*:438)'
@@ -79,6 +93,19 @@ return [
                     .'|/(?'
                         .'|delete(*:495)'
                         .'|edit(*:507)'
+=======
+                    .'|(*:386)'
+                    .'|/(?'
+                        .'|delete(*:404)'
+                        .'|edit(*:416)'
+                    .')'
+                .')'
+                .'|/user/([^/]++)(?'
+                    .'|(*:443)'
+                    .'|/(?'
+                        .'|delete(*:461)'
+                        .'|edit(*:473)'
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
                     .')'
                 .')'
             .')/?$}sDu',
@@ -92,6 +119,7 @@ return [
         168 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         181 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         191 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
+<<<<<<< HEAD
         219 => [[['_route' => 'app_game', '_controller' => 'App\\Controller\\GameController::game'], ['id'], null, null, false, true, null]],
         253 => [[['_route' => 'app_createupdategame', 'id' => null, '_controller' => 'App\\Controller\\GameController::createupdate'], ['id'], null, null, false, true, null]],
         276 => [[['_route' => 'app_deletegame', '_controller' => 'App\\Controller\\GameController::JeuDelete'], ['id'], null, null, false, true, null]],
@@ -99,16 +127,37 @@ return [
         343 => [[['_route' => 'api_createupdategame', 'id' => null, '_controller' => 'App\\Controller\\GameControllerApi::createupdate'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
         366 => [[['_route' => 'api_deletegame', '_controller' => 'App\\Controller\\GameControllerApi::JeuDelete'], ['id'], ['DELETE' => 0], null, false, true, null]],
         392 => [
+=======
+        228 => [
+            [['_route' => 'api_setup_show', '_controller' => 'App\\Controller\\ApiSetupController::show'], ['id'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_setup_edit', '_controller' => 'App\\Controller\\ApiSetupController::edit'], ['id'], ['PUT' => 0], null, false, true, null],
+            [['_route' => 'api_setup_delete', '_controller' => 'App\\Controller\\ApiSetupController::delete'], ['id'], ['DELETE' => 0], null, false, true, null],
+        ],
+        250 => [[['_route' => 'api_game', '_controller' => 'App\\Controller\\GameControllerApi::game'], ['id'], null, null, false, true, null]],
+        275 => [
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
             [['_route' => 'api_user_show', '_controller' => 'App\\Controller\\UserControllerApi::show'], ['id_user'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_user_edit', '_controller' => 'App\\Controller\\UserControllerApi::edit'], ['id_user'], ['PUT' => 0], null, false, true, null],
             [['_route' => 'api_user_delete', '_controller' => 'App\\Controller\\UserControllerApi::delete'], ['id_user'], ['DELETE' => 0], null, false, true, null],
         ],
+<<<<<<< HEAD
         420 => [[['_route' => 'app_setup_show', '_controller' => 'App\\Controller\\SetupController::show'], ['id_setup'], ['GET' => 0], null, false, true, null]],
         438 => [[['_route' => 'app_setup_delete', '_controller' => 'App\\Controller\\SetupController::delete'], ['id_setup'], ['POST' => 0, 'DELETE' => 1], null, false, false, null]],
         450 => [[['_route' => 'app_setup_edit', '_controller' => 'App\\Controller\\SetupController::edit'], ['id_setup'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
         477 => [[['_route' => 'app_user_show', '_controller' => 'App\\Controller\\UserController::show'], ['id_user'], ['GET' => 0], null, false, true, null]],
         495 => [[['_route' => 'app_user_delete', '_controller' => 'App\\Controller\\UserController::delete'], ['id_user'], ['POST' => 0, 'DELETE' => 1], null, false, false, null]],
         507 => [
+=======
+        302 => [[['_route' => 'app_game', '_controller' => 'App\\Controller\\GameController::game'], ['id'], null, null, false, true, null]],
+        336 => [[['_route' => 'app_createupdategame', 'id' => null, '_controller' => 'App\\Controller\\GameController::createupdate'], ['id'], null, null, false, true, null]],
+        359 => [[['_route' => 'app_deletegame', '_controller' => 'App\\Controller\\GameController::JeuDelete'], ['id'], null, null, false, true, null]],
+        386 => [[['_route' => 'app_setup_show', '_controller' => 'App\\Controller\\SetupController::show'], ['id_setup'], ['GET' => 0], null, false, true, null]],
+        404 => [[['_route' => 'app_setup_delete', '_controller' => 'App\\Controller\\SetupController::delete'], ['id_setup'], ['POST' => 0, 'DELETE' => 1], null, false, false, null]],
+        416 => [[['_route' => 'app_setup_edit', '_controller' => 'App\\Controller\\SetupController::edit'], ['id_setup'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        443 => [[['_route' => 'app_user_show', '_controller' => 'App\\Controller\\UserController::show'], ['id_user'], ['GET' => 0], null, false, true, null]],
+        461 => [[['_route' => 'app_user_delete', '_controller' => 'App\\Controller\\UserController::delete'], ['id_user'], ['POST' => 0, 'DELETE' => 1], null, false, false, null]],
+        473 => [
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
             [['_route' => 'app_user_edit', '_controller' => 'App\\Controller\\UserController::edit'], ['id_user'], ['GET' => 0, 'POST' => 1], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],

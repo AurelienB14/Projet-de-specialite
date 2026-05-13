@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Users from './pages/Users';
+import Setups from './pages/Setups';
 
 import Games from './pages/Games';
 import Game from './pages/Game';
@@ -25,6 +26,7 @@ export default function App() {
                     <Route path="/game/:id" element={<Game />} />
                     <Route path="/createupdategame" element={<CreateUpdateGame />} />
                     <Route path="/createupdategame/:id" element={<CreateUpdateGame />} />
+                    <Route path="/setups" element={<Setups />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

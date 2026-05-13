@@ -1499,6 +1499,10 @@ class __TwigTemplate_f4793be2e092fa891de70f41d564f7ca extends Template
     /*]]>*/</script>
 </div>
 <!-- END of Symfony Web Debug Toolbar -->
+<<<<<<< HEAD
 ", "@WebProfiler/Profiler/toolbar_js.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\toolbar_js.html.twig");
+=======
+", "@WebProfiler/Profiler/toolbar_js.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\toolbar_js.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

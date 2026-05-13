@@ -990,6 +990,10 @@ class __TwigTemplate_59317f1ec0f2311e1eeac9e2e6edc1c6 extends Template
         </tbody>
     </table>
 {% endmacro %}
+<<<<<<< HEAD
 ", "@WebProfiler/Collector/translation.html.twig", "C:\\Users\\aurel\\Documents\\visualstudiocode\\projetdespecialite\\groupe\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\translation.html.twig");
+=======
+", "@WebProfiler/Collector/translation.html.twig", "C:\\Users\\jimmy\\OneDrive\\Documents\\DevCode\\Jeuxverifnote\\api\\Projet-de-specialite\\back\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\translation.html.twig");
+>>>>>>> 106b221696bf2a1f81345fdf9a0ade453a0274e2
     }
 }

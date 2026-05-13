@@ -27,11 +27,11 @@ security:
             stateless: true
             jwt: ~
 
-        
     access_control:
         - { path: ^/api, methods: [OPTIONS], roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/setups, roles: PUBLIC_ACCESS }
         - { path: ^/api/games, roles: PUBLIC_ACCESS }
         - { path: ^/api/game, roles: PUBLIC_ACCESS }
         - { path: ^/api/createupdategame, roles: PUBLIC_ACCESS }
