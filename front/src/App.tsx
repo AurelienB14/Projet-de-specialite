@@ -3,6 +3,7 @@ import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import Users from './pages/Users';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Profile from './pages/Profile';
 
 export default function App() {
@@ -13,8 +14,8 @@ export default function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/Profile" element={<Profile />} />
-
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/profile" element={<Profile />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

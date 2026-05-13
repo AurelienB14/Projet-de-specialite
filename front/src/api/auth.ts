@@ -3,9 +3,12 @@ import api from './api';
 export const login = (email: string, password: string) =>
     api.post('/login', { email, password });
 
-export const getCurrentUserId = (): number | null => {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.id; // ← on va ajouter ça dans Symfony
+export const register = (data: { email: string; pseudo: string; prenom: string; password: string; nom?: string }) =>
+    api.post('/register', data);
+
+export const logout = () => {
+    localStorage.removeItem('token');
+    window.dispatchEvent(new Event('authChange'));
 };
+
+export const isAuthenticated = (): boolean => !!localStorage.getItem('token');

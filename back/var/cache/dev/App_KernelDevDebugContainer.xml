@@ -279,15 +279,27 @@
       </parameter>
     </parameter>
     <parameter key="nelmio_cors.map" type="collection">
-      <parameter key="^/api" type="collection">
+      <parameter key="^/api/" type="collection">
         <parameter key="allow_origin" type="collection">
           <parameter>http://localhost:5173</parameter>
         </parameter>
+        <parameter key="allow_methods" type="collection">
+          <parameter>GET</parameter>
+          <parameter>POST</parameter>
+          <parameter>PUT</parameter>
+          <parameter>DELETE</parameter>
+          <parameter>OPTIONS</parameter>
+        </parameter>
+        <parameter key="allow_headers" type="collection">
+          <parameter>content-type</parameter>
+          <parameter>authorization</parameter>
+        </parameter>
+        <parameter key="max_age">3600</parameter>
       </parameter>
     </parameter>
     <parameter key="nelmio_cors.defaults" type="collection">
       <parameter key="allow_origin" type="collection">
-        <parameter>%env(CORS_ALLOW_ORIGIN)%</parameter>
+        <parameter>http://localhost:5173</parameter>
       </parameter>
       <parameter key="allow_credentials">false</parameter>
       <parameter key="allow_headers" type="collection">
@@ -295,20 +307,17 @@
         <parameter>authorization</parameter>
       </parameter>
       <parameter key="allow_private_network">false</parameter>
-      <parameter key="expose_headers" type="collection">
-        <parameter>Link</parameter>
-      </parameter>
+      <parameter key="expose_headers" type="collection"/>
       <parameter key="allow_methods" type="collection">
         <parameter>GET</parameter>
-        <parameter>OPTIONS</parameter>
         <parameter>POST</parameter>
         <parameter>PUT</parameter>
-        <parameter>PATCH</parameter>
         <parameter>DELETE</parameter>
+        <parameter>OPTIONS</parameter>
       </parameter>
       <parameter key="max_age">3600</parameter>
       <parameter key="hosts" type="collection"/>
-      <parameter key="origin_regex">true</parameter>
+      <parameter key="origin_regex">false</parameter>
       <parameter key="skip_same_as_origin">true</parameter>
       <parameter key="forced_allow_origin_value">null</parameter>
     </parameter>
@@ -498,6 +507,9 @@
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
     </service>
+    <service id="App\EventListener\JWTCreatedListener" class="App\EventListener\JWTCreatedListener" autowire="true" autoconfigure="true">
+      <tag name="kernel.event_listener" event="lexik.jwt_authentication.on_jwt_created" method="onJWTCreated"/>
+    </service>
     <service id="App\Form\GameFormType" class="App\Form\GameFormType" autowire="true" autoconfigure="true">
       <tag name="form.type" csrf_token_id="%.form.type_extension.csrf.token_id%"/>
     </service>
@@ -547,7 +559,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.0WN.yl1"/>
+      <argument type="service" id=".service_locator._gOxeZm"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -3016,6 +3028,14 @@
       <argument type="service" id=".virtual_request_stack" on-invalid="null"/>
       <argument type="service" id="profiler.is_disabled_state_checker" on-invalid="null"/>
       <call method="addListener">
+        <argument>lexik.jwt_authentication.on_jwt_created</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="App\EventListener\JWTCreatedListener"/>
+          <argument>onJWTCreated</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
         <argument>kernel.response</argument>
         <argument type="collection">
           <argument type="service_closure" id="security.csrf.same_origin_token_manager"/>
@@ -3677,7 +3697,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.0WN.yl1"/>
+      <argument type="service" id=".service_locator._gOxeZm"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -7004,7 +7024,21 @@
     </service>
     <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap">
       <call method="add">
+        <argument type="service" id=".security.request_matcher.9WCdCrV"/>
+        <argument type="collection">
+          <argument>PUBLIC_ACCESS</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
         <argument type="service" id=".security.request_matcher.S.FPR_b"/>
+        <argument type="collection">
+          <argument>PUBLIC_ACCESS</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.i_iwGce"/>
         <argument type="collection">
           <argument>PUBLIC_ACCESS</argument>
         </argument>
@@ -7648,9 +7682,28 @@
         <argument key="security.firewall.map.context.api" type="service_closure" id="security.firewall.map.context.api"/>
       </argument>
     </service>
+    <service id=".security.request_matcher.v9QSvFG" class="Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher">
+      <argument type="collection">
+        <argument>OPTIONS</argument>
+      </argument>
+    </service>
+    <service id=".security.request_matcher.9WCdCrV" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+      <argument type="collection">
+        <argument type="service" id=".security.request_matcher.v9QSvFG"/>
+        <argument type="service" id=".security.request_matcher.3qgJVJN"/>
+      </argument>
+    </service>
     <service id=".security.request_matcher.S.FPR_b" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
       <argument type="collection">
         <argument type="service" id=".security.request_matcher..tvo6Vp"/>
+      </argument>
+    </service>
+    <service id=".security.request_matcher.CsecYAy" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
+      <argument>^/api/register</argument>
+    </service>
+    <service id=".security.request_matcher.i_iwGce" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+      <argument type="collection">
+        <argument type="service" id=".security.request_matcher.CsecYAy"/>
       </argument>
     </service>
     <service id=".security.request_matcher.RLE1fus" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
@@ -8928,6 +8981,20 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.lURhuIT" method="withContext"/>
     </service>
+    <service id=".service_locator.ISmgmTD" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="em" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="hasher" type="service_closure" id="security.user_password_hasher"/>
+        <argument key="repo" type="service_closure" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.ISmgmTD.App\Controller\UserControllerApi::register()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\UserControllerApi::register()"/>
+      <argument>App\Controller\UserControllerApi::register()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.ISmgmTD" method="withContext"/>
+    </service>
     <service id=".service_locator.O6aUYCb.App\Controller\UserControllerApi::create()" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\UserControllerApi::create()"/>
       <argument>App\Controller\UserControllerApi::create()</argument>
@@ -8952,7 +9019,7 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.3p1IsKM" method="withContext"/>
     </service>
-    <service id=".service_locator.0WN.yl1" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator._gOxeZm" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
@@ -8977,6 +9044,7 @@
         <argument key="App\Controller\UserController::delete" type="service_closure" id=".service_locator.3p1IsKM.App\Controller\UserController::delete()"/>
         <argument key="App\Controller\UserController::edit" type="service_closure" id=".service_locator.3p1IsKM.App\Controller\UserController::edit()"/>
         <argument key="App\Controller\UserControllerApi::index" type="service_closure" id=".service_locator.lURhuIT.App\Controller\UserControllerApi::index()"/>
+        <argument key="App\Controller\UserControllerApi::register" type="service_closure" id=".service_locator.ISmgmTD.App\Controller\UserControllerApi::register()"/>
         <argument key="App\Controller\UserControllerApi::create" type="service_closure" id=".service_locator.O6aUYCb.App\Controller\UserControllerApi::create()"/>
         <argument key="App\Controller\UserControllerApi::show" type="service_closure" id=".service_locator.lURhuIT.App\Controller\UserControllerApi::show()"/>
         <argument key="App\Controller\UserControllerApi::edit" type="service_closure" id=".service_locator.3p1IsKM.App\Controller\UserControllerApi::edit()"/>
@@ -9001,6 +9069,7 @@
         <argument key="App\Controller\UserController:delete" type="service_closure" id=".service_locator.3p1IsKM.App\Controller\UserController::delete()"/>
         <argument key="App\Controller\UserController:edit" type="service_closure" id=".service_locator.3p1IsKM.App\Controller\UserController::edit()"/>
         <argument key="App\Controller\UserControllerApi:index" type="service_closure" id=".service_locator.lURhuIT.App\Controller\UserControllerApi::index()"/>
+        <argument key="App\Controller\UserControllerApi:register" type="service_closure" id=".service_locator.ISmgmTD.App\Controller\UserControllerApi::register()"/>
         <argument key="App\Controller\UserControllerApi:create" type="service_closure" id=".service_locator.O6aUYCb.App\Controller\UserControllerApi::create()"/>
         <argument key="App\Controller\UserControllerApi:show" type="service_closure" id=".service_locator.lURhuIT.App\Controller\UserControllerApi::show()"/>
         <argument key="App\Controller\UserControllerApi:edit" type="service_closure" id=".service_locator.3p1IsKM.App\Controller\UserControllerApi::edit()"/>
@@ -11387,7 +11456,7 @@
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.0WN.yl1"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator._gOxeZm"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id=".Psr\Log\LoggerInterface $request" alias="monolog.logger.request"/>
@@ -11457,6 +11526,7 @@
     <service id=".service_locator.BKUhCUr" alias=".service_locator.lURhuIT"/>
     <service id=".service_locator.TadShlz" alias=".service_locator.O6aUYCb"/>
     <service id=".service_locator.Iu3gxJD" alias=".service_locator.3p1IsKM"/>
+    <service id=".service_locator.VsV740n" alias=".service_locator.ISmgmTD"/>
     <service id=".service_locator.D6tJ4Px" alias=".service_locator.TJNRSaV"/>
   </services>
 </container>

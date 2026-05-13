@@ -41,6 +41,43 @@ final class UserControllerApi extends AbstractController
         );
     }
 
+    #[Route('/me', name: 'api_me', methods: ['GET'])]
+    public function me(): Response
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            return $this->json(['error' => 'Non authentifié'], 401);
+        }
+        return $this->json($this->serializeUser($user));
+    }
+
+    #[Route('/register', name: 'api_register', methods: ['POST'])]
+    public function register(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher, UserRepository $repo): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (empty($data['email']) || empty($data['password']) || empty($data['pseudo']) || empty($data['prenom'])) {
+            return $this->json(['error' => 'Champs obligatoires manquants'], 400);
+        }
+
+        if ($repo->findOneBy(['email' => $data['email']])) {
+            return $this->json(['error' => 'Cet email est déjà utilisé'], 409);
+        }
+
+        $user = new User();
+        $user->setEmail($data['email']);
+        $user->setPseudo($data['pseudo']);
+        $user->setPrenom($data['prenom']);
+        $user->setNom($data['nom'] ?? null);
+        $user->setPassword($hasher->hashPassword($user, $data['password']));
+        $user->setRoles(['ROLE_USER']);
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json($this->serializeUser($user), 201);
+    }
+
     #[Route('/users', name: 'api_user_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response
     {
