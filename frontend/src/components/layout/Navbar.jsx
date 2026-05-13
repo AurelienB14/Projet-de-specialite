@@ -1,0 +1,47 @@
+import { useEffect, useState } from 'react';
+import { UserRound } from 'lucide-react';
+import { isAuthenticated } from '../../api/auth';
+import logo from '../../assets/logo.png';
+
+export default function Navbar() {
+    const [auth, setAuth] = useState(isAuthenticated());
+
+    useEffect(() => {
+        const checkAuth = () => setAuth(isAuthenticated());
+        window.addEventListener('storage', checkAuth);
+        window.addEventListener('authChange', checkAuth);
+        return () => {
+            window.removeEventListener('storage', checkAuth);
+            window.removeEventListener('authChange', checkAuth);
+        };
+    }, []);
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '40px', padding: '12px 0' }}>
+            <a href="/">
+                <img style={{ width: '120px' }} src={logo} alt="logo" />
+            </a>
+
+            <ul style={{ display: 'flex', gap: '80px', listStyle: 'none', margin: 0, padding: 0 }}>
+                <li>JEUX</li>
+                <li>ACTUALITÉS</li>
+                <li>VÉRIFIER MON SETUP</li>
+            </ul>
+
+            <div>
+                <ul style={{ display: 'flex', alignItems: 'center', gap: '32px', listStyle: 'none', margin: 0, padding: 0 }}>
+                    <li className="badge-outline">Ma bibliothèque</li>
+                    {auth ? (
+                        <a href="/profile">
+                            <li className="icon-fill"><UserRound /></li>
+                        </a>
+                    ) : (
+                        <a href="/login">
+                            <li className="icon-fill"><UserRound /></li>
+                        </a>
+                    )}
+                </ul>
+            </div>
+        </div>
+    );
+}

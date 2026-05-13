@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
-import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -9,7 +9,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -26,15 +26,19 @@ export default function Login() {
     };
 
     return (
-        <div className=" m-10 flex justify-center">
+        <div style={{ margin: '40px 0', display: 'flex', justifyContent: 'center' }}>
             <div className="card">
-                <h1 className="text-2xl font-bold mb-6 text-center">Connexion</h1>
+                <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '24px', textAlign: 'center' }}>
+                    Connexion
+                </h1>
 
                 {error && (
-                    <p className="mb-4 text-sm text-red-400 text-center">{error}</p>
+                    <p style={{ marginBottom: '16px', fontSize: '0.875rem', color: '#f87171', textAlign: 'center' }}>
+                        {error}
+                    </p>
                 )}
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     <input
                         type="email"
                         placeholder="Email"
@@ -51,18 +55,14 @@ export default function Login() {
                         required
                         className="input"
                     />
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="btn-primary cursor-pointer"
-                    >
+                    <button type="submit" disabled={loading} className="btn-primary" style={{ cursor: 'pointer' }}>
                         {loading ? 'Connexion...' : 'Se connecter'}
                     </button>
                 </form>
 
-                <p className="mt-6 text-sm text-center text-white/50">
+                <p style={{ marginTop: '24px', fontSize: '0.875rem', textAlign: 'center', color: 'rgba(255,255,255,0.5)' }}>
                     Pas encore de compte ?{' '}
-                    <Link to="/register" className="text-primary hover:underline">
+                    <Link to="/register" style={{ color: 'var(--color-primary)' }}>
                         Créer un compte
                     </Link>
                 </p>

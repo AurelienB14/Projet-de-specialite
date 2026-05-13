@@ -36,3 +36,9 @@ ec76a3,127.0.0.1,OPTIONS,http://localhost:8000/api/register,1778668272,,200,requ
 170dc4,127.0.0.1,POST,http://localhost:8000/api/login,1778668289,,200,request
 a4432f,127.0.0.1,GET,http://localhost:8000/api/me,1778668321,,200,request
 885cce,127.0.0.1,GET,http://localhost:8000/api/me,1778668321,,200,request
+cf85d1,127.0.0.1,POST,http://localhost:8000/api/login,1778669423,,401,request
+32ad43,127.0.0.1,POST,http://localhost:8000/api/login,1778669428,,200,request
+7304e0,127.0.0.1,GET,http://localhost:8000/api/me,1778669430,,200,request
+ac4ac5,127.0.0.1,GET,http://localhost:8000/api/me,1778669430,,200,request
+e740bf,127.0.0.1,GET,http://localhost:8000/api/me,1778669774,,200,request
+2a2cc6,127.0.0.1,GET,http://localhost:8000/api/me,1778669774,,200,request
