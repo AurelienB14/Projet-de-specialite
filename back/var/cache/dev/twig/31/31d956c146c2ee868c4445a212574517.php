@@ -110,6 +110,6 @@ class __TwigTemplate_94d590f2f101dff8af43f42f0bcf36cb extends Template
        </form>
     </div>
 </div>
-", "@WebProfiler/Profiler/header.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/header.html.twig");
+", "@WebProfiler/Profiler/header.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/header.html.twig");
     }
 }

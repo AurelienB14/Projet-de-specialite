@@ -1943,6 +1943,6 @@ class __TwigTemplate_429f9c9edc474ba16e3b9fa97df1fd15 extends Template
         </tbody>
     </table>
 {% endmacro %}
-", "@Doctrine/Collector/db.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/doctrine/doctrine-bundle/templates/Collector/db.html.twig");
+", "@Doctrine/Collector/db.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/doctrine/doctrine-bundle/templates/Collector/db.html.twig");
     }
 }

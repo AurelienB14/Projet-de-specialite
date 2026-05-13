@@ -20,4 +20,38 @@ body {
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: var(--font-sans);
+    padding: 12px;
 }
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.badge-outline {
+    border: 3px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: 8px 12px;
+    font-weight: 700;
+
+}
+
+
+.icon-fill {
+    background-color: var(--color-text);
+    padding: 4px;
+    color: var(--color-background);
+    border-radius: var(--radius-lg);
+}
+
+.affiche {
+    background-image: url(src/assets/bruts/bo.jpg);
+    background-size: cover;
+    min-height: 70vh;
+    border-radius: var(--radius-lg);
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 12px;
+}
+

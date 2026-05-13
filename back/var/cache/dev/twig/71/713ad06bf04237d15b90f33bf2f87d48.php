@@ -1003,6 +1003,6 @@ class __TwigTemplate_c16c992931fb95ab541252cb7d8a1932 extends Template
         {% endautoescape %}</script>
     </div>
 {% endmacro %}
-", "@WebProfiler/Collector/time.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/symfony/web-profiler-bundle/Resources/views/Collector/time.html.twig");
+", "@WebProfiler/Collector/time.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/time.html.twig");
     }
 }

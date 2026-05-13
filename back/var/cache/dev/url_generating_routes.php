@@ -42,6 +42,7 @@ return [
     'api_user_show' => [['id_user'], ['_controller' => 'App\\Controller\\UserControllerApi::show'], [], [['variable', '/', '[^/]++', 'id_user', true], ['text', '/api/users']], [], [], []],
     'api_user_edit' => [['id_user'], ['_controller' => 'App\\Controller\\UserControllerApi::edit'], [], [['variable', '/', '[^/]++', 'id_user', true], ['text', '/api/users']], [], [], []],
     'api_user_delete' => [['id_user'], ['_controller' => 'App\\Controller\\UserControllerApi::delete'], [], [['variable', '/', '[^/]++', 'id_user', true], ['text', '/api/users']], [], [], []],
+    'api_login' => [[], [], [], [['text', '/api/login']], [], [], []],
     'App\Controller\GameController::index' => [[], ['_controller' => 'App\\Controller\\GameController::index'], [], [['text', '/games']], [], [], []],
     'App\Controller\GameController::game' => [['id'], ['_controller' => 'App\\Controller\\GameController::game'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/game']], [], [], []],
     'App\Controller\GameController::createupdate' => [['id'], ['id' => null, '_controller' => 'App\\Controller\\GameController::createupdate'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/game/createupdate']], [], [], []],

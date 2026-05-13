@@ -142,6 +142,6 @@ class __TwigTemplate_2f465ac7d8c6e28c2582572f99e07bec extends Template
     </tbody>
 </table>
 </div>
-", "@WebProfiler/Profiler/table.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/table.html.twig");
+", "@WebProfiler/Profiler/table.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/table.html.twig");
     }
 }

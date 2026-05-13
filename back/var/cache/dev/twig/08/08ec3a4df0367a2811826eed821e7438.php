@@ -178,6 +178,6 @@ class __TwigTemplate_682e861078d16663330199d0b76b48ff extends Template
    
 </div>
 {% endblock %}
-", "home/index.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/home/index.html.twig");
+", "home/index.html.twig", "/Users/elysabeth/StudioGaming/back/templates/home/index.html.twig");
     }
 }

@@ -156,6 +156,6 @@ class __TwigTemplate_6553a1847c3ead9bee6bcc5ac5006bd6 extends Template
     </tbody>
 </table>
 </div>
-", "@WebProfiler/Profiler/bag.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/bag.html.twig");
+", "@WebProfiler/Profiler/bag.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/bag.html.twig");
     }
 }

@@ -472,6 +472,6 @@ class __TwigTemplate_77f5f03080b0fb5b00094ca3b53879d9 extends Template
         </div>
     {% endfor %}
 {% endblock %}
-", "@Debug/Profiler/dump.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/symfony/debug-bundle/Resources/views/Profiler/dump.html.twig");
+", "@Debug/Profiler/dump.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/symfony/debug-bundle/Resources/views/Profiler/dump.html.twig");
     }
 }

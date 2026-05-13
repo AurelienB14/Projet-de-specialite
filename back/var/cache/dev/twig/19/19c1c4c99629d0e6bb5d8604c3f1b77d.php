@@ -290,6 +290,6 @@ class __TwigTemplate_e6001a2c1ab1406ca9b7d33b73332d5c extends Template
 
     </body>
 </html>
-", "base.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/base.html.twig");
+", "base.html.twig", "/Users/elysabeth/StudioGaming/back/templates/base.html.twig");
     }
 }

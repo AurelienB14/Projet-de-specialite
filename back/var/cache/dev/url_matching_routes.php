@@ -28,6 +28,7 @@ return [
             [['_route' => 'api_user', '_controller' => 'App\\Controller\\UserControllerApi::index'], null, ['GET' => 0], null, false, false, null],
             [['_route' => 'api_user_create', '_controller' => 'App\\Controller\\UserControllerApi::create'], null, ['POST' => 0], null, false, false, null],
         ],
+        '/api/login' => [[['_route' => 'api_login'], null, ['POST' => 0], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

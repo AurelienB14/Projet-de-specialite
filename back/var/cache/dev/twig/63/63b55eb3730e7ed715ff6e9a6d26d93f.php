@@ -989,6 +989,6 @@ class __TwigTemplate_7b250c22f9742e0e5cbde8aef90a09aa extends Template
         </td>
     </tr>
 {% endmacro %}
-", "@DoctrineMigrations/Collector/migrations.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/doctrine/doctrine-migrations-bundle/templates/Collector/migrations.html.twig");
+", "@DoctrineMigrations/Collector/migrations.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/doctrine/doctrine-migrations-bundle/templates/Collector/migrations.html.twig");
     }
 }

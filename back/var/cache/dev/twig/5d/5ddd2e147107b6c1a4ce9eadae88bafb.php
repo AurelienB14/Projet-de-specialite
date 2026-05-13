@@ -232,6 +232,6 @@ class __TwigTemplate_c7d98fcae1ba9ab4384a5658b95cc843 extends Template
     </div>
     
     <script src=\"{{ asset('script.js') }}\" defer></script>
-{% endblock %}", "game/index.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/game/index.html.twig");
+{% endblock %}", "game/index.html.twig", "/Users/elysabeth/StudioGaming/back/templates/game/index.html.twig");
     }
 }

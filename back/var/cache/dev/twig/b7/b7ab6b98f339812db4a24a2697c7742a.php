@@ -219,6 +219,6 @@ class __TwigTemplate_1e1f20126f5e85c9943266a2d2781b59 extends Template
         </button>
     </form>
 {% endblock %}
-", "security/login.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/security/login.html.twig");
+", "security/login.html.twig", "/Users/elysabeth/StudioGaming/back/templates/security/login.html.twig");
     }
 }

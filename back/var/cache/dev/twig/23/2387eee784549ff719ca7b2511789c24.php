@@ -174,6 +174,6 @@ class __TwigTemplate_43822efd5d7fd914422a6a20e40af4ec extends Template
 
     </body>
 
-</html>", "layout/navbar.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/layout/navbar.html.twig");
+</html>", "layout/navbar.html.twig", "/Users/elysabeth/StudioGaming/back/templates/layout/navbar.html.twig");
     }
 }

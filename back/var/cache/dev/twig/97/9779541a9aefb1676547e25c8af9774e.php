@@ -186,6 +186,6 @@ class __TwigTemplate_1834bbb2f6a3c58985642876d2900aa6 extends Template
         {%- endfor -%}
     </pre>
 {% endif %}
-", "@Doctrine/Collector/explain.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/vendor/doctrine/doctrine-bundle/templates/Collector/explain.html.twig");
+", "@Doctrine/Collector/explain.html.twig", "/Users/elysabeth/StudioGaming/back/vendor/doctrine/doctrine-bundle/templates/Collector/explain.html.twig");
     }
 }

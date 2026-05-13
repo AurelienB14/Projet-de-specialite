@@ -171,6 +171,6 @@ class __TwigTemplate_c2237004f76524a90705df9af1679b53 extends Template
         <p><strong>Carte graphique :</strong> {{ setup.carteGraphique }}</p>
         <p><strong>Stockage :</strong> {{ setup.stockage }} Go</p>
     </div>
-{% endblock %}", "setup/show.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/setup/show.html.twig");
+{% endblock %}", "setup/show.html.twig", "/Users/elysabeth/StudioGaming/back/templates/setup/show.html.twig");
     }
 }

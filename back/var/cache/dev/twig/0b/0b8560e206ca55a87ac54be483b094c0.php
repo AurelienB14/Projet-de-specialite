@@ -177,6 +177,6 @@ class __TwigTemplate_f3bb09d9b396f153315b4959ae8234e2 extends Template
         <button type=\"submit\">Modifier</button>
     </form>
 </div>
-{% endblock %}", "user/edit.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/user/edit.html.twig");
+{% endblock %}", "user/edit.html.twig", "/Users/elysabeth/StudioGaming/back/templates/user/edit.html.twig");
     }
 }

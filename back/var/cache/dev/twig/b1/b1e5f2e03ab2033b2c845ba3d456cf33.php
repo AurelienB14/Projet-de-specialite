@@ -172,6 +172,6 @@ class __TwigTemplate_da573817841131165bd60ec1e10ac344 extends Template
              <button class=\"btn-danger\">Se deconnecter</button>
              </a>
     </div>
-{% endblock %}", "user/show.html.twig", "/Users/elysabeth/StudioGaming/StudioGaming/templates/user/show.html.twig");
+{% endblock %}", "user/show.html.twig", "/Users/elysabeth/StudioGaming/back/templates/user/show.html.twig");
     }
 }
