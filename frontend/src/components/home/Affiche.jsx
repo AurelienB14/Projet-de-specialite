@@ -34,14 +34,14 @@ export default function Affiche() {
                     backgroundPosition: 'center',
                 }}
             >
-                <div className="chevrons-box">
-                    <button onClick={prev} className="chevrons absolute left-8 top-1/2">
+                <div className="chevrons-box flex justify-between w-1/1 -translate-y-50">
+                    <button onClick={prev} className="chevrons">
                         <ChevronLeft size={24} />
                     </button>
 
                     <button
                         onClick={next}
-                        className="chevrons absolute right-8 top-1/2 ">
+                        className="chevrons">
                         <ChevronRight size={24} />
                     </button>
 
