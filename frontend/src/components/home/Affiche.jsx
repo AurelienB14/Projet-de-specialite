@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { getGames } from '../../api/game' ;
+import { getGame } from '../../api/game';
+
+import Button from "../ui/Button";
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -9,8 +11,9 @@ export default function Affiche() {
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
-        getGames()
-            .then(res => setGames(res.data.slice(-4).reverse()))
+        Promise.all([1,2,3,4].map(id => getGame(id)))
+            .then(results => setGames(results.map(res => res.data)))
+
     }, []);
 
     const prev = () => setCurrent(current === 0 ? games.length - 1 : current - 1);
@@ -21,7 +24,7 @@ export default function Affiche() {
 
     return (
         <div>
-            <h1>À l'affiche</h1>
+            <h1>À l'affiche cette semaine</h1>
 
             <div
                 className="affiche"
@@ -31,22 +34,26 @@ export default function Affiche() {
                     backgroundPosition: 'center',
                 }}
             >
-                <button
-                    onClick={prev}
-                    className="chevrons">
+                <div className="chevrons-box">
+                    <button onClick={prev} className="chevrons absolute left-8 top-1/2">
                         <ChevronLeft size={24} />
-                </button>
-                <button
-                    onClick={next}
-                    className="chevrons">
+                    </button>
+
+                    <button
+                        onClick={next}
+                        className="chevrons absolute right-8 top-1/2 ">
                         <ChevronRight size={24} />
-                </button>
-                <div>
-                    <span className="badge-outline">Voir tous les jeux</span>
+                    </button>
+
                 </div>
 
+
+
+                <Button variant="outline" href="/games">Voir tous les jeux</Button>
+
+
             </div>
-            
+
         </div>
     );
 }

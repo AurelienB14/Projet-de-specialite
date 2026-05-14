@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 
 const Button = ({ 
     children, 
@@ -5,12 +6,21 @@ const Button = ({
     size = 'md',
     disabled = false,
     loading = false,
-    onClick 
+    onClick,
+    href = null 
 }) => {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (href) navigate(href);
+        if (onClick) onClick();
+    };
 
     const variants = {
         primary: 'bg-primary-transparent text-black hover:bg-primary',
         secondary: 'border border-[#00FFAA] text-[#00FFAA] hover:bg-[#00FFAA] hover:text-black',
+        outline: 'border border-primary bg-background-transparent border-4 hover:bg-primary hover:text-black',
         danger: 'bg-[#FF4444] text-white hover:bg-[#cc0000]',
         ghost: 'text-white hover:bg-[#2E2E2E]',
     };
@@ -23,7 +33,7 @@ const Button = ({
 
     return (
         <button
-            onClick={onClick}
+            onClick={handleClick}
             disabled={disabled || loading}
             className={`
                 rounded-lg font-medium transition-all duration-200 cursor-pointer
