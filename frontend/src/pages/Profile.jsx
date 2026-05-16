@@ -38,13 +38,8 @@ export default function Profile() {
     const isAdmin = user.roles?.includes('ROLE_ADMIN');
 
     return (
-        <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{
-                width: '100%', maxWidth: '420px', padding: '32px',
-                borderRadius: '16px', background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px'
-            }}>
+        <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center'>
                 {user.avatar ? (
                     <img
                         src={`http://localhost:8000/uploads/avatars/${user.avatar}`}
@@ -52,22 +47,16 @@ export default function Profile() {
                         style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(255,255,255,0.2)' }}
                     />
                 ) : (
-                    <div style={{
-                        width: '80px', height: '80px', borderRadius: '50%',
-                        background: 'var(--color-primary)', display: 'flex',
-                        alignItems: 'center', justifyContent: 'center',
-                        fontSize: '2rem', fontWeight: 700, color: 'var(--color-background)'
-                    }}>
+                    <div >
                         {user.prenom[0].toUpperCase()}
                     </div>
                 )}
 
-                <div style={{ textAlign: 'center' }}>
+                <div >
                     <h1 style={{ fontSize: '1.25rem', fontWeight: 700 }}>{user.pseudo}</h1>
                     <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem' }}>
                         {user.prenom}{user.nom ? ` ${user.nom}` : ''}
                     </p>
-                    <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', marginTop: '4px' }}>{user.email}</p>
                 </div>
 
                 {isAdmin && (

@@ -23,9 +23,15 @@ export default function Navbar() {
             </a>
 
             <ul style={{ display: 'flex', gap: '80px', listStyle: 'none', margin: 0, padding: 0 }}>
-                <li>JEUX</li>
+                <a href='/games'>
+                    <li>JEUX</li>
+
+                </a>
                 <li>ACTUALITÉS</li>
-                <li>VÉRIFIER MON SETUP</li>
+                <a href='/setups'>
+                    <li>VÉRIFIER MON SETUP</li>
+
+                </a>
             </ul>
 
             <div>

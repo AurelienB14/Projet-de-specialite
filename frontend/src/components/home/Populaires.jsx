@@ -4,6 +4,9 @@ import Note from "../ui/Note";
 import Divider from "../ui/Divider";
 import { ChevronRight } from "lucide-react";
 
+import { Link } from 'react-router-dom'
+
+
 export default function Populaires() {
 
     const [games, setGames] = useState([]);
@@ -15,7 +18,7 @@ export default function Populaires() {
 
     return (
         <div className=" flex flex-col p-8">
-            
+
             <h2 className="mb-6">Jeux populaires</h2>
 
             {games.map(game => (
@@ -27,7 +30,9 @@ export default function Populaires() {
                             <Note note={5} />
                         </div>
                         <div>
-                            <ChevronRight />
+                            <Link to={`/game/${game.id}`} key={game.id}>
+                                <ChevronRight className="chevrons" />
+                            </Link>
                         </div>
 
                     </div>
