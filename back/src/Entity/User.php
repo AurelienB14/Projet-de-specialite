@@ -41,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private string $password;
 
+
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['user:read'])]
     private ?string $avatar = null;
@@ -48,6 +49,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Groups(['user:read'])]
     private array $roles = [];
+
+    #[ORM\OneToOne(targerEntity: Setup::class, mappedBy: 'user')]
+    private ?Setup $setup = null;
+
 
 
     public function getUserIdentifier(): string
@@ -70,6 +75,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
     }
+
+    
+
+
     // GETTERS
     public function getId_user(): ?int
     {
@@ -103,6 +112,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->avatar;
     }
+    public function getSetup(): ?Setup 
+    {
+        return $this->setup;
+    }
 
     //SETTERS
     public function setPseudo(string $pseudo): void
@@ -133,6 +146,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getIdUser(): ?int
     {
         return $this->id_user;
+    }
+    public function setSetup(? Setup $setup): void {
+        $this->setup = $setup;
     }
 
 

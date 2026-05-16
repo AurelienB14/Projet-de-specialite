@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use App\Entity\User;
-
+use App\Entity\Setup;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -28,6 +28,18 @@ final class UserControllerApi extends AbstractController
             'nom' => $user->getNom(),
             'avatar' => $user->getAvatar(),
             'roles' => $user->getRoles(),
+            'setup' => $user->getSetup() ? $this->serializeSetup($user->getSetup()) : null,
+        ];
+    }
+
+    private function serializeSetup(Setup $setup): array
+    {
+        return [
+            'id' => $setup->getId(),
+            'processeur' => $setup->getProcesseur(),
+            'memoire' => $setup->getMemoire(),
+            'carte_graphique' => $setup->getCarte_Graphique(),
+            'stockage' => $setup->getStockage(),
         ];
     }
 
@@ -97,6 +109,8 @@ final class UserControllerApi extends AbstractController
         return $this->json($this->serializeUser($user), 201);
     }
 
+    
+
     #[Route('/users/{id_user}', name: 'api_user_show', methods: ['GET'])]
     public function show(int $id_user, UserRepository $repo): Response
     {
@@ -144,4 +158,28 @@ final class UserControllerApi extends AbstractController
 
         return $this->json(['message' => 'Utilisateur supprimé'], 200);
     }
+
+    //ROUTE SETUP
+    #[Route('/users/{id_user}/setup', name: api_user_setup, methods: ['POST', 'PUT'])]
+    public function setup(int $id_user, Request $request, UserRepository $repo, EntityManagerInterface $em): Response
+    {
+        $user = $repo->find($id_user);
+
+        $data = json_decode($request->getContent(), true);
+
+        $setup = $user->getSetup() ?? new Setup();
+        $setup->setProcesseur($data['processeur']);
+        $setup->setCarte_Graphique($data['carte_graphique']);
+        $setup->setMemoire($data['memoire']);
+        $setup->setStockage($data['stockage']);
+       
+        $em->persist($setup);
+        $em->flush();
+
+        return $this->json(['message' => 'Setup mis à jour']);
+
+        
+    }
+
+    
 }

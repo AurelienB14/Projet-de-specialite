@@ -1,7 +1,9 @@
 <?php   
 
+
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Repository\SetupRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,6 +29,10 @@ class Setup
 
     #[ORM\Column(nullable: true)]
     private int $stockage = 0;
+
+    #[ORM\OneToOne(targetEntity: User::class, invnersedBy: 'setup')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
 
 // CONSTRUCTEUR
@@ -59,6 +65,9 @@ class Setup
     public function getStockage(): int
     {
         return $this->stockage;
+    }
+    public function getUser(): ?User {
+        return $this->user;
     }
 
 
@@ -94,5 +103,8 @@ class Setup
         $this->carte_graphique = $carte_graphique;
 
         return $this;
+    }
+    public function setUser(?User $user): void {
+        $this ->user = $user;
     }
 }
