@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Setup;
 use App\Repository\SetupRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+
 
 #[Route('/api/setups')]
 final class ApiSetupController extends AbstractController
@@ -29,7 +31,7 @@ final class ApiSetupController extends AbstractController
     }
 
     #[Route('', name: 'api_setup_create', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $em): JsonResponse
+    public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepo): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -38,6 +40,11 @@ final class ApiSetupController extends AbstractController
         $setup->setMemoire($data['memoire']);
         $setup->setCarteGraphique($data['carte_graphique']);
         $setup->setStockage($data['stockage']);
+
+        if (isset($data['user_id'])) {
+            $user = $userRepo->find($data['user_id']);
+            if ($user) $setup->setUser($user);
+        }
 
         $em->persist($setup);
         $em->flush();

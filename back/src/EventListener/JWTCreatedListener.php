@@ -11,7 +11,9 @@ class JWTCreatedListener
         $user = $event->getUser();
         $payload = $event->getData();
 
-        $payload['id'] = $user->getIdUser();
+           dump($user->getId_user()); 
+
+        $payload['id'] = $user->getId_user();
         $payload['roles'] = $user->getRoles();
         $payload['pseudo'] = $user->getPseudo();
 

@@ -30,8 +30,8 @@ class Setup
     #[ORM\Column(nullable: true)]
     private int $stockage = 0;
 
-    #[ORM\OneToOne(targetEntity: User::class, invnersedBy: 'setup')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'setup')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id_user', nullable: true)]
     private ?User $user = null;
 
 

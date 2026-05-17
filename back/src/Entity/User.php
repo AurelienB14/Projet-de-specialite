@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:read'])]
     private array $roles = [];
 
-    #[ORM\OneToOne(targerEntity: Setup::class, mappedBy: 'user')]
+    #[ORM\OneToOne(targetEntity: Setup::class, mappedBy: 'user')]
     private ?Setup $setup = null;
 
 

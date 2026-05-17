@@ -160,7 +160,7 @@ final class UserControllerApi extends AbstractController
     }
 
     //ROUTE SETUP
-    #[Route('/users/{id_user}/setup', name: api_user_setup, methods: ['POST', 'PUT'])]
+    #[Route('/users/{id_user}/setup', name: 'api_user_setup', methods: ['POST', 'PUT'])]
     public function setup(int $id_user, Request $request, UserRepository $repo, EntityManagerInterface $em): Response
     {
         $user = $repo->find($id_user);
