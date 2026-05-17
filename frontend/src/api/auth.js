@@ -4,9 +4,14 @@ import api from './api';
 export const login = (email, password) =>
     api.post('/login', { email, password });
 
-export const register = (data) =>
-    api.post('/register', data);
-
+export const register = (data) => {
+    if (data instanceof FormData) {
+        return api.post('/register', data, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+    }
+    return api.post('/register', data);
+};
 export const logout = () => {
     localStorage.removeItem('token');
     window.dispatchEvent(new Event('authChange'));

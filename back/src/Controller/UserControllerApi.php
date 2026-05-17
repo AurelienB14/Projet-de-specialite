@@ -66,30 +66,45 @@ final class UserControllerApi extends AbstractController
     #[Route('/register', name: 'api_register', methods: ['POST'])]
     public function register(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher, UserRepository $repo): Response
     {
-        $data = json_decode($request->getContent(), true);
+        // Récupère depuis FormData ou JSON
+        $email = $request->request->get('email') ?? (json_decode($request->getContent(), true)['email'] ?? null);
+        $pseudo = $request->request->get('pseudo') ?? (json_decode($request->getContent(), true)['pseudo'] ?? null);
+        $prenom = $request->request->get('prenom') ?? (json_decode($request->getContent(), true)['prenom'] ?? null);
+        $password = $request->request->get('password') ?? (json_decode($request->getContent(), true)['password'] ?? null);
+        $nom = $request->request->get('nom');
 
-        if (empty($data['email']) || empty($data['password']) || empty($data['pseudo']) || empty($data['prenom'])) {
+        if (empty($email) || empty($password) || empty($pseudo) || empty($prenom)) {
             return $this->json(['error' => 'Champs obligatoires manquants'], 400);
         }
 
-        if ($repo->findOneBy(['email' => $data['email']])) {
+        if ($repo->findOneBy(['email' => $email])) {
             return $this->json(['error' => 'Cet email est déjà utilisé'], 409);
         }
 
         $user = new User();
-        $user->setEmail($data['email']);
-        $user->setPseudo($data['pseudo']);
-        $user->setPrenom($data['prenom']);
-        $user->setNom($data['nom'] ?? null);
-        $user->setPassword($hasher->hashPassword($user, $data['password']));
+        $user->setEmail($email);
+        $user->setPseudo($pseudo);
+        $user->setPrenom($prenom);
+        $user->setNom($nom ?? null);
+        $user->setPassword($hasher->hashPassword($user, $password));
         $user->setRoles(['ROLE_USER']);
+
+        // Gestion avatar
+        $avatarFile = $request->files->get('avatar');
+        if ($avatarFile) {
+            $newFilename = uniqid() . '.' . $avatarFile->guessExtension();
+            $avatarFile->move(
+                $this->getParameter('avatars_directory'),
+                $newFilename
+            );
+            $user->setAvatar($newFilename);
+        }
 
         $em->persist($user);
         $em->flush();
 
         return $this->json($this->serializeUser($user), 201);
     }
-
     #[Route('/users', name: 'api_user_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response
     {
@@ -109,7 +124,7 @@ final class UserControllerApi extends AbstractController
         return $this->json($this->serializeUser($user), 201);
     }
 
-    
+
 
     #[Route('/users/{id_user}', name: 'api_user_show', methods: ['GET'])]
     public function show(int $id_user, UserRepository $repo): Response
@@ -172,14 +187,14 @@ final class UserControllerApi extends AbstractController
         $setup->setCarte_Graphique($data['carte_graphique']);
         $setup->setMemoire($data['memoire']);
         $setup->setStockage($data['stockage']);
-       
+
         $em->persist($setup);
         $em->flush();
 
         return $this->json(['message' => 'Setup mis à jour']);
 
-        
+
     }
 
-    
+
 }

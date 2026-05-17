@@ -3,26 +3,33 @@ import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../api/auth';
 
 export default function Register() {
-    const [form, setForm] = useState({ email: '', pseudo: '', prenom: '', nom: '', password: '' });
+    const [form, setForm] = useState({ email: '', pseudo: '', prenom: '', nom: '', password: '', avatar: null });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleChange = (e) =>
-        setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+    const handleChange = (e) => {
+        if (e.target.type === 'file') {
+            setForm(f => ({ ...f, avatar: e.target.files[0] }));
+        } else {
+            setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
         try {
-            await register({
-                email: form.email,
-                pseudo: form.pseudo,
-                prenom: form.prenom,
-                nom: form.nom || undefined,
-                password: form.password,
-            });
+            const formData = new FormData();
+            formData.append('email', form.email);
+            formData.append('pseudo', form.pseudo);
+            formData.append('prenom', form.prenom);
+            formData.append('password', form.password);
+            if (form.nom) formData.append('nom', form.nom);
+            if (form.avatar) formData.append('avatar', form.avatar);
+
+            await register(formData);
             navigate('/login');
         } catch (err) {
             setError(err.response?.data?.error ?? 'Une erreur est survenue.');
@@ -60,6 +67,8 @@ export default function Register() {
                     <input name="pseudo" type="text" placeholder="Pseudo *" value={form.pseudo} onChange={handleChange} required style={inputStyle} />
                     <input name="email" type="email" placeholder="Email *" value={form.email} onChange={handleChange} required style={inputStyle} />
                     <input name="password" type="password" placeholder="Mot de passe *" value={form.password} onChange={handleChange} required style={inputStyle} />
+                    <input name="avatar" type="file" accept="image/*" onChange={handleChange} style={inputStyle} />
+
                     <button
                         type="submit"
                         disabled={loading}
