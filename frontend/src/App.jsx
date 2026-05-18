@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Users from './pages/Users';
 import Setups from './pages/Setups';
-import MySetup from './pages/MySetup';
+import AddSetup from './components/profile/AddSetup';
 
 import Games from './pages/Games';
 import Game from './pages/Game';
@@ -28,7 +28,7 @@ export default function App() {
                     <Route path="/createupdategame" element={<CreateUpdateGame />} />
                     <Route path="/createupdategame/:id" element={<CreateUpdateGame />} />
                     <Route path="/setups" element={<Setups />} />
-                    <Route path="/profile/setup" element={<MySetup />} />
+                    <Route path="/profile/setup" element={<AddSetup />} />
 
                 </Routes>
             </Layout>

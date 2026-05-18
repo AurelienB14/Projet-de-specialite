@@ -22,7 +22,7 @@ const Button = ({
         secondary: 'border border-[#00FFAA] text-[#00FFAA] hover:bg-[#00FFAA] hover:text-black',
         outline: 'border border-primary bg-background-transparent border-4 hover:bg-primary hover:text-black',
         danger: 'bg-[#FF4444] text-white hover:bg-[#cc0000]',
-        ghost: 'text-white hover:bg-[#2E2E2E]',
+        ghost: 'text-white hover:bg-[#2E2E2E] border border-text-muted',
     };
 
     const sizes = {
@@ -36,7 +36,7 @@ const Button = ({
             onClick={handleClick}
             disabled={disabled || loading}
             className={`
-                rounded-lg font-medium transition-all duration-200 cursor-pointer
+                rounded-lg font-medium transition-all duration-200 cursor-pointer flex gap-2 items-center
                 ${variants[variant]}
                 ${sizes[size]}
                 ${disabled || loading ? 'opacity-50 cursor-not-allowed' : ''}

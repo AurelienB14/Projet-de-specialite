@@ -28,6 +28,7 @@ final class UserControllerApi extends AbstractController
             'nom' => $user->getNom(),
             'avatar' => $user->getAvatar(),
             'roles' => $user->getRoles(),
+            'description' => $user->getDescription(),
             'setup' => $user->getSetup() ? $this->serializeSetup($user->getSetup()) : null,
         ];
     }
@@ -72,6 +73,7 @@ final class UserControllerApi extends AbstractController
         $prenom = $request->request->get('prenom') ?? (json_decode($request->getContent(), true)['prenom'] ?? null);
         $password = $request->request->get('password') ?? (json_decode($request->getContent(), true)['password'] ?? null);
         $nom = $request->request->get('nom');
+        $description = $request->request->get('description');
 
         if (empty($email) || empty($password) || empty($pseudo) || empty($prenom)) {
             return $this->json(['error' => 'Champs obligatoires manquants'], 400);
@@ -86,6 +88,7 @@ final class UserControllerApi extends AbstractController
         $user->setPseudo($pseudo);
         $user->setPrenom($prenom);
         $user->setNom($nom ?? null);
+        $user->setDescription($description ?? null);
         $user->setPassword($hasher->hashPassword($user, $password));
         $user->setRoles(['ROLE_USER']);
 
@@ -153,6 +156,7 @@ final class UserControllerApi extends AbstractController
         $user->setPrenom($data['prenom'] ?? $user->getPrenom());
         $user->setEmail($data['email'] ?? $user->getEmail());
         $user->setNom($data['nom'] ?? $user->getNom());
+        $user->setDescription($data['description'] ?? $user->getDescription());
 
         $em->flush();
 
