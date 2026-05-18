@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { getCurrentUserId } from '../api/auth';
-import api from '../api/api';
-import Button from '../components/ui/Button';
+import { getCurrentUserId } from '../../api/auth';
+import api from '../../api/api';
+import Button from '../ui/Button';
 
 export default function MySetup() {
 

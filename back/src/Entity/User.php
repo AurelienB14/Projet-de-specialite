@@ -46,6 +46,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:read'])]
     private ?string $avatar = null;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['user:read'])]
+    private ?string $description = null;
+
+
     #[ORM\Column]
     #[Groups(['user:read'])]
     private array $roles = [];
@@ -116,6 +121,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->setup;
     }
+    public function getDescription(): ?string {
+        return $this->description;
+    }
 
     //SETTERS
     public function setPseudo(string $pseudo): void
@@ -149,6 +157,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function setSetup(? Setup $setup): void {
         $this->setup = $setup;
+    }
+    public function setDescription(string $description): void {
+        $this->description = $description;
     }
 
 

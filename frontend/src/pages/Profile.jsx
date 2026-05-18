@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { isAuthenticated, logout } from '../api/auth';
 import api from '../api/api';
 
+import { SquarePen, Settings, LogOut } from 'lucide-react'
+
+import Button from '../components/ui/Button'
+import MySetup from '../components/profile/MySetup';
+
 export default function Profile() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -38,26 +43,62 @@ export default function Profile() {
     const isAdmin = user.roles?.includes('ROLE_ADMIN');
 
     return (
-        <div className='flex flex-col items-center'>
-            <div className='flex flex-col items-center'>
-                {user.avatar ? (
-                    <img
-                        src={`http://localhost:8000/uploads/avatars/${user.avatar}`}
-                        alt={user.pseudo}
-                        style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(255,255,255,0.2)' }}
-                    />
-                ) : (
-                    <div >
-                        {user.prenom[0].toUpperCase()}
-                    </div>
-                )}
+        <div className='w-full max-w-4xl mx-auto py-8'>
+            <div className='flex items-center gap-8'>
 
-                <div >
-                    <h1 style={{ fontSize: '1.25rem', fontWeight: 700 }}>{user.pseudo}</h1>
-                    <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem' }}>
-                        {user.prenom}{user.nom ? ` ${user.nom}` : ''}
-                    </p>
+                <div className='flex flex-col gap-8'>
+                    <div className='flex flex-col gap-4'>
+                        <div className='flex gap-8'>
+
+                            {user.avatar ? (
+                                <img
+                                    src={`http://localhost:8000/uploads/avatars/${user.avatar}`}
+                                    alt={user.pseudo}
+                                    style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover' }}
+                                />
+                            ) : (
+                                <div className=' flex border border-primary border-4 justify-center items-center rounded-full w-20 h-20' >
+                                    {user.prenom[0].toUpperCase()}
+                                </div>
+                            )}
+                            <div>
+
+                                <h1>{user.prenom}</h1>
+                                <p className='text-text-muted'>
+                                    @{user.pseudo}
+                                </p>
+                                <p className='text-text-muted'>
+                                    {user.description}
+                                </p>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div className='flex gap-8'>
+                        <Button variant='ghost' size='sm'>
+                            <SquarePen size={18} />
+
+                            Modifier le profil
+                        </Button>
+
+                        <Button variant='ghost'>
+                            <Settings size={18} />
+                            Paramètres
+                        </Button>
+
+                        <Button variant='danger' onClick={handleLogout}>
+                            <LogOut />
+                            Se déconnecter
+                        </Button>
+                    </div>
+
+                    <div>
+                        <MySetup />
+                    </div>
                 </div>
+
 
                 {isAdmin && (
                     <span style={{
@@ -69,18 +110,10 @@ export default function Profile() {
                     </span>
                 )}
 
-                <button
-                    onClick={handleLogout}
-                    style={{
-                        marginTop: '16px', width: '100%', padding: '8px',
-                        borderRadius: '8px', fontWeight: 600,
-                        border: '1px solid rgba(239,68,68,0.4)', color: '#f87171',
-                        background: 'transparent', cursor: 'pointer'
-                    }}
-                >
-                    Se déconnecter
-                </button>
+
             </div>
+
+
         </div>
     );
 }
