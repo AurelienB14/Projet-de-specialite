@@ -3,7 +3,7 @@ import { getCurrentUserId } from '../../api/auth';
 
 import api from '../../api/api'
 
-import { Cpu, Plus } from 'lucide-react'
+import { Cpu, Plus, MoveRight } from 'lucide-react'
 
 import WhiteDivider from '../ui/WhiteDivider'
 import Button from '../ui/Button';
@@ -33,12 +33,12 @@ export default function MySetup() {
         <Cpu size={18} className='text-primary' /> Mon setup
       </h3>
       <div className='card w-80 flex flex-col items-center text-center gap-4'>
-       <Cpu className='text-text-muted' />
-       <h2>Aucun setup configuré</h2>
-       <p className='text-text-muted'>Renseigne ta configuration pour vérifier si tu peux faire tourner un jeu avant de l'acheter.</p>
-       <Button variant='ghost' href='/setups'>
-        <Plus size={16} />
-        Ajouter mon setup</Button>
+        <Cpu className='text-text-muted' />
+        <h2>Aucun setup configuré</h2>
+        <p className='text-text-muted'>Renseigne ta configuration pour vérifier si tu peux faire tourner un jeu avant de l'acheter.</p>
+        <Button variant='ghost' href='/setups'>
+          <Plus size={16} />
+          Ajouter mon setup</Button>
       </div>
     </div>
   );
@@ -46,10 +46,15 @@ export default function MySetup() {
 
   return (
     <div >
-      <h3 className='flex items-center gap-4 ml-4'>
-        <Cpu size={18} className='text-primary' /> Mon setup
-      </h3>
-      <div className='card w-80 flex flex-col'>
+      <div className='flex justify-between'>
+
+        <h3 className='flex items-center gap-4 '>
+          <Cpu size={18} className='text-primary' /> Mon setup
+        </h3>
+        <span className='text-sm text-primary flex items-center gap-1'> Modifier<MoveRight size={14} /> </span>
+
+      </div>
+      <div className='card  flex flex-col'>
 
         <div className='flex justify-between w-1/1'>
           <span className='text-text-muted text-sm'>CPU</span>

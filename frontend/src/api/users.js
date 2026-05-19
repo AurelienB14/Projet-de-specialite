@@ -5,4 +5,9 @@ export const getUser = (id) => api.get(`/users/${id}`);
 export const createUser = (data) => api.post('/users', data);
 export const updateUser = (id, data) => api.put(`/users/${id}`, data);
 export const deleteUser = (id) => api.delete(`/users/${id}`);
-export const setup = (id, data) => api.post(`/users/${id}/setup`, data)
+export const setup = (id, data) => api.post(`/users/${id}/setup`, data);
+
+export const getUserGames = (userId) => api.get(`/users/${userId}/games`);
+export const addGame = (userId, data) => api.post(`/users/${userId}/games`, data);
+export const updateGame = (userId, id, data) => api.put(`/users/${userId}/games/${id}`, data);
+export const removeGame = (userId, id) => api.delete(`/users/${userId}/games/${id}`);
