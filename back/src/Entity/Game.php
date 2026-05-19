@@ -29,54 +29,68 @@ class Game
     #[ORM\Column]
     private int $ventes = 0;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $categories = [];
+
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $image = null;
-    
-    public function getId() 
+
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getNom() 
+    public function getNom()
     {
         return $this->nom;
     }
 
-    public function setNom($newNom) 
+    public function setNom($newNom)
     {
         $this->nom = $newNom;
     }
 
-    public function getDescription() 
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription($newDescription) 
+    public function setDescription($newDescription)
     {
         $this->description = $newDescription;
     }
 
-    public function getAge() 
+    public function getAge()
     {
         return $this->age;
     }
 
-    public function setAge($newAge) 
+    public function setAge($newAge)
     {
         $this->age = $newAge;
     }
 
-    public function getDate() 
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function setDate($newDate) {
+    public function setDate($newDate)
+    {
         if ($newDate >= 1947) {
             $this->date = $newDate;
         }
     }
+
+    public function getCategories(): ?array
+    {
+        return $this->categories;
+    }
+    public function setCategories(?array $categories): void
+    {
+        $this->categories = $categories;
+    }
+
 
     public function getVentes()
     {
@@ -87,12 +101,12 @@ class Game
         $this->ventes = $newVentes;
     }
 
-    public function getImage() 
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage($newImage) 
+    public function setImage($newImage)
     {
         $this->image = $newImage;
     }

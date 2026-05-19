@@ -27,6 +27,7 @@ final class UserGameApi extends AbstractController
                 'id' => $ug->getGame()?->getId(),
                 'nom' => $ug->getGame()?->getNom(),
                 'image' => $ug->getGame()?->getImage(),
+                'categories'=>$ug->getGame()?->getCategories(),
             ],
             'added_at' => $ug->getAddedAt()?->format('d-m-Y'),
             'status' => $ug->getStatus(),

@@ -8,6 +8,8 @@ import { SquarePen, Settings, LogOut } from 'lucide-react'
 import Button from '../components/ui/Button'
 import MySetup from '../components/profile/MySetup';
 import MyGames from '../components/profile/MyGames';
+import MyReview from '../components/profile/MyReview';
+import MyActivity from '../components/profile/MyActivity';
 
 export default function Profile() {
     const [user, setUser] = useState(null);
@@ -95,9 +97,12 @@ export default function Profile() {
                         </Button>
                     </div>
 
-                    <div className='grid grid-cols-3 w-1/1 gap-10'>
+                    <div className='grid grid-cols-2 w-1/1 gap-10'>
                         <MySetup />
                         <MyGames />
+                        <MyReview />
+                        <MyActivity />
+
                     </div>
                 </div>
 

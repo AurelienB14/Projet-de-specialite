@@ -32,7 +32,7 @@ export default function MySetup() {
       <h3 className='flex items-center gap-4 ml-4'>
         <Cpu size={18} className='text-primary' /> Mon setup
       </h3>
-      <div className='card w-80 flex flex-col items-center text-center gap-4'>
+      <div className='card flex flex-col items-center text-center gap-4'>
         <Cpu className='text-text-muted' />
         <h2>Aucun setup configuré</h2>
         <p className='text-text-muted'>Renseigne ta configuration pour vérifier si tu peux faire tourner un jeu avant de l'acheter.</p>

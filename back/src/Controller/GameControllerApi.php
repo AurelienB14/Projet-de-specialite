@@ -41,14 +41,15 @@ class GameControllerApi extends AbstractController
             'age'=>$game->getAge(),
             'date'=>$game->getDate(),
             'ventes'=>$game->getVentes(),
-            'image'=>$game->getImage()
+            'image'=>$game->getImage(),
+            'categories'=>$game->getCategories()
         ];
 
         return $this->json($data);
     }
 
     #[Route('/game/createupdate/{id}', name: 'api_createupdategame', defaults: ['id' => null], methods: ['GET', 'POST'])]
-    public function createupdate(int $id = null, GameRepository $jeuRepository, Request $request, EntityManagerInterface $manager): Response
+    public function createupdate(int $id, GameRepository $jeuRepository, Request $request, EntityManagerInterface $manager): Response
     {
 
         $data = [
@@ -71,7 +72,8 @@ class GameControllerApi extends AbstractController
                 "date" => null,
                 "age" => null,
                 "ventes" => null,
-                "image" => ""
+                "image" => "",
+                "categories" => []
             ]
         ];
 
@@ -87,6 +89,7 @@ class GameControllerApi extends AbstractController
             $data["jeu"]["age"] = $jeu->getAge();
             $data["jeu"]["ventes"] = $jeu->getVentes();
             $data["jeu"]["image"] = $jeu->getImage();
+            $data["jeu"]["categories"] = $jeu ->getCategories();
         } else {
             $jeu = new Game();
         }
@@ -99,6 +102,7 @@ class GameControllerApi extends AbstractController
             $jeu->setAge($request->request->get('age'));
             $jeu->setDate($request->request->get('date'));
             $jeu->setVentes($request->request->get('ventes'));
+            $jeu->setCategories(json_decode($request->request->get('categories'), true) ?? []); 
 
             if (strlen($jeu->getNom()) < 2 || strlen($jeu->getNom()) > 100) {
                 $data["verification"]["nom"] = "Le nom comporte " . strlen($jeu->getNom()) . " Caractères. Minimum : 2 | Maximum : 100";

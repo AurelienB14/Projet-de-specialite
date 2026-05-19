@@ -37,7 +37,12 @@ const Games = () => {
                     <Link to={`/game/${game.id}`} key={game.id}>
                         <div className="flex flex-col w-[300px] gap-[10px] items-center border-[3px] border-black cursor-pointer hover:scale-105 transition-transform duration-200">
                             <h2 className="text-center font-bold w-full text-sm leading-tight line-clamp-1">{game.nom}</h2>
-                            <img src={game.image} alt={game.nom} className="w-full h-[200px] object-cover"/>
+
+                            {game.categories?.map((cat, index) => (
+                                <span className='text-xs text-text-muted' key={index}>{cat}</span>
+                            ))}          
+
+                            <img src={game.image} alt={game.nom} className="w-full h-[200px] object-cover" />
                             <p className='line-clamp-2 text-center'>{game.description}</p>
                             <p>Date de sortie : {game.date}</p>
                             <p>Âge minimum : {game.age}</p>

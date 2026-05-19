@@ -44,8 +44,9 @@ export default function MyGames() {
                 {userGames.slice(-3).map(ug => (
                     <div className='flex flex-col card-xs ' key={ug.id}>
                         <span>{ug.game.nom}</span>
-                        <span className='text-sm text-text-muted'>Catégorie</span>
-
+                        <span className='text-sm text-text-muted'>
+                            {ug.game.categories?.join(' / ')}
+                        </span>
                     </div>
 
                 ))}
