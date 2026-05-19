@@ -92,7 +92,7 @@ final class UserControllerApi extends AbstractController
         $user->setPassword($hasher->hashPassword($user, $password));
         $user->setRoles(['ROLE_USER']);
 
-        // Gestion avatar
+        //  avatar
         $avatarFile = $request->files->get('avatar');
         if ($avatarFile) {
             $newFilename = uniqid() . '.' . $avatarFile->guessExtension();
