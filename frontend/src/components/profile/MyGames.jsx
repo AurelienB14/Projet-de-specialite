@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { getCurrentUserId } from '../../api/auth';
 import api from '../../api/api'
-import { Library, MoveRight } from 'lucide-react';
+import { Library, MoveRight, Plus } from 'lucide-react';
 
+import Button from '../ui/Button';
 
 
 export default function MyGames() {
@@ -26,7 +27,17 @@ export default function MyGames() {
 
     if (userGames.length === 0) return (
         <div>
-            <p>Aucun jeu dans ta bibliothèque</p>
+            <h3 className='flex items-center gap-4 ml-4'>
+                <Library size={18} className='text-primary' /> Ma bibliothèque
+            </h3>
+            <div className='card flex flex-col items-center text-center gap-4'>
+                <Library className='text-text-muted' />
+                <h2>La bibliothèque est vide</h2>
+                <p className='text-text-muted'>Ajoute des jeux pour compléter ta collection !</p>
+                <Button variant='ghost' href='/games'>
+                    <Plus  size={16} />
+                    Voir les jeux</Button>
+            </div>
         </div>
 
 

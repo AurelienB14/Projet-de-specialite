@@ -27,7 +27,7 @@ final class UserGameApi extends AbstractController
                 'id' => $ug->getGame()?->getId(),
                 'nom' => $ug->getGame()?->getNom(),
                 'image' => $ug->getGame()?->getImage(),
-                'categories'=>$ug->getGame()?->getCategories(),
+                'categories' => $ug->getGame()?->getCategories(),
             ],
             'added_at' => $ug->getAddedAt()?->format('d-m-Y'),
             'status' => $ug->getStatus(),
@@ -53,7 +53,7 @@ final class UserGameApi extends AbstractController
 
         $user = $userRepo->find($id_user);
         $game = $gameRepo->find($data['game_id']);
-
+       
         if (!$user || !$game) {
             return $this->json(['error' => 'User ou Game introuvable'], 404);
         }

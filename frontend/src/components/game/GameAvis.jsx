@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 
 import api from '../../api/api'
 
-import { Star } from 'lucide-react'
+import { Star, Plus } from 'lucide-react'
 
 import Note from '../ui/Note'
-
+import AddReview from "../review/AddReview";
 export default function GameAvis({ gameId }) {
 
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [showReview, setShowReview] = useState(false);
 
 
     useEffect(() => {
@@ -27,12 +29,24 @@ export default function GameAvis({ gameId }) {
 
     return (
         <div>
-            <h3 className='flex items-center gap-4 '>
-                <Star size={18} className='text-primary' /> Avis
-            </h3>
+            <div className='flex justify-between'>
+
+                <h3 className='flex items-center gap-4 '>
+                    <Star size={18} className='text-primary' /> Avis
+                </h3>
+                <button onClick={() => setShowReview(true)} className='text-sm text-primary flex items-center gap-1'> Ajouter un avis <Plus size={14} /> </button>
+
+                {showReview && (
+                    <AddReview
+                        gameId={gameId}
+                        onClose={() => setShowReview(false)}
+                        onSuccess={() => console.log('avis ajouté !')}
+                    />
+                )}
+            </div>
 
             <div className=" flex flex-col">
-                <div >
+                <div className="flex flex-col gap-2" >
                     {reviews.map(review => (
                         <div className="card flex flex-col gap-4" key={review.id}>
 
@@ -44,11 +58,11 @@ export default function GameAvis({ gameId }) {
                                         style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }}
                                     />
                                 ) : (
-                                    <div className=' flex border border-primary border-4 justify-center items-center rounded-full w-20 h-20' >
+                                    <div className=' flex border border-primary border-3 justify-center items-center rounded-full w-15 h-15' >
                                         {review.user.pseudo[0].toUpperCase()}
                                     </div>
                                 )}
-                                
+
                                 <div className="flex flex-col gap-1">
                                     <span className="font-bold">{review.user.pseudo}</span>
                                     <span className="text-xs text-text-muted">{review.created_at}</span>

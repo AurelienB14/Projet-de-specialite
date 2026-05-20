@@ -21,6 +21,7 @@ const Button = ({
         primary: 'bg-primary-transparent text-black hover:bg-primary',
         secondary: 'border border-[#00FFAA] text-[#00FFAA] hover:bg-[#00FFAA] hover:text-black',
         outline: 'border border-primary bg-background-transparent border-4 hover:bg-primary hover:text-black',
+        outlineSecondary: 'border border-primary bg-background-transparent',
         danger: 'bg-[#FF4444] text-white hover:bg-[#cc0000]',
         ghost: 'text-white hover:bg-[#2E2E2E] border border-text-muted',
     };
