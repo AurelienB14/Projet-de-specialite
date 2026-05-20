@@ -36,7 +36,7 @@ export default function MySetup() {
         <Cpu className='text-text-muted' />
         <h2>Aucun setup configuré</h2>
         <p className='text-text-muted'>Renseigne ta configuration pour vérifier si tu peux faire tourner un jeu avant de l'acheter.</p>
-        <Button variant='ghost' href='/setups'>
+        <Button variant='ghost' href='/profile/setup'>
           <Plus size={16} />
           Ajouter mon setup</Button>
       </div>
@@ -51,7 +51,7 @@ export default function MySetup() {
         <h3 className='flex items-center gap-4 '>
           <Cpu size={18} className='text-primary' /> Mon setup
         </h3>
-        <span className='text-sm text-primary flex items-center gap-1'> Modifier<MoveRight size={14} /> </span>
+        <a href='/profile/setup' className='text-sm text-primary flex items-center gap-1'> Modifier<MoveRight size={14} /> </a>
 
       </div>
       <div className='card  flex flex-col'>

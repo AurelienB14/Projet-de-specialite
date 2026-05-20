@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getCurrentUserId } from '../../api/auth';
 import api from '../../api/api';
 import Button from '../ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 import { Cpu } from 'lucide-react';
 
 export default function MySetup() {
 
 
+  const navigate = useNavigate();
+  
   const [form, setForm] = useState({
     processeur: '',
     memoire: '',
@@ -15,11 +18,25 @@ export default function MySetup() {
     stockage: '',
   })
 
+  const [setupId, setSetupId] = useState(null);
   const userId = getCurrentUserId();
-  console.log('userId', userId);
 
-  const token = localStorage.getItem('token');
-  console.log(JSON.parse(atob(token.split('.')[1])));
+  useEffect(() => {
+    api.get(`/users/${userId}`)
+      .then(res => {
+        const setup = res.data.setup;
+        if (setup) {
+          setSetupId(setup.id);
+          setForm({
+            processeur: setup.processeur,
+            memoire: setup.memoire,
+            carte_graphique: setup.carte_graphique,
+            stockage: setup.stockage,
+          });
+        }
+      });
+  }, []);
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,13 +44,18 @@ export default function MySetup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await api.post('/setups', { ...form, user_id: userId });
-    alert('Setup créé !')
+
+    if (setupId) {
+      await api.put(`/setups/${setupId}`, { ...form, user_id: userId });
+    } else {
+      await api.post('/setups', { ...form, user_id: userId });
+    }
+    navigate('/profile');
   };
 
   return (
     <div className='flex flex-col items-center'>
-      <Cpu size={24} className='text-primary '/>
+      <Cpu size={24} className='text-primary ' />
       <h1>Mon Setup</h1>
       <div className='card flex flex-col items-center w-2/3'>
         <form onSubmit={handleSubmit} className='flex flex-col  gap-4'>
@@ -73,7 +95,7 @@ export default function MySetup() {
 
 
           <Button type="submit">
-            Ajouter ou modifier mon setup
+            {setupId ? 'Modifier mon setup' : 'Ajouter mon setup'}
           </Button>
         </form>
       </div>

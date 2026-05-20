@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import GameAvis from '../components/game/GameAvis';
 
 const Game = () => {
     const { id } = useParams();
@@ -52,6 +53,8 @@ const Game = () => {
                     Supprimer
                 </button>
             </div>
+
+            <GameAvis gameId={game.id} />
         </div>
     )
 }

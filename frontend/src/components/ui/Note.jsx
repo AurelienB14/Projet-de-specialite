@@ -8,7 +8,7 @@ const Note = ({ note = 0, max = 5}) => {
             key={index}
             size={20}
             fill={index < note ? 'var(--color-yellow)' : 'transparent'}
-            color={index < note ? 'var(--color-yellow)' : 'var(--color-text)'}
+            color={index < note ? 'var(--color-yellow)' : 'var(--color-yellow)'}
             />
       ))}
     </div>
