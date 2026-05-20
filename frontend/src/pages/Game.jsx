@@ -44,6 +44,8 @@ const Game = () => {
                     <p>Nombre de ventes : {game.ventes}</p>
 
                     <GameToolBar game={game} />
+
+                    
                 </div>
             </div>
             <div className='flex justify-center m-[25px]'>

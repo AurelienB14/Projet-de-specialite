@@ -1,4 +1,4 @@
-<?php   
+<?php
 
 
 namespace App\Entity;
@@ -18,13 +18,13 @@ class Setup
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length:255)]
+    #[ORM\Column(length: 255)]
     private string $processeur = '';
 
     #[ORM\Column]
     private int $memoire = 0;
 
-    #[ORM\Column(length:255)]
+    #[ORM\Column(length: 255)]
     private string $carte_graphique = '';
 
     #[ORM\Column(nullable: true)]
@@ -35,56 +35,57 @@ class Setup
     private ?User $user = null;
 
 
-// CONSTRUCTEUR
-    public function __construct( ) {
+    // CONSTRUCTEUR
+    public function __construct()
+    {
     }
 
 
-// GETTERS
-    public function getId_user(): ?int {
+    // GETTERS
+    public function getId_user(): ?int
+    {
         return $this->id;
     }
-
-
     public function getProcesseur(): string
     {
         return $this->processeur;
     }
-
     public function getMemoire(): int
     {
         return $this->memoire;
     }
-
     public function getCarte_Graphique(): string
     {
         return $this->carte_graphique;
     }
-    
-
     public function getStockage(): int
     {
         return $this->stockage;
     }
-    public function getUser(): ?User {
+    public function getUser(): ?User
+    {
         return $this->user;
     }
 
 
-//SETTERS
-    public function setProcesseur(string $processeur): void{
+    //SETTERS
+    public function setProcesseur(string $processeur): void
+    {
         $this->processeur = $processeur;
     }
 
-    public function setMemoire(int $memoire): void{
+    public function setMemoire(int $memoire): void
+    {
         $this->memoire = $memoire;
     }
 
-    public function setCarte_Graphique(string $carte_graphique): void{
+    public function setCarte_Graphique(string $carte_graphique): void
+    {
         $this->carte_graphique = $carte_graphique;
     }
 
-    public function setStockage(int $stockage): void{
+    public function setStockage(int $stockage): void
+    {
         $this->stockage = $stockage;
     }
 
@@ -104,7 +105,8 @@ class Setup
 
         return $this;
     }
-    public function setUser(?User $user): void {
-        $this ->user = $user;
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 }

@@ -12,6 +12,7 @@ import AddSetup from './components/profile/AddSetup';
 import Games from './pages/Games';
 import Game from './pages/Game';
 import CreateUpdateGame from './pages/CreateUpdateGame';
+import VerifyMySetup from './components/game/VerifyMySetup';
 
 export default function App() {
     return (
@@ -29,6 +30,8 @@ export default function App() {
                     <Route path="/createupdategame/:id" element={<CreateUpdateGame />} />
                     <Route path="/setups" element={<Setups />} />
                     <Route path="/profile/setup" element={<AddSetup />} />
+                    <Route path="/game/:id/verify-setup" element={<VerifyMySetup />} />
+
 
                 </Routes>
             </Layout>

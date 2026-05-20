@@ -9,7 +9,9 @@ export default function GameToolBar({ game }) {
         <div className="flex gap-4">
 
            <AddToLibrary gameId={game.id} />
-            <Button variant="ghost">
+
+
+            <Button variant="ghost" href={`/game/${game.id}/verify-setup`}>
                 <Cpu size={18}/>
                 Vérifier mon setup
             </Button>

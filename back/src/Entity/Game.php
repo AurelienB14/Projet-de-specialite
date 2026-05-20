@@ -110,4 +110,25 @@ class Game
     {
         $this->image = $newImage;
     }
+
+
+    //SETUP MINIMUM
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cpu_min = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $gpu_min = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?int $ram_min = null;
+
+    public function getCpuMin(): ?string { return $this-> cpu_min; }
+    public function setCpuMin(?string $cpu_min): void {$this->cpu_min = $cpu_min; }
+
+    public function getGpuMin(): ?string { return $this-> gpu_min; }
+    public function setGpuMin(?string $gpu_min): void {$this->gpu_min = $gpu_min; }
+
+    public function getRamMin(): ?int { return $this-> ram_min; }
+    public function setRamMin(?string $ram_min): void {$this->ram_min = $ram_min; }
+
 }

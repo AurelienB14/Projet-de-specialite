@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Config\SetupConfig;
 use App\Entity\Setup;
 use App\Repository\SetupRepository;
 use App\Repository\UserRepository;
@@ -43,7 +44,8 @@ final class ApiSetupController extends AbstractController
 
         if (isset($data['user_id'])) {
             $user = $userRepo->find($data['user_id']);
-            if ($user) $setup->setUser($user);
+            if ($user)
+                $setup->setUser($user);
         }
 
         $em->persist($setup);
@@ -56,7 +58,8 @@ final class ApiSetupController extends AbstractController
     public function show(int $id, SetupRepository $repo): JsonResponse
     {
         $setup = $repo->find($id);
-        if (!$setup) return $this->json(['error' => 'Not found'], 404);
+        if (!$setup)
+            return $this->json(['error' => 'Not found'], 404);
 
         return $this->json([
             'id' => $setup->getId(),
@@ -71,7 +74,8 @@ final class ApiSetupController extends AbstractController
     public function edit(int $id, Request $request, SetupRepository $repo, EntityManagerInterface $em): JsonResponse
     {
         $setup = $repo->find($id);
-        if (!$setup) return $this->json(['error' => 'Not found'], 404);
+        if (!$setup)
+            return $this->json(['error' => 'Not found'], 404);
 
         $data = json_decode($request->getContent(), true);
         $setup->setProcesseur($data['processeur']);
@@ -88,11 +92,23 @@ final class ApiSetupController extends AbstractController
     public function delete(int $id, SetupRepository $repo, EntityManagerInterface $em): JsonResponse
     {
         $setup = $repo->find($id);
-        if (!$setup) return $this->json(['error' => 'Not found'], 404);
+        if (!$setup)
+            return $this->json(['error' => 'Not found'], 404);
 
         $em->remove($setup);
         $em->flush();
 
         return $this->json(['success' => true]);
+    }
+
+    #[Route('/config/setup', name: 'api_setup_config', methods: ['GET'])]
+    public function setupConfig(): JsonResponse
+    {
+        return $this->json([
+            'gpu' => SetupConfig::GPU_LIST,
+            'cpu' => SetupConfig::CPU_LIST,
+            'ram' => SetupConfig::RAM_LIST,
+
+        ]);
     }
 }

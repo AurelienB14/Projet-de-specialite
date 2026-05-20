@@ -42,7 +42,10 @@ class GameControllerApi extends AbstractController
             'date'=>$game->getDate(),
             'ventes'=>$game->getVentes(),
             'image'=>$game->getImage(),
-            'categories'=>$game->getCategories()
+            'categories'=>$game->getCategories(),
+            'cpu_min'=>$game->getCpuMin(),
+            'gpu_min'=>$game->getGpuMin(),
+            'ram_min'=>$game->getRamMin(),
         ];
 
         return $this->json($data);

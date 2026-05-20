@@ -10,7 +10,7 @@ export default function MySetup() {
 
 
   const navigate = useNavigate();
-  
+
   const [form, setForm] = useState({
     processeur: '',
     memoire: '',
@@ -20,6 +20,12 @@ export default function MySetup() {
 
   const [setupId, setSetupId] = useState(null);
   const userId = getCurrentUserId();
+
+  const [config, setConfig] = useState({ gpu: [], cpu: [], ram: [] });
+  useEffect(() => {
+    api.get('/setups/config/setup').then(res => setConfig(res.data));
+  }, []);
+
 
   useEffect(() => {
     api.get(`/users/${userId}`)
@@ -60,14 +66,22 @@ export default function MySetup() {
       <div className='card flex flex-col items-center w-2/3'>
         <form onSubmit={handleSubmit} className='flex flex-col  gap-4'>
 
-          <div className='flex flex-col'>
-            <span className='ml-2 text-text-muted'>Processeur</span>
-            <input name='processeur' placeholder='Processeur' value={form.processeur} onChange={handleChange} className='input' />
-          </div>
 
+
+          <div>
+            <select name="processeur" className='input' onChange={handleChange} value={form.processeur}>
+              {config.cpu.map(cpu => (
+                <option key={cpu} value={cpu} >{cpu}</option>
+              ))}
+            </select>
+          </div>
           <div className='flex flex-col'>
             <span className='ml-2 text-text-muted'>Carte graphique</span>
-            <input name='carte_graphique' placeholder='Carte graphique' value={form.carte_graphique} onChange={handleChange} className='input' />
+            <select name='carte_graphique' className='input' value={form.carte_graphique} onChange={handleChange}>
+              {config.gpu.map(gpu => (
+                <option key={gpu} value={gpu}>{gpu}</option>
+              ))}
+            </select>
           </div>
 
           <div className='flex gap-8'>
