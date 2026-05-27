@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
+const CATEGORIES = [
+    'Sandbox', 'Plateforme', 'Stratégie', 'Aventure', 'RPG',
+    'Course', 'Simulation', 'Gestion', 'Sport', 'FPS',
+    'Action', 'Party Game', 'Monde ouvert', 'Compétitif', "Multijoueur"
+];
+
+const PLATEFORMES = [
+    'PC', 'Android', 'iOS', 'PS4', 'PS5',
+    'Xbox One', 'Xbox Series', 'Nintendo Switch', 'Mac', "Wii U"
+];
+
 const CreateUpdateGame = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -12,6 +23,8 @@ const CreateUpdateGame = () => {
     const [age, setAge] = useState('');
     const [ventes, setVentes] = useState('');
     const [image, setImage] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [plateformes, setPlateformes] = useState([]);
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(true);
     const [btn, setBtn] = useState('Ajouter');
@@ -31,9 +44,19 @@ const CreateUpdateGame = () => {
                 setAge(data.jeu.age ?? '');
                 setVentes(data.jeu.ventes ?? '');
                 setImagePreview(data.jeu.image ?? '');
+                setCategories(data.jeu.categories ?? []);
+                setPlateformes(data.jeu.plateformes ?? []);
                 setLoading(false);
             });
     }, [id]);
+
+    const handleCheckbox = (value, list, setList) => {
+        if (list.includes(value)) {
+            setList(list.filter(v => v !== value));
+        } else {
+            setList([...list, value]);
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,6 +67,8 @@ const CreateUpdateGame = () => {
         formData.append('date', date);
         formData.append('age', age);
         formData.append('ventes', ventes);
+        formData.append('categories', JSON.stringify(categories));
+        formData.append('plateformes', JSON.stringify(plateformes));
         if (image) formData.append('image', image);
 
         const gameId = id ?? '0';
@@ -88,6 +113,38 @@ const CreateUpdateGame = () => {
                 <div>
                     <input className="border w-full p-2" placeholder="Nombre de ventes" type="number" value={ventes} onChange={e => setVentes(e.target.value)} />
                     {errors.ventes && <p className="text-red-500 text-sm">{errors.ventes}</p>}
+                </div>
+                <div>
+                    <h4 className="font-bold mb-1">Catégories :</h4>
+                    <div className="flex flex-wrap gap-2">
+                        {CATEGORIES.map(cat => (
+                            <label key={cat} className="flex items-center gap-1 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={categories.includes(cat)}
+                                    onChange={() => handleCheckbox(cat, categories, setCategories)}
+                                />
+                                {cat}
+                            </label>
+                        ))}
+                    </div>
+                    {errors.categories && <p className="text-red-500 text-sm">{errors.categories}</p>}
+                </div>
+                <div>
+                    <h4 className="font-bold mb-1">Plateformes :</h4>
+                    <div className="flex flex-wrap gap-2">
+                        {PLATEFORMES.map(plat => (
+                            <label key={plat} className="flex items-center gap-1 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={plateformes.includes(plat)}
+                                    onChange={() => handleCheckbox(plat, plateformes, setPlateformes)}
+                                />
+                                {plat}
+                            </label>
+                        ))}
+                    </div>
+                    {errors.plateformes && <p className="text-red-500 text-sm">{errors.plateformes}</p>}
                 </div>
                 <div>
                     <input 

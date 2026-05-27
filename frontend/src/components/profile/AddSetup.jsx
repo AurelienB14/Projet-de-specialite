@@ -65,11 +65,8 @@ export default function MySetup() {
       <h1>Mon Setup</h1>
       <div className='card flex flex-col items-center w-2/3'>
         <form onSubmit={handleSubmit} className='flex flex-col  gap-4'>
-
-
-
           <div>
-            <select name="processeur" className='input' onChange={handleChange} value={form.processeur}>
+            <select name="processeur" className='input [&>option]:text-white [&>option]:bg-black' onChange={handleChange} value={form.processeur}>
               {config.cpu.map(cpu => (
                 <option key={cpu} value={cpu} >{cpu}</option>
               ))}
@@ -77,7 +74,7 @@ export default function MySetup() {
           </div>
           <div className='flex flex-col'>
             <span className='ml-2 text-text-muted'>Carte graphique</span>
-            <select name='carte_graphique' className='input' value={form.carte_graphique} onChange={handleChange}>
+            <select name='carte_graphique' className='input [&>option]:text-white [&>option]:bg-black' value={form.carte_graphique} onChange={handleChange}>
               {config.gpu.map(gpu => (
                 <option key={gpu} value={gpu}>{gpu}</option>
               ))}
@@ -87,7 +84,7 @@ export default function MySetup() {
           <div className='flex gap-8'>
             <div className='flex flex-col'>
               <span className='ml-2 text-text-muted'>RAM</span>
-              <select className='input' name='memoire' placeholder='Mémoire RAM' value={form.memoire} onChange={handleChange}>
+              <select className='input [&>option]:text-white [&>option]:bg-black' name='memoire' placeholder='Mémoire RAM' value={form.memoire} onChange={handleChange}>
                 <option value={4}>4 GO</option>
                 <option value={8}>8 GO</option>
                 <option value={16}>16 GO</option>
@@ -97,7 +94,7 @@ export default function MySetup() {
 
             <div className='flex flex-col'>
               <span className='ml-2 text-text-muted'>Stockage</span>
-              <select className='input' name='stockage' placeholder='Stockage' value={form.stockage} onChange={handleChange}>
+              <select className='input [&>option]:text-white [&>option]:bg-black' name='stockage' placeholder='Stockage' value={form.stockage} onChange={handleChange}>
                 <option value={128}>128 GO</option>
                 <option value={256}>256 GO</option>
                 <option value={512}>512 GO</option>
@@ -106,7 +103,6 @@ export default function MySetup() {
               </select>
             </div>
           </div>
-
 
           <Button type="submit">
             {setupId ? 'Modifier mon setup' : 'Ajouter mon setup'}

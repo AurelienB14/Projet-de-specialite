@@ -32,6 +32,9 @@ class Game
     #[ORM\Column(type: 'json', nullable: true)]
     private ?array $categories = [];
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $plateforms = [];
+
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $image = null;
 
@@ -89,6 +92,15 @@ class Game
     public function setCategories(?array $categories): void
     {
         $this->categories = $categories;
+    }
+
+    public function getPlateformes(): ?array
+    {
+        return $this->plateforms;
+    }
+    public function setPlateformes(?array $plateformes): void
+    {
+        $this->plateforms = $plateformes;
     }
 
 

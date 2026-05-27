@@ -31,6 +31,8 @@ class GameControllerApi extends AbstractController
                 'age' => $game->getAge(),
                 'date' => $game->getDate(),
                 'ventes' => $game->getVentes(),
+                'categories' => $game->getCategories(),
+                'plateformes' => $game->getPlateformes(),
                 'image' => $game->getImage()
             ];
         }
@@ -49,6 +51,7 @@ class GameControllerApi extends AbstractController
             'date'=>$game->getDate(),
             'ventes'=>$game->getVentes(),
             'image'=>$game->getImage(),
+            'plateformes'=>$game->getPlateformes(),
             'categories'=>$game->getCategories(),
             'cpu_min'=>$game->getCpuMin(),
             'gpu_min'=>$game->getGpuMin(),
@@ -74,7 +77,9 @@ class GameControllerApi extends AbstractController
                 "date" => "",
                 "age" => "",
                 "ventes" => "",
-                "image" => ""
+                "image" => "",
+                "categories" => "",
+                "plateformes" => ""
             ],
             "jeu" => [
                 "nom" => "",
@@ -83,7 +88,8 @@ class GameControllerApi extends AbstractController
                 "age" => null,
                 "ventes" => null,
                 "image" => "",
-                "categories" => []
+                "categories" => [],
+                "plateformes" => []
             ]
         ];
 
@@ -100,6 +106,7 @@ class GameControllerApi extends AbstractController
             $data["jeu"]["ventes"] = $jeu->getVentes();
             $data["jeu"]["image"] = $jeu->getImage();
             $data["jeu"]["categories"] = $jeu ->getCategories();
+            $data["jeu"]["plateformes"] = $jeu ->getPlateformes();
         } else {
             $jeu = new Game();
         }
@@ -112,7 +119,8 @@ class GameControllerApi extends AbstractController
             $jeu->setAge($request->request->get('age'));
             $jeu->setDate($request->request->get('date'));
             $jeu->setVentes($request->request->get('ventes'));
-            $jeu->setCategories(json_decode($request->request->get('categories'), true) ?? []); 
+            $jeu->setCategories(json_decode($request->request->get('categories'), true) ?? []);
+            $jeu->setPlateformes(json_decode($request->request->get('plateformes'), true) ?? []);
 
             if (strlen($jeu->getNom()) < 2 || strlen($jeu->getNom()) > 100) {
                 $data["verification"]["nom"] = "Le nom comporte " . strlen($jeu->getNom()) . " Caractères. Minimum : 2 | Maximum : 100";
@@ -136,6 +144,16 @@ class GameControllerApi extends AbstractController
 
             if ($jeu->getVentes() < 0 || $jeu->getVentes() > 1000000000) {
                 $data["verification"]["ventes"] = "La date de sortie du jeu doit être entre 0 et 1000000000 (1 milliard). Actuellement : " . $jeu->getVentes() . " ventes.";
+                $verif = True;
+            }
+
+            if (empty($jeu->getCategories())) {
+                $data["verification"]["categories"] = "Veuillez sélectionner au moins une catégorie.";
+                $verif = True;
+            }
+
+            if (empty($jeu->getPlateformes())) {
+                $data["verification"]["plateformes"] = "Veuillez sélectionner au moins une plateforme.";
                 $verif = True;
             }
 
