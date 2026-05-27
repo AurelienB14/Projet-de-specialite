@@ -28,7 +28,7 @@ export default function Users() {
                     }}>
                         {user.avatar ? (
                             <img
-                                src={`http://localhost:8000/uploads/avatars/${user.avatar}`}
+                                src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${user.avatar}`}
                                 alt={user.pseudo}
                                 style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover' }}
                             />

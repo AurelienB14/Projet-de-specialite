@@ -58,7 +58,7 @@ export default function Profile() {
 
                             {user.avatar ? (
                                 <img
-                                    src={`http://localhost:8000/uploads/avatars/${user.avatar}`}
+                                    src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${user.avatar}`}
                                     alt={user.pseudo}
                                     style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover' }}
                                 />

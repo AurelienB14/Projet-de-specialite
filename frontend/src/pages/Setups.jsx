@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API_URL = "http://localhost:8000/api";
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 async function fetchSetups() {
     const res = await fetch(`${API_URL}/setups`);
