@@ -6,8 +6,10 @@ const Games = () => {
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
-        axios.get('http://localhost:8000/api/games')
+        axios.get(`${API_URL}/api/games`)
             .then(res => {
                 setGames(res.data);
                 setLoading(false);

@@ -31,9 +31,11 @@ const CreateUpdateGame = () => {
     const [lienback, setLienback] = useState('');
     const [imagePreview, setImagePreview] = useState('');
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         const gameId = id ?? '0';
-        axios.get(`http://localhost:8000/api/game/createupdate/${gameId}`)
+        axios.get(`${API_URL}/api/game/createupdate/${gameId}`)
             .then(res => {
                 const data = res.data;
                 setBtn(data.infos.btn);
@@ -72,7 +74,7 @@ const CreateUpdateGame = () => {
         if (image) formData.append('image', image);
 
         const gameId = id ?? '0';
-        axios.post(`http://localhost:8000/api/game/createupdate/${gameId}`, formData)
+        axios.post(`${API_URL}/api/game/createupdate/${gameId}`, formData)
             .then(res => {
                 if (res.data.success) {
                     navigate('/games');

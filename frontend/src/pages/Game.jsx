@@ -11,15 +11,17 @@ const Game = () => {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     const handleDelete = () => {
         if (confirm('Supprimer ce jeu ?')) {
-            axios.delete(`http://localhost:8000/api/game/delete/${game.id}`)
+            axios.delete(`${API_URL}/api/game/delete/${game.id}`)
                 .then(() => navigate('/games'));
         }
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/game/${id}`)
+        axios.get(`${API_URL}/api/game/${id}`)
             .then(res => {
                 setGame(res.data);
                 setLoading(false);
