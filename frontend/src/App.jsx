@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import Users from './pages/Users';
 import Setups from './pages/Setups';
 import AddSetup from './components/profile/AddSetup';
+import MyCollection from './pages/MyCollection';
 
 import Games from './pages/Games';
 import Game from './pages/Game';
@@ -31,7 +32,7 @@ export default function App() {
                     <Route path="/setups" element={<Setups />} />
                     <Route path="/profile/setup" element={<AddSetup />} />
                     <Route path="/game/:id/verify-setup" element={<VerifyMySetup />} />
-
+                    <Route path="/profile/collection" element={<MyCollection />} />
 
                 </Routes>
             </Layout>

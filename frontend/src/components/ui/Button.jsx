@@ -37,7 +37,7 @@ const Button = ({
             onClick={handleClick}
             disabled={disabled || loading}
             className={`
-                rounded-lg font-medium transition-all duration-200 cursor-pointer flex gap-2 items-center
+                rounded-lg font-medium transition-all duration-200 cursor-pointer flex gap-2 items-center w-fit
                 ${variants[variant]}
                 ${sizes[size]}
                 ${disabled || loading ? 'opacity-50 cursor-not-allowed' : ''}
