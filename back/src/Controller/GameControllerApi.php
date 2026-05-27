@@ -24,9 +24,16 @@ class GameControllerApi extends AbstractController
         $games = $gameRepository->findAll();
         $data = [];
         foreach ($games as $game) {
-            $data[] = $game->getId();
+            $data[] = [
+                'id' => $game->getId(),
+                'nom' => $game->getNom(),
+                'description' => $game->getDescription(),
+                'age' => $game->getAge(),
+                'date' => $game->getDate(),
+                'ventes' => $game->getVentes(),
+                'image' => $game->getImage()
+            ];
         }
-
         return $this->json($data);
     }
 

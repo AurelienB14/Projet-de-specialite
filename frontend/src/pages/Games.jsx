@@ -9,15 +9,7 @@ const Games = () => {
     useEffect(() => {
         axios.get('http://localhost:8000/api/games')
             .then(res => {
-                const ids = res.data;
-                const requests = ids.map(id =>
-                    axios.get(`http://localhost:8000/api/game/${id}`)
-                );
-                return Promise.all(requests);
-            })
-            .then(responses => {
-                const gamesData = responses.map(res => res.data);
-                setGames(gamesData);
+                setGames(res.data);
                 setLoading(false);
             })
             .catch(err => console.error(err));
