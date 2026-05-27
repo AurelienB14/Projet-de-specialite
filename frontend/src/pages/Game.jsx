@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import GameAvis from '../components/game/GameAvis';
 import GameToolBar from '../components/game/GameToolBar';
+import WhiteDivider from '../components/ui/WhiteDivider'
 
 const Game = () => {
     const { id } = useParams();
@@ -38,14 +39,25 @@ const Game = () => {
                 </div>
                 <div className="w-1/2 flex flex-col gap-[10px] items-center">
                     <h2 className='text-center font-bold'>{game.nom}</h2>
+                    <WhiteDivider />
                     <p className="text-center">{game.description}</p>
                     <p>Date de sortie : {game.date}</p>
                     <p>Âge minimum : {game.age}</p>
                     <p>Nombre de ventes : {game.ventes}</p>
-
+                    <WhiteDivider />
+                    <h3>Catégories</h3>
+                    <div className='w-full flex flex-row gap-[10px] justify-center flex-wrap'>
+                        {game.categories && game.categories.map(categorie => (
+                            <p key={categorie}>{categorie}</p>
+                        ))}
+                    </div>
+                    <h3>Plateformes</h3>
+                    <div className='w-full flex flex-row gap-[10px] justify-center flex-wrap'>
+                        {game.plateformes && game.plateformes.map(plateforme => (
+                            <p key={plateforme}>{plateforme}</p>
+                        ))}
+                    </div>
                     <GameToolBar game={game} />
-
-                    
                 </div>
             </div>
             <div className='flex justify-center m-[25px]'>
