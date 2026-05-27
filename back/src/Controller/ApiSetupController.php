@@ -6,6 +6,7 @@ use App\Config\SetupConfig;
 use App\Entity\Setup;
 use App\Repository\SetupRepository;
 use App\Repository\UserRepository;
+use App\Repository\GameRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -109,6 +110,55 @@ final class ApiSetupController extends AbstractController
             'cpu' => SetupConfig::CPU_LIST,
             'ram' => SetupConfig::RAM_LIST,
 
+        ]);
+    }
+
+    #[Route('/verify-setup/{gameId}', name: 'api_verify_setup', methods: ['GET'])]
+    public function verifySetup(int $gameId, GameRepository $gameRepo): JsonResponse
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof \App\Entity\User) {
+            return $this->json(['error' => 'Non authentifié'], 401);
+        }
+
+        $game = $gameRepo->find($gameId);
+        $setup = $user->getSetup();
+
+        if (!$setup) {
+            return $this->json(['error' => 'Pas de setup'], 404);
+        }
+
+        $cpuList = SetupConfig::CPU_LIST;
+        $gpuList = SetupConfig::GPU_LIST;
+        $ramList = SetupConfig::RAM_LIST;
+
+        $userCpuIndex = array_search($setup->getProcesseur(), $cpuList);
+        $gameCpuIndex = array_search($game->getCpuMin(), $cpuList);
+
+        $userGpuIndex = array_search($setup->getCarteGraphique(), $gpuList);
+        $gameGpuIndex = array_search($game->getGpuMin(), $gpuList);
+
+        $userRamIndex = array_search($setup->getMemoire(), $ramList);
+        $gameRamIndex = array_search($game->getRamMin(), $ramList);
+
+        return $this->json([
+            'cpu' => [
+                'ok' => $userCpuIndex >= $gameCpuIndex,
+                'user' => $setup->getProcesseur(),
+                'required' => $game->getCpuMin(),
+            ],
+            'gpu' => [
+                'ok' => $userGpuIndex >= $gameGpuIndex,
+                'user' => $setup->getCarteGraphique(),
+                'required' => $game->getGpuMin(),
+            ],
+            'ram' => [
+                'ok' => $userRamIndex >= $gameRamIndex,
+                'user' => $setup->getMemoire(),
+                'required' => $game->getRamMin(),
+            ],
+            'can_run' => $userCpuIndex >= $gameCpuIndex && $userGpuIndex >= $gameGpuIndex && $userRamIndex >= $gameRamIndex,
         ]);
     }
 }

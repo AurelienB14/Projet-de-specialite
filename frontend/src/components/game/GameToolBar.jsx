@@ -11,7 +11,7 @@ export default function GameToolBar({ game }) {
            <AddToLibrary gameId={game.id} />
 
 
-            <Button variant="ghost" href={`/game/${game.id}/verify-setup`}>
+            <Button variant="ghost" href={`/game/verify-setup/${game.id}`}>
                 <Cpu size={18}/>
                 Vérifier mon setup
             </Button>

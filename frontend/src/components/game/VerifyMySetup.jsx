@@ -11,6 +11,8 @@ export default function VerifyMySetup() {
     const { id } = useParams();
     const [game, setGame] = useState(null);
     const [userSetup, setUserSetup] = useState(null);
+        const [result, setResult] = useState(null);
+
     const [loading, setLoading] = useState(true);
 
 
@@ -20,11 +22,15 @@ export default function VerifyMySetup() {
         Promise.all([
             api.get(`/game/${id}`),
             api.get(`/users/${userId}`),
+api.get(`/setups/verify-setup/${id}`)
+
 
         ])
-            .then(([gameRes, userRes]) => {
+            .then(([gameRes, userRes, verifyRes]) => {
                 setGame(gameRes.data);
-                setUserSetup(userRes.data.setup)
+                setUserSetup(userRes.data.setup);
+                                setResult(verifyRes.data);
+
             })
             .finally(() => setLoading(false));
 
@@ -35,7 +41,11 @@ export default function VerifyMySetup() {
 
     return (
         <div className='flex gap-4'>
-
+ {result && (
+                <div className='card text-center'>
+                    <h2>{result.can_run ? '✅ Tu peux faire tourner ce jeu !' : '❌ Ton setup est insuffisant'}</h2>
+                </div>
+            )}
             <div className='flex flex-col w-1/2'>
                 <div className='flex items-center gap-2'>
                     <Gamepad2 size={18} className='text-primary' />
@@ -89,6 +99,8 @@ export default function VerifyMySetup() {
 
                 </div>
             </div>
+
+            
         </div>
 
     );

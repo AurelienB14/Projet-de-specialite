@@ -14,7 +14,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         public:
-            pattern: ^/api/(games|game|setups|register|createupdategame)
+            pattern: ^/api/(games|game|register|createupdategame)
             stateless: true
             security: false
         login:
@@ -34,6 +34,8 @@ security:
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/setups/verify-setup, roles: ROLE_USER }
+        - { path: ^/api/setups/config, roles: PUBLIC_ACCESS }
         - { path: ^/api/setups, roles: PUBLIC_ACCESS }
         - { path: ^/api/games, roles: PUBLIC_ACCESS }
         - { path: ^/api/game, roles: PUBLIC_ACCESS }
