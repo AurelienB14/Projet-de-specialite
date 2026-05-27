@@ -30,7 +30,7 @@ export default function App() {
                     <Route path="/createupdategame/:id" element={<CreateUpdateGame />} />
                     <Route path="/setups" element={<Setups />} />
                     <Route path="/profile/setup" element={<AddSetup />} />
-                    <Route path="/game/:id/verify-setup" element={<VerifyMySetup />} />
+                    <Route path="/game/verify-setup/:id" element={<VerifyMySetup />} />
 
 
                 </Routes>
