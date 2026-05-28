@@ -3,14 +3,15 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const CATEGORIES = [
-    'Sandbox', 'Plateforme', 'Stratégie', 'Aventure', 'RPG',
-    'Course', 'Simulation', 'Gestion', 'Sport', 'FPS',
-    'Action', 'Party Game', 'Monde ouvert', 'Compétitif', "Multijoueur"
+    'Action', 'Aventure', 'Battle Royale', 'Compétitif', 'Course',
+    'FPS', 'Gestion', 'Monde ouvert', 'Multijoueur', 'Party Game',
+    'Plateforme', 'RPG', 'Rythme', 'Sandbox', 'Simulation',
+    'Sport', 'Stratégie', 'Survie', 'Tour par tour'
 ];
 
 const PLATEFORMES = [
-    'PC', 'Android', 'iOS', 'PS4', 'PS5',
-    'Xbox One', 'Xbox Series', 'Nintendo Switch', 'Mac', "Wii U"
+    'Android', 'iOS', 'Mac', 'Nintendo Switch', 'PC',
+    'PS4', 'PS5', 'Wii U', 'Xbox One', 'Xbox Series'
 ];
 
 const CreateUpdateGame = () => {
