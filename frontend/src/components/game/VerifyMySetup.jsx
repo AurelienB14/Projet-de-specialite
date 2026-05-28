@@ -50,7 +50,6 @@ export default function VerifyMySetup() {
 
                             <div className='flex flex-col text-left'>
                                 <h2 className='text-bold'>Tu peux faire tourner ce jeux ! </h2>
-                                <p className='text-text-muted '>Ta configuration est totalement ok avec les exigences de ce jeu</p>
                             </div>
 
                         </div>

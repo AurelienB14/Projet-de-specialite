@@ -33,7 +33,7 @@ const Game = () => {
     if (!game) return <p>Jeu introuvable</p>;
 
     return (
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-4'>
 
             <div className='relative w-full h-84 overflow-hidden rounded-xl'>
                 <img src={game.image} alt={game.nom} className="w-full h-auto object-cover" />
@@ -53,35 +53,51 @@ const Game = () => {
 
                 </div>
             </div>
-            <GameToolBar game={game} />
 
 
 
-            <a href="/games" className='flex text-[40px]'>◄</a>
-            <div className="flex flex-row">
-                <div className="w-1/2">
-                    <img src={game.image} alt={game.nom} className="w-full h-auto object-cover" />
-                </div>
-                <div className="w-1/2 flex flex-col gap-[10px] items-center">
-                    <h2 className='text-center font-bold'>{game.nom}</h2>
-                    <WhiteDivider />
-                    <p className="text-center">{game.description}</p>
-                    <p>Date de sortie : {game.date}</p>
-                    <p>Âge minimum : {game.age}</p>
-                    <p>Nombre de ventes : {game.ventes}</p>
-                    <WhiteDivider />
-                    <h3>Catégories</h3>
-                    <div className='w-full flex flex-row gap-[10px] justify-center flex-wrap'>
-                        {game.categories && game.categories.map(categorie => (
-                            <p key={categorie}>{categorie}</p>
-                        ))}
+            <div className="">
+
+                <div className="grid grid-cols-2 gap-8 items-center">
+
+                    <div className='flex flex-col gap-4'>
+                        <GameToolBar game={game} />
+
+                        <p className=" whitespace-pre-line">{game.description}</p>
+                        <WhiteDivider />
+
+                        <div className='grid grid-cols-3 gap-8'>
+                            <div className='flex flex-col'>
+                                <p className='text-text-muted'>Date de sortie</p>
+                                <div className='card'>
+                                    <p>{game.date}</p>
+                                </div>
+                            </div>
+                            <div className='flex flex-col'>
+                                <p className='text-text-muted'>Âge minimum</p>
+                                <div className='card'>
+                                    <p>{game.age}</p>
+                                </div>
+                            </div>
+                            <div className='flex flex-col'>
+                                <p className='text-text-muted'>Nombre de ventes</p>
+                                <div className='card'>
+                                    <p>{game.ventes}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+               
+                     
+                        <h3>Plateformes</h3>
+                        <div className='w-full flex flex-row gap-[10px] justify-center flex-wrap'>
+                            {game.plateformes && game.plateformes.map(plateforme => (
+                                <p key={plateforme}>{plateforme}</p>
+                            ))}
+                        </div>
                     </div>
-                    <h3>Plateformes</h3>
-                    <div className='w-full flex flex-row gap-[10px] justify-center flex-wrap'>
-                        {game.plateformes && game.plateformes.map(plateforme => (
-                            <p key={plateforme}>{plateforme}</p>
-                        ))}
-                    </div>
+
 
                     <VerifyMySetup />
 
