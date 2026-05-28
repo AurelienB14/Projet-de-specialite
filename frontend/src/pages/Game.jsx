@@ -5,6 +5,7 @@ import GameAvis from '../components/game/GameAvis';
 import GameToolBar from '../components/game/GameToolBar';
 import WhiteDivider from '../components/ui/WhiteDivider'
 import VerifyMySetup from '../components/game/VerifyMySetup'
+import Button from '../components/ui/Button';
 
 const Game = () => {
     const { id } = useParams();
@@ -32,7 +33,30 @@ const Game = () => {
     if (!game) return <p>Jeu introuvable</p>;
 
     return (
-        <div>
+        <div className='flex flex-col gap-2'>
+
+            <div className='relative w-full h-84 overflow-hidden rounded-xl'>
+                <img src={game.image} alt={game.nom} className="w-full h-auto object-cover" />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+
+                <div className='absolute bottom-0 left-0 p-6 flex flex-col items-start'>
+                    <h1 className=' font-bold font '>{game.nom}</h1>
+
+                    <div className='w-full flex flex-row gap-[10px]  flex-wrap'>
+                        {game.categories && game.categories.map(categorie => (
+
+                            <Button variant="ghost" size="sm" key={categorie}>{categorie}</Button>
+                        ))}
+                    </div>
+
+
+                </div>
+            </div>
+            <GameToolBar game={game} />
+
+
+
             <a href="/games" className='flex text-[40px]'>◄</a>
             <div className="flex flex-row">
                 <div className="w-1/2">
@@ -58,8 +82,8 @@ const Game = () => {
                             <p key={plateforme}>{plateforme}</p>
                         ))}
                     </div>
-                    <GameToolBar game={game} />
-                                    <VerifyMySetup />
+
+                    <VerifyMySetup />
 
                 </div>
             </div>
