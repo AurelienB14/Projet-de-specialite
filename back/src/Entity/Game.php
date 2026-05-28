@@ -6,6 +6,9 @@ use App\Repository\GameRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
 {
@@ -37,6 +40,22 @@ class Game
 
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $note = null;
+
+    #[ORM\OneToMany(mappedBy: 'game', targetEntity: Review::class)]
+    private Collection $reviews;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
 
     public function getId()
     {
@@ -111,6 +130,15 @@ class Game
     public function setVentes($newVentes)
     {
         $this->ventes = $newVentes;
+    }
+
+    public function getNote()
+    {
+        return $this->note;
+    }
+    public function setNote($newNote)
+    {
+        $this->note = $newNote;
     }
 
     public function getImage()

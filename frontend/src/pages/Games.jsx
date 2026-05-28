@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
+import Note from '../components/ui/Note'
+
 const CATEGORIES = [
     'Action', 'Aventure', 'Battle Royale', 'Compétitif', 'Course',
     'FPS', 'Gestion', 'Monde ouvert', 'Multijoueur', 'Party Game',
@@ -71,11 +73,15 @@ const Games = () => {
                     <Link to={`/game/${game.id}`} key={game.id}>
                         <div className="flex flex-col w-[300px] gap-[10px] items-center border-[3px] border-black cursor-pointer hover:scale-105 transition-transform duration-200">
                             <h2 className="text-center font-bold w-full text-sm leading-tight line-clamp-1">{game.nom}</h2>
-
-                            {game.categories?.map((cat, index) => (
-                                <span className='text-xs text-text-muted' key={index}>{cat}</span>
-                            ))}          
-
+                            {game.note !== null
+                                ? <Note note={game.note}/>
+                                : <p>Pas de note</p>
+                            }
+                            <div className='flex flex-row flex-wrap test-center gap-5'>
+                                {game.categories?.map((cat, index) => (
+                                    <span className='text-xs text-text-muted' key={index}>{cat}</span>
+                                ))}     
+                            </div>
                             <img src={game.image} alt={game.nom} className="w-full h-[200px] object-cover" />
                             <p className='line-clamp-2 text-center'>{game.description}</p>
                             <p>Date de sortie : {game.date}</p>

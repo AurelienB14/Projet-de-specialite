@@ -22,7 +22,7 @@ class Review {
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id_user', nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: Game::class)]
+    #[ORM\ManyToOne(targetEntity: Game::class, inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Game $game = null;
 
