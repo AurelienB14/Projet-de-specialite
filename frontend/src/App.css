@@ -7,12 +7,26 @@
     border-radius: var(--radius-lg);
     background-color: rgba(0, 255, 170, 0.2);
     border: 1px solid var(--color-primary);
-    padding: 22px;
+    padding: 16px;
+}
+
+.card-danger {
+    border-radius: var(--radius-lg);
+    background-color: rgba(255, 47, 15, 0.2);
+    border: 1px solid var(--color-danger);
+    padding: 16px;
 }
 .card-img {
-        border-radius: var(--radius-lg);
+    border-radius: var(--radius-lg);
     background-color: rgba(255, 255, 255, 0.02);
     overflow: hidden;
+
+}
+
+.card-outline {
+        border-radius: var(--radius-lg);
+    border: 1px solid var(--color-text-muted);
+    padding: 12px;
 
 }
 .card-xs {

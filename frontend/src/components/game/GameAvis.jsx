@@ -47,7 +47,7 @@ export default function GameAvis({ gameId }) {
 
             <div className=" flex flex-col">
                 <div className="flex flex-col gap-2" >
-                    {reviews.map(review => (
+                    {reviews.slice(-3).map(review => (
                         <div className="card flex flex-col gap-4" key={review.id}>
 
                             <div className="flex items-center gap-4">

@@ -3,9 +3,10 @@ import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import GameAvis from '../components/game/GameAvis';
 import GameToolBar from '../components/game/GameToolBar';
-import WhiteDivider from '../components/ui/WhiteDivider'
 import VerifyMySetup from '../components/game/VerifyMySetup'
 import Button from '../components/ui/Button';
+import VerticalDivider from '../components/ui/VerticalDivider';
+import GamePlateform from '../components/game/GamePlatform';
 
 const Game = () => {
     const { id } = useParams();
@@ -56,42 +57,52 @@ const Game = () => {
 
 
 
-            <div className="">
+            <div className=''>
 
-                <div className="grid grid-cols-2 gap-22 items-center">
+                <div className="grid grid-cols-2 gap-22 mt-10">
 
                     <div className='flex flex-col gap-4'>
                         <GameToolBar game={game} />
 
-                        <p className=" whitespace-pre-line">{game.description}</p>
-                        <WhiteDivider />
-
-
-
-                        <div className='grid grid-cols-3 gap-8'>
-                            <div className='flex flex-col'>
+                        <div className='flex gap-8 card w-full'>
+                            <div className='flex flex-col w-full'>
                                 <p className='text-text-muted'>Date de sortie</p>
-                                <div className='card'>
+                                <div className=''>
                                     <p>{game.date}</p>
                                 </div>
                             </div>
-                            <div className='flex flex-col'>
+                            <VerticalDivider />
+
+                            <div className='flex flex-col w-full'>
                                 <p className='text-text-muted'>Âge minimum</p>
-                                <div className='card'>
-                                    <p>{game.age}</p>
+                                <div className=''>
+                                    <p className='font-bold'>{game.age}</p>
                                 </div>
+
                             </div>
-                            <div className='flex flex-col'>
+                            <VerticalDivider />
+
+                            <div className='flex flex-col w-full'>
                                 <p className='text-text-muted'>Nombre de ventes</p>
-                                <div className='card'>
+                                <div className=''>
                                     <p>{game.ventes}</p>
                                 </div>
+
                             </div>
+
                         </div>
 
+                        <GamePlateform />
 
-               
-                     
+                        <p className=" whitespace-pre-line">{game.description}</p>
+
+
+
+
+
+
+
+
                         <h3>Plateformes</h3>
                         <div className='w-full flex flex-row gap-[10px] justify-center flex-wrap'>
                             {game.plateformes && game.plateformes.map(plateforme => (
@@ -100,8 +111,11 @@ const Game = () => {
                         </div>
                     </div>
 
+                    <div className='flex flex-col gap-8'>
+                        <VerifyMySetup />
+                        <GameAvis gameId={game.id} />
 
-                    <VerifyMySetup />
+                    </div>
 
                 </div>
             </div>
@@ -117,7 +131,6 @@ const Game = () => {
             </div>
 
             <div className='grid grid-cols-2'>
-                <GameAvis gameId={game.id} />
             </div>
 
 
