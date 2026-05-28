@@ -92,10 +92,10 @@ const Game = () => {
 
                         </div>
 
-                        <GamePlateform />
 
                         <p className=" whitespace-pre-line">{game.description}</p>
 
+                        <GameAvis gameId={game.id} />
 
 
 
@@ -103,17 +103,12 @@ const Game = () => {
 
 
 
-                        <h3>Plateformes</h3>
-                        <div className='w-full flex flex-row gap-[10px] justify-center flex-wrap'>
-                            {game.plateformes && game.plateformes.map(plateforme => (
-                                <p key={plateforme}>{plateforme}</p>
-                            ))}
-                        </div>
                     </div>
 
                     <div className='flex flex-col gap-8'>
+                                                <GamePlateform />
+
                         <VerifyMySetup />
-                        <GameAvis gameId={game.id} />
 
                     </div>
 
