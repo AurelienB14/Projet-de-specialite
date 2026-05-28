@@ -47,6 +47,11 @@ class Game
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Review::class)]
     private Collection $reviews;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id_user', nullable: true)]
+
+    private ?User $user_id = null;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -139,6 +144,15 @@ class Game
     public function setNote($newNote)
     {
         $this->note = $newNote;
+    }
+
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+    public function setUserId($newUserId)
+    {
+        $this->user_id = $newUserId;
     }
 
     public function getImage()

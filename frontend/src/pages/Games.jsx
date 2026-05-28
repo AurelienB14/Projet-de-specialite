@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
+
 import Note from '../components/ui/Note'
 
 const CATEGORIES = [
@@ -73,6 +74,7 @@ const Games = () => {
                     <Link to={`/game/${game.id}`} key={game.id}>
                         <div className="flex flex-col w-[300px] gap-[10px] items-center border-[3px] border-black cursor-pointer hover:scale-105 transition-transform duration-200">
                             <h2 className="text-center font-bold w-full text-sm leading-tight line-clamp-1">{game.nom}</h2>
+                            <p>Ajouté par {game.pseudo}</p>
                             {game.note !== null
                                 ? <Note note={game.note}/>
                                 : <p>Pas de note</p>
