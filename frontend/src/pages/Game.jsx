@@ -58,13 +58,15 @@ const Game = () => {
 
             <div className="">
 
-                <div className="grid grid-cols-2 gap-8 items-center">
+                <div className="grid grid-cols-2 gap-22 items-center">
 
                     <div className='flex flex-col gap-4'>
                         <GameToolBar game={game} />
 
                         <p className=" whitespace-pre-line">{game.description}</p>
                         <WhiteDivider />
+
+
 
                         <div className='grid grid-cols-3 gap-8'>
                             <div className='flex flex-col'>
