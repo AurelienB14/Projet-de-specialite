@@ -48,7 +48,7 @@ export default function MyGames() {
                 <h3 className='flex items-center gap-4 ml-4'>
                     <Library size={18} className='text-primary' /> Ma bibliothèque
                 </h3>
-                <span className='text-sm text-primary flex items-center gap-1'> Voir tout <MoveRight size={14} /> </span>
+                <a href='/profile/collection' className='text-sm text-primary flex items-center gap-1'> Voir tout <MoveRight size={14} /> </a>
             </div>
 
             <div className=' flex flex-col gap-3'>

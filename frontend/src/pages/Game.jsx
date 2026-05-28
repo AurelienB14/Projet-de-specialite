@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import GameAvis from '../components/game/GameAvis';
 import GameToolBar from '../components/game/GameToolBar';
 import WhiteDivider from '../components/ui/WhiteDivider'
+import VerifyMySetup from '../components/game/VerifyMySetup'
 
 const Game = () => {
     const { id } = useParams();
@@ -58,6 +59,8 @@ const Game = () => {
                         ))}
                     </div>
                     <GameToolBar game={game} />
+                                    <VerifyMySetup />
+
                 </div>
             </div>
             <div className='flex justify-center m-[25px]'>
@@ -71,9 +74,12 @@ const Game = () => {
                 </button>
             </div>
 
-            <div className='w-1/3'>
+            <div className='grid grid-cols-2'>
                 <GameAvis gameId={game.id} />
+            </div>
 
+
+            <div>
             </div>
 
         </div>

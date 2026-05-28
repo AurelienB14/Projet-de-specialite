@@ -6,6 +6,7 @@ import api from '../../api/api';
 import { Gamepad2, User, SquareCheck } from 'lucide-react';
 import WhiteDivider from '../ui/WhiteDivider';
 
+
 export default function VerifyMySetup() {
 
     const { id } = useParams();
@@ -48,7 +49,7 @@ export default function VerifyMySetup() {
                             <SquareCheck size={24} className='text-primary' />
 
                             <div className='flex flex-col text-left'>
-                                <h1>Tu peux faire tourner ce jeux ! </h1>
+                                <h2 className='text-bold'>Tu peux faire tourner ce jeux ! </h2>
                                 <p className='text-text-muted '>Ta configuration est totalement ok avec les exigences de ce jeu</p>
                             </div>
 
