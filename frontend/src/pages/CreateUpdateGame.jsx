@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getCurrentUserId, getCurrentUser } from '../api/auth';
 
 const CATEGORIES = [
     'Action', 'Aventure', 'Battle Royale', 'Compétitif', 'Course',
@@ -17,6 +18,7 @@ const PLATEFORMES = [
 const CreateUpdateGame = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const currentUserId = getCurrentUserId();
 
     const [nom, setNom] = useState('');
     const [description, setDescription] = useState('');
@@ -32,11 +34,18 @@ const CreateUpdateGame = () => {
     const [lienback, setLienback] = useState('');
     const [imagePreview, setImagePreview] = useState('');
 
+    const currentUser = getCurrentUser();
+    const isAdmin = currentUser?.roles?.includes('ROLE_ADMIN');
+
     useEffect(() => {
         const gameId = id ?? '0';
         axios.get(`http://localhost:8000/api/game/createupdate/${gameId}`)
             .then(res => {
                 const data = res.data;
+                if (id && data.jeu.userid && data.jeu.userid !== currentUserId && !isAdmin) {
+                    navigate('/games');
+                    return;
+                }
                 setBtn(data.infos.btn);
                 setLienback(data.infos.lienback);
                 setNom(data.jeu.nom);

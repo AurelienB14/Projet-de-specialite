@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\GameFormType;
 
-
+use App\Repository\UserRepository;
 use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,8 @@ class GameControllerApi extends AbstractController
             $data[] = [
                 'id' => $game->getId(),
                 'nom' => $game->getNom(),
+                'userid' => $game->getUserId()?->getIdUser(),
+                'pseudo' => $game->getUserId()?->getPseudo(),
                 'description' => $game->getDescription(),
                 'age' => $game->getAge(),
                 'date' => $game->getDate(),
@@ -49,6 +52,8 @@ class GameControllerApi extends AbstractController
         $data = [
             'id'=>$game->getId(),
             'nom'=>$game->getNom(),
+            'userid' => $game->getUserId()?->getIdUser(),
+            'pseudo' => $game->getUserId()?->getPseudo(),
             'description'=>$game->getDescription(),
             'age'=>$game->getAge(),
             'date'=>$game->getDate(),
@@ -87,6 +92,7 @@ class GameControllerApi extends AbstractController
             ],
             "jeu" => [
                 "nom" => "",
+                "userid" => "",
                 "description" => "",
                 "date" => null,
                 "age" => null,
@@ -98,13 +104,19 @@ class GameControllerApi extends AbstractController
             ]
         ];
 
-        if ($id && $id>0) {
+        if ($id && $id > 0) {
             $jeu = $jeuRepository->find($id);
+            
+            $user = $this->getUser();
+            if ($user && $jeu->getUserId() !== $user && !in_array('ROLE_ADMIN', $user->getRoles())) {
+                return $this->json(['error' => 'Non autorisé'], 403);
+            }
             $data["infos"]["lien"] = "/game/createupdatejeu/$id";
             $data["infos"]["btn"] = "Modifier";
             $data["infos"]["lienback"] = "/game/$id";
 
             $data["jeu"]["nom"] = $jeu->getNom();
+            $data["jeu"]["userid"] = $jeu->getUserId()?->getIdUser();
             $data["jeu"]["description"] = $jeu->getDescription();
             $data["jeu"]["date"] = $jeu->getDate();
             $data["jeu"]["age"] = $jeu->getAge();
@@ -114,6 +126,11 @@ class GameControllerApi extends AbstractController
             $data["jeu"]["plateformes"] = $jeu ->getPlateformes();
         } else {
             $jeu = new Game();
+            if ($this->getUser()) {
+                $jeu->setUserId($this->getUser());
+            } else {
+                return $this->json(['error' => 'Non connecté à un compte'], 403);
+            }
         }
 
         $verif = false;
@@ -203,10 +220,14 @@ class GameControllerApi extends AbstractController
     {
         $jeu = $jeuRepository->find($id);
 
-        if ($jeu) {
-            $manager->remove($jeu);
-            $manager->flush();
+        $user = $this->getUser();
+        
+        if (!($user && in_array('ROLE_ADMIN', $user->getRoles())) && !($jeu->getUserId() === $user)) {
+            return $this->json(['error' => 'Non autorisé'], 403);
         }
+
+        $manager->remove($jeu);
+        $manager->flush();
 
         return $this->json(['success' => true]);
     }
