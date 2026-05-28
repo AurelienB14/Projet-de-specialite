@@ -74,8 +74,8 @@ export default function MyCollection() {
             </div>
 
             {/* Barre de recherche */}
-            <div className="relative">
-                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <div className="flex items-center gap-2">
+                <Search size={16} className="text-text-muted" />
                 <input
                     type="text"
                     placeholder="Rechercher un jeu, une catégorie..."
