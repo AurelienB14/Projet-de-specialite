@@ -35,7 +35,7 @@ export default function GamePlateform() {
                 <MonitorSmartphone size={18} className='text-primary' /> Plateformes
             </h3>
             <div className='card'>
-                <div className='w-full flex flex-row gap-3 flex-wrap'>
+                <div className='w-full flex flex-row  flex-wrap'>
                     {game.plateformes && game.plateformes.map(plateforme => (
                         <p className='card-outline w-fit' key={plateforme}>{plateforme}</p>
                     ))}
