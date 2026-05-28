@@ -23,7 +23,9 @@ class GameControllerApi extends AbstractController
     {
         $games = $gameRepository->findAll();
         $data = [];
+        
         foreach ($games as $game) {
+
             $data[] = [
                 'id' => $game->getId(),
                 'nom' => $game->getNom(),
@@ -33,6 +35,7 @@ class GameControllerApi extends AbstractController
                 'ventes' => $game->getVentes(),
                 'categories' => $game->getCategories(),
                 'plateformes' => $game->getPlateformes(),
+                'note' => $game->getNote(),
                 'image' => $game->getImage()
             ];
         }
@@ -50,12 +53,13 @@ class GameControllerApi extends AbstractController
             'age'=>$game->getAge(),
             'date'=>$game->getDate(),
             'ventes'=>$game->getVentes(),
-            'image'=>$game->getImage(),
+            'note'=>$game->getNote(),
             'plateformes'=>$game->getPlateformes(),
             'categories'=>$game->getCategories(),
             'cpu_min'=>$game->getCpuMin(),
             'gpu_min'=>$game->getGpuMin(),
             'ram_min'=>$game->getRamMin(),
+            'image'=>$game->getImage(),
         ];
 
         return $this->json($data);
@@ -88,6 +92,7 @@ class GameControllerApi extends AbstractController
                 "age" => null,
                 "ventes" => null,
                 "image" => "",
+                "note" => "",
                 "categories" => [],
                 "plateformes" => []
             ]
