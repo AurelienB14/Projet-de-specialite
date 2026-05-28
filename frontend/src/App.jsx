@@ -14,6 +14,9 @@ import Games from './pages/Games';
 import Game from './pages/Game';
 import CreateUpdateGame from './pages/CreateUpdateGame';
 import VerifyMySetup from './components/game/VerifyMySetup';
+import Article from './pages/Article';
+import Articles from './pages/Articles';
+import CreateArticle from './pages/CreateArticle';
 
 export default function App() {
     return (
@@ -34,7 +37,10 @@ export default function App() {
                     <Route path="/game/verify-setup/:id" element={<VerifyMySetup />} />
 
                     <Route path="/profile/collection" element={<MyCollection />} />
+                    <Route path="/articles/:id" element={<Article />} />
+                    <Route path="/articles" element={<Articles />} />
 
+                    <Route path="/articles/create" element={<CreateArticle />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

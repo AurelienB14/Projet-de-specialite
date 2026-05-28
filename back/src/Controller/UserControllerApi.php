@@ -17,7 +17,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[Route('/api')]
 final class UserControllerApi extends AbstractController
 {
-    // ← méthode privée réutilisable
     private function serializeUser(User $user): array
     {
         return [
