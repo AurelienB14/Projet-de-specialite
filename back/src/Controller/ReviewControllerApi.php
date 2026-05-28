@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
 use App\Entity\Review;
 use App\Repository\ReviewRepository;
 
@@ -41,6 +42,18 @@ final class ReviewControllerApi extends AbstractController
         ];
     }
 
+    private function reCalculGameNote(Game $game, EntityManagerInterface $em): void 
+    {
+        $reviews = $game->getReviews();
+        $total = count($reviews);
+        $moyenne = $total > 0
+            ? round(array_sum(array_map(fn($r) => $r->getNote(), $reviews->toArray())) / $total, 1)
+            : null;
+
+        $game->setNote($moyenne);
+        $em->flush();
+    }
+
     #[Route('/users/{id_user}/reviews', name: 'api_user_reviews', methods: ['GET'])]
     public function index(int $id_user, ReviewRepository $repo): JsonResponse
     {
@@ -72,7 +85,7 @@ final class ReviewControllerApi extends AbstractController
 
         $em->persist($userReview);
         $em->flush();
-
+        $this->reCalculGameNote($game, $em);
         return $this->json($this->serialize($userReview), 201);
     }
 
@@ -88,6 +101,7 @@ final class ReviewControllerApi extends AbstractController
         $userReview->setNote($data['note'] ?? $userReview->getNote());
 
         $em->flush();
+        $this->reCalculGameNote($userReview->getGame(), $em);
         return $this->json($this->serialize($userReview));
     }
 
@@ -101,9 +115,10 @@ final class ReviewControllerApi extends AbstractController
                 ['error' => 'Not found'],
                 404
             );
-
+        $game = $userReview->getGame();
         $em->remove($userReview);
         $em->flush();
+        $this->reCalculGameNote($game, $em);
         return $this->json(['message' => 'avis retiré']);
     }
     #[Route('/games/{id}/reviews', name: 'api_game_reviews', methods: ['GET'])]
