@@ -1,6 +1,6 @@
 import Affiche from '../components/home/Affiche';
 import Populaires from '../components/home/Populaires';
-import Articles from '../pages/Articles';
+import ArticlesVedettes from '../components/home/ArticlesVedettes';
 
 export default function Home() {
     return (
@@ -15,9 +15,9 @@ export default function Home() {
 
                 </div>
             </div>
-            <div className='flex flex-col'>
+            <div className='flex flex-col gap-1'>
             <h2>Nos derniers articles</h2>
-            <Articles />
+            <ArticlesVedettes />
 
             </div>
 

@@ -23,17 +23,19 @@ const Articles = () => {
         if (!isAuthenticated()) return;
         api.get('/me')
             .then(res => setUser(res.data))
-            .catch(() => {});
+            .catch(() => { });
     }, []);
 
     return (
-        <div>
+        <div className='flex flex-col gap-4'>
+            <h1 className='text-center'> Toute l'actualité du jeux vidéo</h1>
             {isAdmin && (
                 <a href='/articles/create'>
                     <CirclePlus />
                 </a>
             )}
             <div className='grid grid-cols-4 gap-8'>
+
                 {articles.map(article => (
                     <div
                         className='card-img cursor-pointer'
@@ -47,6 +49,9 @@ const Articles = () => {
                             ))}
                         </div>
                         <h3 className='px-4'>{article.title}</h3>
+                        <p className='text-text-muted text-sm line-clamp-2 px-4 my-2'>
+                            {article.content?.replace(/[#*>`-]/g, '').slice(0, 150)}...
+                        </p>
                     </div>
                 ))}
             </div>

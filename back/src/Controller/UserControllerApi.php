@@ -82,6 +82,10 @@ final class UserControllerApi extends AbstractController
             return $this->json(['error' => 'Cet email est déjà utilisé'], 409);
         }
 
+        if ($repo->findOneBy(['pseudo' => $pseudo])) {
+            return $this->json(['error' => 'Ce pseudo est déjà utilisé'], 409);
+        }
+
         $user = new User();
         $user->setEmail($email);
         $user->setPseudo($pseudo);

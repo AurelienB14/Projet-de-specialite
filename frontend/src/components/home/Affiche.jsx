@@ -11,7 +11,7 @@ export default function Affiche() {
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
-        Promise.all([1,2,3,4].map(id => getGame(id)))
+        Promise.all([3,4,5,6].map(id => getGame(id)))
             .then(results => setGames(results.map(res => res.data)))
 
     }, []);

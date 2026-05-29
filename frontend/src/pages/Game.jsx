@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GameAvis from '../components/game/GameAvis';
 import GameToolBar from '../components/game/GameToolBar';
 import VerifyMySetup from '../components/game/VerifyMySetup'
 import Button from '../components/ui/Button';
 import VerticalDivider from '../components/ui/VerticalDivider';
 import GamePlateform from '../components/game/GamePlatform';
+import { isAuthenticated } from '../api/auth';
+import api from '../api/api';
 
 const Game = () => {
     const { id } = useParams();
@@ -14,13 +16,22 @@ const Game = () => {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [user, setUser] = useState(null);
+
+    const isAdmin = user?.roles?.includes('ROLE_ADMIN');
+
     const handleDelete = () => {
         if (confirm('Supprimer ce jeu ?')) {
             axios.delete(`http://localhost:8000/api/game/delete/${game.id}`)
                 .then(() => navigate('/games'));
         }
     }
-
+    useEffect(() => {
+        if (!isAuthenticated()) return;
+        api.get('/me')
+            .then(res => setUser(res.data))
+            .catch(() => { });
+    }, []);
     useEffect(() => {
         axios.get(`http://localhost:8000/api/game/${id}`)
             .then(res => {
@@ -106,7 +117,7 @@ const Game = () => {
                     </div>
 
                     <div className='flex flex-col gap-8'>
-                                                <GamePlateform />
+                        <GamePlateform />
 
                         <VerifyMySetup />
 
@@ -114,16 +125,20 @@ const Game = () => {
 
                 </div>
             </div>
-            <div className='flex justify-center m-[25px]'>
-                <Link to={`/createupdategame/${game.id}`} className='w-[100px] h-[40px] border-[2px] rounded-lg border-black bg-blue-500 cursor-pointer'>
-                    <button className='cursor-pointer'>Modifier</button>
-                </Link>
-                <button
-                    onClick={handleDelete}
-                    className='w-[100px] h-[40px] border-[2px] rounded-lg border-black bg-red-500 cursor-pointer text-white'>
-                    Supprimer
-                </button>
-            </div>
+
+            {isAdmin && (
+                <div className='flex justify-center gap-4'>
+                    <Button href={`/createupdategame/${game.id}`}>
+                        Modifier
+                    </Button>
+                    <Button
+                        onClick={handleDelete}
+                        variant='danger'>
+                        Supprimer
+                    </Button>
+                </div>
+            )}
+
 
             <div className='grid grid-cols-2'>
             </div>

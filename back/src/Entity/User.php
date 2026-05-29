@@ -158,7 +158,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSetup(? Setup $setup): void {
         $this->setup = $setup;
     }
-    public function setDescription(string $description): void {
+    public function setDescription(?string $description): void {
         $this->description = $description;
     }
 

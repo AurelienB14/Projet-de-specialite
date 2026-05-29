@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import api from '../api/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCurrentUserId, getCurrentUser } from '../api/auth';
+import { MoveLeft } from 'lucide-react';
+import Button from '../components/ui/Button';
 
 const CATEGORIES = [
     'Action', 'Aventure', 'Battle Royale', 'Compétitif', 'Course',
@@ -70,7 +72,6 @@ const CreateUpdateGame = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const formData = new FormData();
         formData.append('nom', nom);
         formData.append('description', description);
@@ -100,37 +101,61 @@ const CreateUpdateGame = () => {
     if (loading) return <p>Chargement...</p>;
 
     return (
-        <div className="flex flex-col items-center gap-4 p-8">
-            <a href={lienback} className='flex text-[40px]'>◄</a>
-            <h1 className="text-2xl font-bold">{btn} un jeu</h1>
-            <div className="flex flex-col gap-3 w-[400px]">
-                <div>
-                    <input className="border w-full p-2" placeholder="Nom" value={nom} onChange={e => setNom(e.target.value)} />
-                    {errors.nom && <p className="text-red-500 text-sm">{errors.nom}</p>}
+        <div className='w-full max-w-2xl mx-auto py-8 flex flex-col gap-6'>
+
+            <a href={lienback} className='flex gap-2 text-text-muted items-center'>
+                <MoveLeft size={18} /> Retour
+            </a>
+
+            <h1 className='font-bold'>{btn} un jeu</h1>
+
+            <div className='flex flex-col gap-4'>
+
+                <div className='flex flex-col gap-2'>
+                    <span className='text-text-muted text-sm'>Nom</span>
+                    <input className='input w-full' placeholder='Nom' value={nom} onChange={e => setNom(e.target.value)} />
+                    {errors.nom && <p className='text-danger text-sm'>{errors.nom}</p>}
                 </div>
-                <div>
-                    <textarea className="border w-full p-2" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
-                    {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+
+                <div className='flex flex-col gap-2'>
+                    <span className='text-text-muted text-sm'>Description</span>
+                    <textarea className='input w-full' rows={4} placeholder='Description' value={description} onChange={e => setDescription(e.target.value)} />
+                    {errors.description && <p className='text-danger text-sm'>{errors.description}</p>}
                 </div>
-                <div>
-                    <input className="border w-full p-2" placeholder="Date de sortie" type="number" value={date} onChange={e => setDate(e.target.value)} />
-                    {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+
+                <div className='flex gap-4'>
+                    <div className='flex flex-col gap-2 w-1/3'>
+                        <span className='text-text-muted text-sm'>Date de sortie</span>
+                        <input className='input w-full' placeholder='Année' type='number' value={date} onChange={e => setDate(e.target.value)} />
+                        {errors.date && <p className='text-danger text-sm'>{errors.date}</p>}
+                    </div>
+                    <div className='flex flex-col gap-2 w-1/3'>
+                        <span className='text-text-muted text-sm'>Âge minimum</span>
+                        <input className='input w-full' placeholder='Âge' type='number' value={age} onChange={e => setAge(e.target.value)} />
+                        {errors.age && <p className='text-danger text-sm'>{errors.age}</p>}
+                    </div>
+                    <div className='flex flex-col gap-2 w-1/3'>
+                        <span className='text-text-muted text-sm'>Nombre de ventes</span>
+                        <input className='input w-full' placeholder='Ventes' type='number' value={ventes} onChange={e => setVentes(e.target.value)} />
+                        {errors.ventes && <p className='text-danger text-sm'>{errors.ventes}</p>}
+                    </div>
                 </div>
-                <div>
-                    <input className="border w-full p-2" placeholder="Âge minimum" type="number" value={age} onChange={e => setAge(e.target.value)} />
-                    {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
-                </div>
-                <div>
-                    <input className="border w-full p-2" placeholder="Nombre de ventes" type="number" value={ventes} onChange={e => setVentes(e.target.value)} />
-                    {errors.ventes && <p className="text-red-500 text-sm">{errors.ventes}</p>}
-                </div>
-                <div>
-                    <h4 className="font-bold mb-1">Catégories :</h4>
-                    <div className="flex flex-wrap gap-2">
+
+                <div className='flex flex-col gap-2'>
+                    <span className='text-text-muted text-sm'>Catégories</span>
+                    <div className='flex flex-wrap gap-2'>
                         {CATEGORIES.map(cat => (
-                            <label key={cat} className="flex items-center gap-1 cursor-pointer">
+                            <label
+                                key={cat}
+                                className={`px-3 py-1 rounded-full text-sm cursor-pointer border transition-all ${
+                                    categories.includes(cat)
+                                        ? 'border-primary text-primary'
+                                        : 'border-surface-alt text-text-muted'
+                                }`}
+                            >
                                 <input
-                                    type="checkbox"
+                                    type='checkbox'
+                                    className='hidden'
                                     checked={categories.includes(cat)}
                                     onChange={() => handleCheckbox(cat, categories, setCategories)}
                                 />
@@ -138,43 +163,54 @@ const CreateUpdateGame = () => {
                             </label>
                         ))}
                     </div>
-                    {errors.categories && <p className="text-red-500 text-sm">{errors.categories}</p>}
                 </div>
-                <div>
-                    <h4 className="font-bold mb-1">Plateformes :</h4>
-                    <div className="flex flex-wrap gap-2">
+
+                <div className='flex flex-col gap-2'>
+                    <span className='text-text-muted text-sm'>Plateformes</span>
+                    <div className='flex flex-wrap gap-2'>
                         {PLATEFORMES.map(plat => (
-                            <label key={plat} className="flex items-center gap-1 cursor-pointer">
+                            <label
+                                key={plat}
+                                className={`px-3 py-1 rounded-full text-sm cursor-pointer border transition-all ${
+                                    plateformes.includes(plat)
+                                        ? 'border-primary text-primary'
+                                        : 'border-surface-alt text-text-muted'
+                                }`}
+                            >
                                 <input
-                                    type="checkbox"
-                                    checked={plateformes.includes(plat)}
+                                    type='checkbox'
+                                    className='hidden'
                                     onChange={() => handleCheckbox(plat, plateformes, setPlateformes)}
+                                    checked={plateformes.includes(plat)}
                                 />
                                 {plat}
                             </label>
                         ))}
                     </div>
-                    {errors.plateformes && <p className="text-red-500 text-sm">{errors.plateformes}</p>}
                 </div>
-                <div>
-                    <input 
-                        className="border w-full p-2" 
-                        type="file" 
-                        accept=".jpg,.jpeg,.png" 
+
+                <div className='flex flex-col gap-2'>
+                    <span className='text-text-muted text-sm'>Image</span>
+                    <input
+                        className='input w-full'
+                        type='file'
+                        accept='.jpg,.jpeg,.png'
                         onChange={e => {
                             const file = e.target.files?.[0] ?? null;
                             setImage(file);
-                            if (file) {
-                                setImagePreview(URL.createObjectURL(file));
-                            }
-                        }} 
+                            if (file) setImagePreview(URL.createObjectURL(file));
+                        }}
                     />
-                    {errors.image && <p className="text-red-500 text-sm">{errors.image}</p>}
-                    {imagePreview && <img src={imagePreview} alt="preview" className="w-full h-[200px] object-cover mt-2" />}
+                    {errors.image && <p className='text-danger text-sm'>{errors.image}</p>}
+                    {imagePreview && (
+                        <img src={imagePreview} alt='preview' className='w-full h-48 object-cover rounded-lg mt-2' />
+                    )}
                 </div>
-                <button onClick={handleSubmit} className="bg-black text-white p-2 cursor-pointer">
+
+                <Button onClick={handleSubmit} type='submit'>
                     {btn}
-                </button>
+                </Button>
+
             </div>
         </div>
     );

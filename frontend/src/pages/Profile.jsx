@@ -71,13 +71,17 @@ export default function Profile() {
                                     <Camera />
                                 </div>
                             )}
-                            <div>
+                            <div className='flex flex-col gap-1'>
 
                                 <h1>{user.prenom}</h1>
                                 <p className='text-text-muted'>
                                     @{user.pseudo}
                                 </p>
-
+                                {isAdmin && (
+                                    <Button variant='outlineSecondary' size='sm' >
+                                        Administrateur
+                                    </Button>
+                                )}
                                 {user.description ? (
                                     <p className='text-text-muted'>
                                         {user.description}
@@ -89,7 +93,7 @@ export default function Profile() {
                                 )}
 
 
-                          
+
                             </div>
 
 
@@ -108,15 +112,7 @@ export default function Profile() {
                 </div>
 
 
-                {isAdmin && (
-                    <span style={{
-                        padding: '4px 12px', fontSize: '0.75rem', borderRadius: '999px',
-                        background: 'rgba(245,158,11,0.2)', color: '#fbbf24',
-                        border: '1px solid rgba(245,158,11,0.3)'
-                    }}>
-                        Administrateur
-                    </span>
-                )}
+
 
 
             </div>

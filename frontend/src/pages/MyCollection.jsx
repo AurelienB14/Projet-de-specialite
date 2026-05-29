@@ -61,7 +61,6 @@ export default function MyCollection() {
     };
 
     const handleReviewSuccess = (gameId) => {
-        // Recharge les avis après ajout
         setReviews(r => ({ ...r, [gameId]: undefined }));
         loadReviews(gameId);
     };
@@ -83,33 +82,33 @@ export default function MyCollection() {
     return (
         <div className="flex flex-col gap-6">
 
-            {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold">Ma collection</h1>
+                    <h1 className="font-bold">Ma collection</h1>
                     <p className="text-text-muted text-sm mt-1">{userGames.length} jeu{userGames.length > 1 ? 'x' : ''} dans ta bibliothèque</p>
                 </div>
             </div>
 
-            {/* Barre de recherche */}
             <div className="flex items-center gap-2 flex-wrap">
-                <Search size={16} className="text-text-muted" />
-                <input
-                    type="text"
-                    placeholder="Rechercher un jeu, une catégorie..."
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    className="input w-full max-w-md"
-                />
-                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedCategorie} onChange={e => setSelectedCategorie(e.target.value)}>
+                <div className='flex items-center gap-2 input max-w-md'>
+                    <Search size={16} className="text-text-muted" />
+                    <input
+                        type="text"
+                        placeholder="Rechercher un jeu..."
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        className="bg-transparent outline-none w-full"
+                    />
+                </div>
+                <select className='input' value={selectedCategorie} onChange={e => setSelectedCategorie(e.target.value)}>
                     <option value=''>Toutes les catégories</option>
                     {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                 </select>
-                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedPlateforme} onChange={e => setSelectedPlateforme(e.target.value)}>
+                <select className='input' value={selectedPlateforme} onChange={e => setSelectedPlateforme(e.target.value)}>
                     <option value=''>Toutes les plateformes</option>
                     {PLATEFORMES.map(plat => <option key={plat} value={plat}>{plat}</option>)}
                 </select>
-                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedStatus} onChange={e => setSelectedStatus(e.target.value)}>
+                <select className='input' value={selectedStatus} onChange={e => setSelectedStatus(e.target.value)}>
                     <option value=''>Tous les statuts</option>
                     <option value='pascommence'>Pas commencé</option>
                     <option value='wishlist'>Wish list</option>
@@ -118,19 +117,17 @@ export default function MyCollection() {
                 </select>
             </div>
 
-            {/* Résultats vides */}
             {gamesFiltres.length === 0 && (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
                     <p className="text-text-muted">Aucun jeu trouvé</p>
                     {search && (
-                        <button className="text-sm text-white underline" onClick={() => setSearch("")}>
+                        <button className="text-sm text-primary underline" onClick={() => setSearch("")}>
                             Effacer la recherche
                         </button>
                     )}
                 </div>
             )}
 
-            {/* Grille de jeux */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {gamesFiltres.map(ug => {
                     const gameReviews = reviews[ug.game.id] || [];
@@ -140,9 +137,8 @@ export default function MyCollection() {
                     const isExpanded = expandedGame === ug.game.id;
 
                     return (
-                        <div key={ug.id} className="card-img flex flex-col overflow-hidden rounded-lg border border-text-muted/20">
+                        <div key={ug.id} className="card-img flex flex-col overflow-hidden">
 
-                            {/* Image */}
                             <div className="relative">
                                 <img
                                     src={ug.game.image}
@@ -151,16 +147,15 @@ export default function MyCollection() {
                                 />
                                 {avgNote && (
                                     <div className="absolute top-2 right-2 bg-black/80 rounded-md px-2 py-1 flex items-center gap-1">
-                                        <Star size={12} className="text-yellow-400 fill-yellow-400" />
+                                        <Star size={12} className="text-primary fill-primary" />
                                         <span className="text-xs font-bold text-white">{avgNote}</span>
                                     </div>
                                 )}
                             </div>
 
-                            {/* Infos */}
                             <div className="p-4 flex flex-col gap-3 flex-1">
                                 <div>
-                                    <span className="font-bold text-base">{ug.game.nom}</span>
+                                    <span className="font-bold">{ug.game.nom}</span>
                                     {ug.game.categories?.length > 0 && (
                                         <p className="text-sm text-text-muted mt-0.5">
                                             {ug.game.categories.join(' / ')}
@@ -168,51 +163,47 @@ export default function MyCollection() {
                                     )}
                                 </div>
 
-                                {/* Actions */}
-                                <div className="flex gap-2 mt-auto">
-                                    <a variant="outlineSecondary" href={`/game/${ug.game.id}`}>Voir le jeu</a>
-                                    <button
+                                <div className="flex gap-2 mt-auto flex-wrap items-center">
+                                    <Button variant='ghost' size='sm' href={`/game/${ug.game.id}`}>Voir le jeu</Button>
+                                    <Button
+                                        variant='ghost'
+                                        size='sm'
                                         onClick={() => setReviewGameId(ug.game.id)}
-                                        className="flex items-center gap-1.5 text-sm text-text-muted hover:text-white border border-text-muted/30 hover:border-white/50 rounded px-3 py-1 transition-colors"
                                     >
                                         <Star size={13} />
                                         Avis
-                                    </button>
+                                    </Button>
                                     <select
-                                    className="border p-2 [&>option]:text-white [&>option]:bg-black"
-                                    value={ug.status ?? 'pascommence'}
-                                    onChange={e => {
-                                        const newStatus = e.target.value;
-                                        api.put(`/users/${userId}/games/${ug.id}`, { status: newStatus })
-                                            .then(() => {
-                                                setUserGames(prev => prev.map(g => 
-                                                    g.id === ug.id ? { ...g, status: newStatus } : g
-                                                ));
-                                            });
-                                    }}
+                                        className='input text-sm'
+                                        value={ug.status ?? 'pascommence'}
+                                        onChange={e => {
+                                            const newStatus = e.target.value;
+                                            api.put(`/users/${userId}/games/${ug.id}`, { status: newStatus })
+                                                .then(() => {
+                                                    setUserGames(prev => prev.map(g =>
+                                                        g.id === ug.id ? { ...g, status: newStatus } : g
+                                                    ));
+                                                });
+                                        }}
                                     >
                                         <option value="pascommence">Pas commencé</option>
-                                        <option value="whishlist">Whish list</option>
+                                        <option value="wishlist">Wish list</option>
                                         <option value="encours">En cours</option>
                                         <option value="termine">Terminé</option>
                                     </select>
                                 </div>
 
-                                {/* Toggle avis */}
                                 <button
                                     onClick={() => toggleExpand(ug.game.id)}
-                                    className="flex items-center justify-between text-sm text-text-muted hover:text-white transition-colors pt-2 border-t border-text-muted/20"
+                                    className="flex items-center justify-between text-sm text-text-muted hover:text-white transition-colors pt-2 border-t border-surface-alt"
                                 >
                                     <span className="flex items-center gap-1.5">
                                         <MessageSquare size={13} />
-                                        {gameReviews.length > 0
-                                            ? `${gameReviews.length} avis`
-                                            : "Voir les avis"}
+                                        {gameReviews.length > 0 ? `${gameReviews.length} avis` : "Voir les avis"}
                                     </span>
                                     {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                                 </button>
 
-                                {/* Liste des avis */}
                                 {isExpanded && (
                                     <div className="flex flex-col gap-3 mt-1">
                                         {loadingReviews[ug.game.id] && (
@@ -222,10 +213,10 @@ export default function MyCollection() {
                                             <p className="text-xs text-text-muted">Aucun avis pour ce jeu.</p>
                                         )}
                                         {gameReviews.map(review => (
-                                            <div key={review.id} className="bg-background rounded-md p-3 flex flex-col gap-1">
+                                            <div key={review.id} className="card flex flex-col gap-1">
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-xs font-semibold">
-                                                        {review.user?.pseudo || review.user?.username || "Utilisateur"}
+                                                    <span className="text-xs font-bold">
+                                                        {review.user?.pseudo || "Utilisateur"}
                                                     </span>
                                                     <Note note={review.note} max={5} />
                                                 </div>
@@ -244,7 +235,6 @@ export default function MyCollection() {
                 })}
             </div>
 
-            {/* Modal AddReview */}
             {reviewGameId && (
                 <AddReview
                     gameId={reviewGameId}

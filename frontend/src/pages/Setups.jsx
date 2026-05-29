@@ -49,15 +49,18 @@ export default function Setup() {
         <div className='w-full max-w-5xl mx-auto py-8 flex flex-col gap-8'>
 
             <div className='flex flex-col gap-2'>
-                <div className='flex items-center gap-3'>
-                    <Cpu size={24} className='text-primary' />
+                <div className='flex flex-col items-center text-center gap-3'>
                     <h1 className='font-bold'>Vérifier mon setup</h1>
+                    <span>Tu veux savoir si ton PC peut faire tourner un jeu ? 🖥️ <br />
+                        Cette page te permet de vérifier rapidement la compatibilité de ton setup avec les jeux de la collection : performances, configuration minimale/recommandée et composants détectés.
+                        <br />
+                        Pratique pour voir ce qui tourne correctement… ou ce qu’il faudra upgrade 👀</span>
                 </div>
-                <p className='text-text-muted'>Comparez votre configuration avec les exigences de vos jeux.</p>
-            </div>
+                <WhiteDivider />            
+                </div>
 
             <div className='flex gap-8'>
-                {/* Mon setup */}
+
                 <div className='w-1/2 flex flex-col gap-4'>
                     <div className='flex justify-between items-center'>
                         <div className='flex items-center gap-2'>
@@ -129,7 +132,7 @@ export default function Setup() {
                         </div>
                     )}
 
-                    {/* Résultat global */}
+
                     {result && (
                         <div className={result.can_run ? 'card-validate' : 'card-danger'}>
                             <div className='flex items-center gap-4'>
@@ -148,7 +151,7 @@ export default function Setup() {
                     )}
                 </div>
 
-                {/* Recherche jeux */}
+
                 <div className='w-1/2 flex flex-col gap-4'>
                     <div className='flex items-center gap-3 card'>
                         <Search size={18} className='text-text-muted' />
@@ -164,7 +167,10 @@ export default function Setup() {
                         {filteredGames.map(game => (
                             <div
                                 key={game.id}
-                                className={`card flex items-center gap-4 cursor-pointer transition-all ${selectedGame?.id === game.id ? 'border-primary' : 'hover:border-primary'}`}
+                                className={`card flex items-center gap-4 cursor-pointer transition-all ${selectedGame?.id === game.id
+                                    ? 'border-2 border-primary bg-[var(--color-surface)]'
+                                    : 'hover:border-primary'
+                                    }`}
                                 onClick={() => handleSelectGame(game)}
                             >
                                 <div className='flex flex-col'>
@@ -180,6 +186,6 @@ export default function Setup() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
