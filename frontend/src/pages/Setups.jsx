@@ -1,193 +1,185 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { getCurrentUserId } from '../api/auth';
+import api from '../api/api';
+import { Cpu, MemoryStick, HardDrive, Monitor, Pencil, Search, SquareCheck, SquareX } from 'lucide-react';
+import Button from '../components/ui/Button';
+import WhiteDivider from '../components/ui/WhiteDivider';
 
-const API_URL = "http://localhost:8000/api";
-
-async function fetchSetups() {
-    const res = await fetch(`${API_URL}/setups`);
-    if (!res.ok) throw new Error("Erreur chargement");
-    return res.json();
-}
-async function createSetup(data) {
-    const res = await fetch(`${API_URL}/setups`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error("Erreur création");
-    return res.json();
-}
-async function updateSetup(id, data) {
-    const res = await fetch(`${API_URL}/setups/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error("Erreur modification");
-    return res.json();
-}
-async function deleteSetup(id) {
-    const res = await fetch(`${API_URL}/setups/${id}`, { method: "DELETE" });
-    if (!res.ok) throw new Error("Erreur suppression");
-}
-
-const EMPTY_FORM = { processeur: "", memoire: 8, carte_graphique: "", stockage: 256 };
-
-function SetupForm({ initial, onSubmit, onCancel, isEdit }) {
-    const [form, setForm] = useState(initial || EMPTY_FORM);
-    const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
-
-    return (
-        <div style={styles.formWrap}>
-            <button onClick={onCancel} style={styles.backBtn}>← Retour</button>
-            <h2 style={styles.formTitle}>{isEdit ? "Modifier le setup" : "Nouveau setup"}</h2>
-            <div style={styles.formCard}>
-                <div style={styles.formGroup}>
-                    <label style={styles.label}>Processeur</label>
-                    <input
-                        style={styles.input}
-                        placeholder="ex: Intel Core i9-13900K"
-                        value={form.processeur}
-                        onChange={e => set("processeur", e.target.value)}
-                    />
-                </div>
-                <div style={styles.formGroup}>
-                    <label style={styles.label}>Mémoire RAM</label>
-                    <select style={styles.input} value={form.memoire} onChange={e => set("memoire", parseInt(e.target.value))}>
-                        <option value={4}>4 Go</option>
-                        <option value={8}>8 Go</option>
-                        <option value={16}>16 Go</option>
-                        <option value={32}>32 Go</option>
-                    </select>
-                </div>
-                <div style={styles.formGroup}>
-                    <label style={styles.label}>Carte graphique</label>
-                    <input
-                        style={styles.input}
-                        placeholder="ex: RTX 4090"
-                        value={form.carte_graphique}
-                        onChange={e => set("carte_graphique", e.target.value)}
-                    />
-                </div>
-                <div style={styles.formGroup}>
-                    <label style={styles.label}>Stockage</label>
-                    <select style={styles.input} value={form.stockage} onChange={e => set("stockage", parseInt(e.target.value))}>
-                        <option value={128}>128 Go</option>
-                        <option value={256}>256 Go</option>
-                        <option value={512}>512 Go</option>
-                        <option value={1000}>1 To</option>
-                        <option value={2000}>2 To</option>
-                    </select>
-                </div>
-                <div style={styles.formActions}>
-                    <button style={styles.btnPrimary} onClick={() => onSubmit(form)}>
-                        {isEdit ? "Enregistrer" : "Créer"}
-                    </button>
-                    <button style={styles.btnGhost} onClick={onCancel}>Annuler</button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function SetupCard({ setup, onEdit, onDelete }) {
-    const gpu = setup.carte_graphique || setup.carteGraphique || "—";
-    const stockageLabel = setup.stockage >= 1000 ? `${setup.stockage / 1000} To` : `${setup.stockage} Go`;
-    const initial = setup.processeur?.[0]?.toUpperCase() || "S";
-
-    return (
-        <div style={styles.card}>
-            <div style={styles.avatar}>{initial}</div>
-            <div style={styles.cardBody}>
-                <div style={styles.cardName}>{setup.processeur}</div>
-                <div style={styles.cardSub}>{gpu}</div>
-                <div style={styles.cardSub}>{setup.memoire} Go RAM · {stockageLabel}</div>
-            </div>
-            <div style={styles.cardActions}>
-                <button style={styles.btnEdit} onClick={() => onEdit(setup)}>Modifier</button>
-                <button style={styles.btnDelete} onClick={() => onDelete(setup.id)}>Supprimer</button>
-            </div>
-        </div>
-    );
-}
-
-export default function Setups() {
-    const [view, setView] = useState("list");
-    const [setups, setSetups] = useState([]);
+export default function Setup() {
+    const [userSetup, setUserSetup] = useState(null);
+    const [games, setGames] = useState([]);
+    const [search, setSearch] = useState('');
+    const [selectedGame, setSelectedGame] = useState(null);
+    const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [editTarget, setEditTarget] = useState(null);
 
-    const load = async () => {
-        setLoading(true);
-        setError(null);
-        try { setSetups(await fetchSetups()); }
-        catch (e) { setError(e.message); }
-        finally { setLoading(false); }
+    useEffect(() => {
+        const userId = getCurrentUserId();
+        if (!userId) { setLoading(false); return; }
+
+        Promise.all([
+            api.get(`/users/${userId}`),
+            api.get('/games'),
+        ])
+            .then(([userRes, gamesRes]) => {
+                setUserSetup(userRes.data.setup);
+                setGames(gamesRes.data);
+            })
+            .finally(() => setLoading(false));
+    }, []);
+
+    const handleSelectGame = async (game) => {
+        setSelectedGame(game);
+        setResult(null);
+        try {
+            const res = await api.get(`/setups/verify-setup/${game.id}`);
+            setResult(res.data);
+        } catch {
+            setResult(null);
+        }
     };
 
-    useEffect(() => { load(); }, []);
+    const filteredGames = games.filter(g =>
+        g.nom?.toLowerCase().includes(search.toLowerCase())
+    );
 
-    const handleCreate = async (data) => {
-        try { await createSetup(data); await load(); setView("list"); }
-        catch (e) { alert(e.message); }
-    };
-
-    const handleEdit = async (data) => {
-        try { await updateSetup(editTarget.id, data); await load(); setView("list"); setEditTarget(null); }
-        catch (e) { alert(e.message); }
-    };
-
-    const handleDelete = async (id) => {
-        if (!confirm("Supprimer ce setup ?")) return;
-        try { await deleteSetup(id); setSetups(s => s.filter(x => x.id !== id)); }
-        catch (e) { alert(e.message); }
-    };
-
-    if (view === "create") return <SetupForm onSubmit={handleCreate} onCancel={() => setView("list")} isEdit={false} />;
-    if (view === "edit" && editTarget) return <SetupForm initial={editTarget} onSubmit={handleEdit} onCancel={() => { setView("list"); setEditTarget(null); }} isEdit={true} />;
+    if (loading) return null;
 
     return (
-        <div style={styles.page}>
-            <div style={styles.topBar}>
-                <h1 style={styles.pageTitle}>Setups</h1>
-                <button style={styles.btnPrimary} onClick={() => setView("create")}>+ Ajouter</button>
+        <div className='w-full max-w-5xl mx-auto py-8 flex flex-col gap-8'>
+
+            <div className='flex flex-col gap-2'>
+                <div className='flex items-center gap-3'>
+                    <Cpu size={24} className='text-primary' />
+                    <h1 className='font-bold'>Vérifier mon setup</h1>
+                </div>
+                <p className='text-text-muted'>Comparez votre configuration avec les exigences de vos jeux.</p>
             </div>
 
-            {loading && <p style={styles.info}>Chargement...</p>}
-            {error && <p style={{ ...styles.info, color: "#ff4466" }}>{error}</p>}
-            {!loading && !error && setups.length === 0 && <p style={styles.info}>Aucun setup enregistré.</p>}
+            <div className='flex gap-8'>
+                {/* Mon setup */}
+                <div className='w-1/2 flex flex-col gap-4'>
+                    <div className='flex justify-between items-center'>
+                        <div className='flex items-center gap-2'>
+                            <Monitor size={18} className='text-primary' />
+                            <h2 className='font-bold'>Mon setup</h2>
+                        </div>
+                        <Button variant='ghost' size='sm' href='/setup/edit'>
+                            <Pencil size={14} />
+                            Modifier
+                        </Button>
+                    </div>
 
-            <div style={styles.list}>
-                {setups.map(s => (
-                    <SetupCard key={s.id} setup={s} onEdit={setup => { setEditTarget(setup); setView("edit"); }} onDelete={handleDelete} />
-                ))}
+                    {!userSetup ? (
+                        <div className='card flex flex-col items-center gap-4 text-center'>
+                            <Cpu size={32} className='text-text-muted' />
+                            <p className='text-text-muted'>Aucun setup configuré</p>
+                            <Button variant='ghost' href='/login'>Configurer mon setup</Button>
+                        </div>
+                    ) : (
+                        <div className='card flex flex-col gap-3'>
+                            <div className='flex justify-between items-center'>
+                                <div className='flex items-center gap-3'>
+                                    <Cpu size={18} className='text-primary' />
+                                    <div>
+                                        <p className='text-xs text-text-muted uppercase tracking-wide'>Processeur</p>
+                                        <p className={`font-bold ${result ? (result.cpu.ok ? 'text-primary' : 'text-danger') : ''}`}>
+                                            {userSetup.processeur}
+                                        </p>
+                                    </div>
+                                </div>
+                                {result && (result.cpu.ok ? <SquareCheck size={18} className='text-primary' /> : <SquareX size={18} className='text-danger' />)}
+                            </div>
+                            <WhiteDivider />
+                            <div className='flex justify-between items-center'>
+                                <div className='flex items-center gap-3'>
+                                    <Monitor size={18} className='text-primary' />
+                                    <div>
+                                        <p className='text-xs text-text-muted uppercase tracking-wide'>Carte graphique</p>
+                                        <p className={`font-bold ${result ? (result.gpu.ok ? 'text-primary' : 'text-danger') : ''}`}>
+                                            {userSetup.carte_graphique}
+                                        </p>
+                                    </div>
+                                </div>
+                                {result && (result.gpu.ok ? <SquareCheck size={18} className='text-primary' /> : <SquareX size={18} className='text-danger' />)}
+                            </div>
+                            <WhiteDivider />
+                            <div className='flex justify-between items-center'>
+                                <div className='flex items-center gap-3'>
+                                    <MemoryStick size={18} className='text-primary' />
+                                    <div>
+                                        <p className='text-xs text-text-muted uppercase tracking-wide'>Mémoire RAM</p>
+                                        <p className={`font-bold ${result ? (result.ram.ok ? 'text-primary' : 'text-danger') : ''}`}>
+                                            {userSetup.memoire} Go
+                                        </p>
+                                    </div>
+                                </div>
+                                {result && (result.ram.ok ? <SquareCheck size={18} className='text-primary' /> : <SquareX size={18} className='text-danger' />)}
+                            </div>
+                            <WhiteDivider />
+                            <div className='flex justify-between items-center'>
+                                <div className='flex items-center gap-3'>
+                                    <HardDrive size={18} className='text-primary' />
+                                    <div>
+                                        <p className='text-xs text-text-muted uppercase tracking-wide'>Stockage</p>
+                                        <p className='font-bold'>{userSetup.stockage} Go</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Résultat global */}
+                    {result && (
+                        <div className={result.can_run ? 'card-validate' : 'card-danger'}>
+                            <div className='flex items-center gap-4'>
+                                {result.can_run
+                                    ? <SquareCheck size={20} className='text-primary' />
+                                    : <SquareX size={20} className='text-danger' />
+                                }
+                                <span className='font-bold'>
+                                    {result.can_run
+                                        ? `Tu peux faire tourner ${selectedGame.nom} !`
+                                        : `Ton setup est insuffisant pour ${selectedGame.nom}`
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Recherche jeux */}
+                <div className='w-1/2 flex flex-col gap-4'>
+                    <div className='flex items-center gap-3 card'>
+                        <Search size={18} className='text-text-muted' />
+                        <input
+                            className='bg-transparent outline-none w-full'
+                            placeholder='Rechercher un jeu...'
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                        />
+                    </div>
+
+                    <div className='flex flex-col gap-2 max-h-96 overflow-y-auto'>
+                        {filteredGames.map(game => (
+                            <div
+                                key={game.id}
+                                className={`card flex items-center gap-4 cursor-pointer transition-all ${selectedGame?.id === game.id ? 'border-primary' : 'hover:border-primary'}`}
+                                onClick={() => handleSelectGame(game)}
+                            >
+                                <div className='flex flex-col'>
+                                    <span className='font-bold'>{game.nom}</span>
+                                    <div className='flex gap-2'>
+                                        {game.categories?.slice(0, 2).map(cat => (
+                                            <span key={cat} className='text-xs text-text-muted'>{cat}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
-
-const styles = {
-    page: { padding: "2rem", color: "#fff" },
-    topBar: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" },
-    pageTitle: { fontSize: "1.5rem", fontWeight: "700", margin: 0 },
-    list: { display: "flex", flexDirection: "column", gap: "0.75rem" },
-    card: { display: "flex", alignItems: "center", gap: "1rem", background: "#1e1e1e", borderRadius: "12px", padding: "1rem 1.25rem" },
-    avatar: { width: "44px", height: "44px", borderRadius: "50%", background: "#00e5a0", color: "#000", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "700", fontSize: "1.1rem", flexShrink: 0 },
-    cardBody: { flex: 1 },
-    cardName: { fontWeight: "700", fontSize: "1rem", marginBottom: "0.15rem" },
-    cardSub: { fontSize: "0.85rem", color: "#aaa" },
-    cardActions: { display: "flex", gap: "0.5rem", flexShrink: 0 },
-    btnPrimary: { background: "#00e5a0", color: "#000", border: "none", borderRadius: "8px", padding: "0.5rem 1.25rem", fontWeight: "700", cursor: "pointer", fontSize: "0.9rem" },
-    btnGhost: { background: "transparent", color: "#aaa", border: "1px solid #333", borderRadius: "8px", padding: "0.5rem 1.25rem", cursor: "pointer", fontSize: "0.9rem" },
-    btnEdit: { background: "transparent", color: "#00e5a0", border: "1px solid #00e5a0", borderRadius: "8px", padding: "0.35rem 0.9rem", cursor: "pointer", fontSize: "0.82rem", fontWeight: "600" },
-    btnDelete: { background: "transparent", color: "#ff4466", border: "1px solid #ff4466", borderRadius: "8px", padding: "0.35rem 0.9rem", cursor: "pointer", fontSize: "0.82rem", fontWeight: "600" },
-    info: { color: "#aaa", fontSize: "0.9rem", padding: "2rem 0" },
-    formWrap: { padding: "2rem", maxWidth: "500px" },
-    formTitle: { fontSize: "1.4rem", fontWeight: "700", marginBottom: "1.25rem", color: "#fff" },
-    formCard: { background: "#1e1e1e", borderRadius: "12px", padding: "1.5rem" },
-    formGroup: { marginBottom: "1rem" },
-    label: { display: "block", fontSize: "0.8rem", color: "#aaa", marginBottom: "0.4rem", textTransform: "uppercase", letterSpacing: "0.05em" },
-    input: { width: "100%", background: "#2a2a2a", border: "1px solid #333", borderRadius: "8px", padding: "0.6rem 0.9rem", color: "#fff", fontSize: "0.95rem", outline: "none", boxSizing: "border-box" },
-    formActions: { display: "flex", gap: "0.75rem", marginTop: "1.5rem" },
-    backBtn: { background: "none", border: "none", color: "#aaa", cursor: "pointer", fontSize: "0.85rem", marginBottom: "1rem", padding: 0 },
-};
