@@ -46,7 +46,7 @@ const Articles = () => {
                                 <Button variant="ghost" size="sm" key={tag}>{tag}</Button>
                             ))}
                         </div>
-                        <h2 className='px-4'>{article.title}</h2>
+                        <h3 className='px-4'>{article.title}</h3>
                     </div>
                 ))}
             </div>

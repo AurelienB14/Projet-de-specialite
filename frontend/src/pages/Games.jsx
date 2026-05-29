@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
 
 import Note from '../components/ui/Note'
+import AddToLibrary from '../components/game/AddToMyGames';
 
 const CATEGORIES = [
     'Action', 'Aventure', 'Battle Royale', 'Compétitif', 'Course',
@@ -23,6 +24,7 @@ const Games = () => {
     const [search, setSearch] = useState('');
     const [selectedCategorie, setSelectedCategorie] = useState('');
     const [selectedPlateforme, setSelectedPlateforme] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/games')
@@ -52,45 +54,64 @@ const Games = () => {
             </div>
             <div className='flex gap-4 justify-center m-[25px] flex-wrap'>
                 <input
-                    className='border p-2'
+                    className='input'
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                 />
-                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedCategorie} onChange={e => setSelectedCategorie(e.target.value)}>
+                <select className='input [&>option]:text-white [&>option]:bg-black' value={selectedCategorie} onChange={e => setSelectedCategorie(e.target.value)}>
                     <option value=''>Toutes les catégories</option>
                     {CATEGORIES.map(cat => (
                         <option key={cat} value={cat}>{cat}</option>
                     ))}
                 </select>
-                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedPlateforme} onChange={e => setSelectedPlateforme(e.target.value)}>
+                <select className='input [&>option]:text-white [&>option]:bg-black' value={selectedPlateforme} onChange={e => setSelectedPlateforme(e.target.value)}>
                     <option value=''>Toutes les plateformes</option>
                     {PLATEFORMES.map(plat => (
                         <option key={plat} value={plat}>{plat}</option>
                     ))}
                 </select>
             </div>
-            <div className="flex flex-row gap-[25px] flex-wrap justify-center w-full">
+            <div className="grid grid-cols-3 gap-[25px] flex-wrap justify-center w-full">
                 {gamesFiltres.map(game => (
-                    <Link to={`/game/${game.id}`} key={game.id}>
-                        <div className="flex flex-col w-[300px] gap-[10px] items-center border-[3px] border-black cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <h2 className="text-center font-bold w-full text-sm leading-tight line-clamp-1">{game.nom}</h2>
-                            <p>Ajouté par {game.pseudo}</p>
-                            {game.note !== null
-                                ? <Note note={game.note}/>
-                                : <p>Pas de note</p>
-                            }
+                    <div
+                        className="card-img hover:scale-105 transition-all duration-200 relative flex flex-col gap-4 cursor-pointer"
+                        onClick={() => navigate(`/game/${game.id}`)}
+                        key={game.id}
+                    >                            <img src={game.image} alt={game.nom} className="w-full h-[200px] object-cover" />
+                        <div
+                            className='absolute top-2 right-2'
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <AddToLibrary gameId={game.id} variant='icon' />
+                        </div>
+
+                        <div className='px-4 py-2'>
+                            <div className='flex flex-row justify-between items-center '>
+
+                                <h2 className="">{game.nom}</h2>
+                                <p className='text-text-muted text-xs'>Ajouté par {game.pseudo}</p>
+
+
+                            </div>
                             <div className='flex flex-row flex-wrap test-center gap-5'>
                                 {game.categories?.map((cat, index) => (
                                     <span className='text-xs text-text-muted' key={index}>{cat}</span>
-                                ))}     
+                                ))}
                             </div>
-                            <img src={game.image} alt={game.nom} className="w-full h-[200px] object-cover" />
-                            <p className='line-clamp-2 text-center'>{game.description}</p>
-                            <p>Date de sortie : {game.date}</p>
-                            <p>Âge minimum : {game.age}</p>
-                            <p>Nombre de ventes : {game.ventes}</p>
+
+                            <div className='flex flex-col gap-2 my-2'>
+                                <p className='line-clamp-2'>{game.description}</p>
+                                {game.note !== null
+                                    ? <Note note={game.note} />
+                                    : <p>Pas de note</p>
+                                }
+
+                            </div>
+
+
                         </div>
-                    </Link>
+
+                    </div>
                 ))}
             </div>
         </div>
