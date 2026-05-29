@@ -5,15 +5,21 @@ import Divider from "../ui/Divider";
 import { ChevronRight } from "lucide-react";
 
 import { Link } from 'react-router-dom'
-
+import axios from 'axios';
 
 export default function Populaires() {
 
     const [games, setGames] = useState([]);
 
     useEffect(() => {
-        Promise.all([5, 6, 7].map(id => getGame(id)))
-            .then(results => setGames(results.map(res => res.data)))
+        axios.get('http://localhost:8000/api/games')
+            .then(res => {
+                const sorted = res.data
+                    .filter(g => g.note !== null && g.nb_favoris > 0)
+                    .sort((a, b) => (b.note * b.nb_favoris) - (a.note * a.nb_favoris))
+                    .slice(0, 5);
+                setGames(sorted);
+            });
     }, []);
 
     return (
@@ -27,7 +33,7 @@ export default function Populaires() {
 
                         <div className="flex flex-col gap-2">
                             <span>{game.nom}</span>
-                            <Note note={5} />
+                            <Note note={game.note} />
                         </div>
                         <div>
                             <Link to={`/game/${game.id}`} key={game.id}>

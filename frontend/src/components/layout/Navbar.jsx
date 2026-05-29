@@ -38,15 +38,23 @@ export default function Navbar() {
 
             <div>
                 <ul style={{ display: 'flex', alignItems: 'center', gap: '32px', listStyle: 'none', margin: 0, padding: 0 }}>
-                    <li className="badge-outline">Ma bibliothèque</li>
                     {auth ? (
-                        <a href="/profile">
-                            <li className="icon-fill"><UserRound /></li>
-                        </a>
+                        <ul style={{ display: 'flex', alignItems: 'center', gap: '32px', listStyle: 'none', margin: 0, padding: 0 }}>
+                            <a href="/profile/collection">
+                                <li className="badge-outline">Ma bibliothèque</li>
+                            </a>
+                            <a href="/profile">
+                                <li className="icon-fill"><UserRound /></li>
+                            </a>
+                        </ul>
                     ) : (
-                        <a href="/login">
-                            <li className="icon-fill"><UserRound /></li>
-                        </a>
+                        
+                        
+                        <ul style={{ display: 'flex', alignItems: 'center', gap: '32px', listStyle: 'none', margin: 0, padding: 0 }}>
+                            <a href="/login">
+                                <li className="badge-outline">Se connecter</li>
+                            </a>
+                        </ul>
                     )}
                 </ul>
             </div>

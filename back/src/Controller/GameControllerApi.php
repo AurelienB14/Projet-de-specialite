@@ -39,6 +39,7 @@ class GameControllerApi extends AbstractController
                 'categories' => $game->getCategories(),
                 'plateformes' => $game->getPlateformes(),
                 'note' => $game->getNote(),
+                'nb_favoris' => count($game->getUserGames()),
                 'image' => $game->getImage()
             ];
         }
@@ -65,6 +66,7 @@ class GameControllerApi extends AbstractController
             'gpu_min'=>$game->getGpuMin(),
             'ram_min'=>$game->getRamMin(),
             'image'=>$game->getImage(),
+            'nb_favoris' => count($game->getUserGames()),
         ];
 
         return $this->json($data);

@@ -170,9 +170,7 @@ export default function MyCollection() {
 
                                 {/* Actions */}
                                 <div className="flex gap-2 mt-auto">
-                                    <Button variant="outlineSecondary" size="sm">
-                                        Voir le jeu
-                                    </Button>
+                                    <a variant="outlineSecondary" href={`/game/${ug.game.id}`}>Voir le jeu</a>
                                     <button
                                         onClick={() => setReviewGameId(ug.game.id)}
                                         className="flex items-center gap-1.5 text-sm text-text-muted hover:text-white border border-text-muted/30 hover:border-white/50 rounded px-3 py-1 transition-colors"

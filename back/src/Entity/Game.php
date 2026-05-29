@@ -49,12 +49,20 @@ class Game
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id_user', nullable: true)]
-
     private ?User $user_id = null;
+
+    #[ORM\OneToMany(mappedBy: 'game', targetEntity: UserGame::class)]
+    private Collection $userGames;
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->userGames = new ArrayCollection();
+    }
+
+    public function getUserGames(): Collection
+    {
+        return $this->userGames;
     }
 
     public function getReviews(): Collection
