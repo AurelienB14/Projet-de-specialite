@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { getCurrentUserId } from "../api/auth";
 import api from "../api/api";
 import Button from "../components/ui/Button";
-import Note from "../components/ui/Note";
-import AddReview from "../components/review/AddReview";
-import { Search, Star, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
+import { Search, Star } from "lucide-react";
 
 const CATEGORIES = [
     'Action', 'Aventure', 'Battle Royale', 'Compétitif', 'Course',
@@ -22,10 +20,7 @@ export default function MyCollection() {
     const [userGames, setUserGames] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
-    const [reviewGameId, setReviewGameId] = useState(null);
-    const [expandedGame, setExpandedGame] = useState(null);
-    const [reviews, setReviews] = useState({});
-    const [loadingReviews, setLoadingReviews] = useState({});
+    const [reviews] = useState({});
     const [selectedCategorie, setSelectedCategorie] = useState('');
     const [selectedPlateforme, setSelectedPlateforme] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
@@ -38,32 +33,8 @@ export default function MyCollection() {
             .catch(() => setLoading(false));
     }, []);
 
-    const loadReviews = async (gameId) => {
-        if (reviews[gameId]) return;
-        setLoadingReviews(r => ({ ...r, [gameId]: true }));
-        try {
-            const res = await api.get(`/games/${gameId}/reviews`);
-            setReviews(r => ({ ...r, [gameId]: res.data }));
-        } catch {
-            setReviews(r => ({ ...r, [gameId]: [] }));
-        } finally {
-            setLoadingReviews(r => ({ ...r, [gameId]: false }));
-        }
-    };
 
-    const toggleExpand = (gameId) => {
-        if (expandedGame === gameId) {
-            setExpandedGame(null);
-        } else {
-            setExpandedGame(gameId);
-            loadReviews(gameId);
-        }
-    };
 
-    const handleReviewSuccess = (gameId) => {
-        setReviews(r => ({ ...r, [gameId]: undefined }));
-        loadReviews(gameId);
-    };
 
     const gamesFiltres = userGames.filter(ug => {
         const matchSearch = ug.game.nom.toLowerCase().includes(search.toLowerCase());
@@ -134,7 +105,6 @@ export default function MyCollection() {
                     const avgNote = gameReviews.length
                         ? (gameReviews.reduce((acc, r) => acc + r.note, 0) / gameReviews.length).toFixed(1)
                         : null;
-                    const isExpanded = expandedGame === ug.game.id;
 
                     return (
                         <div key={ug.id} className="card-img flex flex-col overflow-hidden">
@@ -164,15 +134,8 @@ export default function MyCollection() {
                                 </div>
 
                                 <div className="flex gap-2 mt-auto flex-wrap items-center">
-                                    <Button variant='ghost' size='sm' href={`/game/${ug.game.id}`}>Voir le jeu</Button>
-                                    <Button
-                                        variant='ghost'
-                                        size='sm'
-                                        onClick={() => setReviewGameId(ug.game.id)}
-                                    >
-                                        <Star size={13} />
-                                        Avis
-                                    </Button>
+                                    <Button variant="ghost" size="sm" href={`/game/${ug.game.id}`}>Voir le jeu</Button>
+                             
                                     <select
                                         className='input text-sm'
                                         value={ug.status ?? 'pascommence'}
@@ -193,55 +156,15 @@ export default function MyCollection() {
                                     </select>
                                 </div>
 
-                                <button
-                                    onClick={() => toggleExpand(ug.game.id)}
-                                    className="flex items-center justify-between text-sm text-text-muted hover:text-white transition-colors pt-2 border-t border-surface-alt"
-                                >
-                                    <span className="flex items-center gap-1.5">
-                                        <MessageSquare size={13} />
-                                        {gameReviews.length > 0 ? `${gameReviews.length} avis` : "Voir les avis"}
-                                    </span>
-                                    {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                                </button>
+                           
 
-                                {isExpanded && (
-                                    <div className="flex flex-col gap-3 mt-1">
-                                        {loadingReviews[ug.game.id] && (
-                                            <p className="text-xs text-text-muted">Chargement...</p>
-                                        )}
-                                        {!loadingReviews[ug.game.id] && gameReviews.length === 0 && (
-                                            <p className="text-xs text-text-muted">Aucun avis pour ce jeu.</p>
-                                        )}
-                                        {gameReviews.map(review => (
-                                            <div key={review.id} className="card flex flex-col gap-1">
-                                                <div className="flex items-center justify-between">
-                                                    <span className="text-xs font-bold">
-                                                        {review.user?.pseudo || "Utilisateur"}
-                                                    </span>
-                                                    <Note note={review.note} max={5} />
-                                                </div>
-                                                {review.commentaire && (
-                                                    <p className="text-xs text-text-muted leading-relaxed">
-                                                        {review.commentaire}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
                             </div>
                         </div>
                     );
                 })}
             </div>
 
-            {reviewGameId && (
-                <AddReview
-                    gameId={reviewGameId}
-                    onClose={() => setReviewGameId(null)}
-                    onSuccess={() => handleReviewSuccess(reviewGameId)}
-                />
-            )}
+         
         </div>
     );
 }

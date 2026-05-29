@@ -67,7 +67,7 @@ const Games = () => {
                     Bienvenue sur la page dédiée à la collection de jeux vidéo 🎮 <br />
                     Ici, vous retrouverez la plupart des jeux, classés et ajoutés au fil du temps.
                     La collection mélange plusieurs générations et plateformes, avec autant de classiques que de découvertes plus récentes. <br />
-                    N’hésitez pas à parcourir les fiches, comparer les versions ou discuter des jeux en commentaires comme sur un bon vieux forum gaming ✨<br />
+                    N’hésitez pas à parcourir les fiches, comparer les versions, ou encore vérifier votre setup ! ✨<br />
                     <br />
                     Bonne visite dans la collection !
                 </p>
