@@ -27,7 +27,9 @@ export default function Navbar() {
                     <li>JEUX</li>
 
                 </a>
-                <li>ACTUALITÉS</li>
+                <a href='/articles'>
+                    <li>ACTUALITÉS</li>
+                </a>
                 <a href='/setups'>
                     <li>VÉRIFIER MON SETUP</li>
 
