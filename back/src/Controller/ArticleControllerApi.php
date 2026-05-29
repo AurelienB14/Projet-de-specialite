@@ -46,7 +46,8 @@ final class ArticleControllerApi extends AbstractController
     public function show(int $id, ArticleRepository $repo): JsonResponse
     {
         $article = $repo->find($id);
-        if (!$article) return $this->json(['error' => 'Not found'], 404);
+        if (!$article)
+            return $this->json(['error' => 'Not found'], 404);
         return $this->json($this->serialize($article));
     }
 
@@ -60,15 +61,20 @@ final class ArticleControllerApi extends AbstractController
             return $this->json(['error' => 'Non authentifié'], 401);
         }
 
-        $data = json_decode($request->getContent(), true);
-
         $article = new Article();
-        $article->setTitle($data['title']);
-        $article->setContent($data['content']);
-        $article->setImage($data['image'] ?? null);
-        $article->setTags($data['tags'] ?? []);
+        $article->setTitle($request->request->get('title'));
+        $article->setContent($request->request->get('content'));
+        $tagsRaw = $request->request->get('tags');
+        $article->setTags($tagsRaw ? json_decode($tagsRaw, true) : []);
         $article->setAuteur($user);
         $article->setCreatedAt(new \DateTime());
+
+        $imageFile = $request->files->get('image');
+        if ($imageFile) {
+            $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+            $imageFile->move($this->getParameter('articles_directory'), $newFilename);
+            $article->setImage($newFilename);
+        }
 
         $em->persist($article);
         $em->flush();
@@ -78,17 +84,27 @@ final class ArticleControllerApi extends AbstractController
 
 
 
-    #[Route('/articles/{id}', name: 'api_article_edit', methods: ['PUT'])]
+    #[Route('/articles/{id}', name: 'api_article_edit', methods: ['PUT', 'POST'])]
     public function edit(int $id, Request $request, ArticleRepository $repo, EntityManagerInterface $em): JsonResponse
     {
         $article = $repo->find($id);
-        if (!$article) return $this->json(['error' => 'Not found'], 404);
+        if (!$article)
+            return $this->json(['error' => 'Not found'], 404);
 
-        $data = json_decode($request->getContent(), true);
-        $article->setTitle($data['title'] ?? $article->getTitle());
-        $article->setContent($data['content'] ?? $article->getContent());
-        $article->setImage($data['image'] ?? $article->getImage());
-        $article->setTags($data['tags'] ?? $article->getTags());
+        $article->setTitle($request->request->get('title') ?? $article->getTitle());
+        $article->setContent($request->request->get('content') ?? $article->getContent());
+
+        $tagsRaw = $request->request->get('tags');
+        if ($tagsRaw !== null) {
+            $article->setTags(json_decode($tagsRaw, true));
+        }
+
+        $imageFile = $request->files->get('image');
+        if ($imageFile) {
+            $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+            $imageFile->move($this->getParameter('articles_directory'), $newFilename);
+            $article->setImage($newFilename);
+        }
 
         $em->flush();
         return $this->json($this->serialize($article));
@@ -100,7 +116,8 @@ final class ArticleControllerApi extends AbstractController
     public function delete(int $id, ArticleRepository $repo, EntityManagerInterface $em): JsonResponse
     {
         $article = $repo->find($id);
-        if (!$article) return $this->json(['error' => 'Not found'], 404);
+        if (!$article)
+            return $this->json(['error' => 'Not found'], 404);
 
         $em->remove($article);
         $em->flush();

@@ -50,7 +50,7 @@ export default function MyReview() {
             </h3>
             <div className='flex flex-col gap-2'>
 
-                {reviews.map(review => (
+                {reviews.slice(-4).map(review => (
                     <div key={review.id} className='card flex flex-col gap-4'>
                         <div className='flex gap-4'>
                             <span><Note note={review.note} /></span>

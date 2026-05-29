@@ -16,7 +16,7 @@ import CreateUpdateGame from './pages/CreateUpdateGame';
 import VerifyMySetup from './components/game/VerifyMySetup';
 import Article from './pages/Article';
 import Articles from './pages/Articles';
-import CreateArticle from './pages/CreateArticle';
+import ArticleForm from './pages/ArticleForm';
 
 export default function App() {
     return (
@@ -40,7 +40,8 @@ export default function App() {
                     <Route path="/articles/:id" element={<Article />} />
                     <Route path="/articles" element={<Articles />} />
 
-                    <Route path="/articles/create" element={<CreateArticle />} />
+                    <Route path="/articles/create" element={<ArticleForm />} />
+                    <Route path="/articles/:id/edit" element={<ArticleForm />} />
                 </Routes>
             </Layout>
         </BrowserRouter>
