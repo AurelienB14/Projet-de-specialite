@@ -6,6 +6,18 @@ import Note from "../components/ui/Note";
 import AddReview from "../components/review/AddReview";
 import { Search, Star, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 
+const CATEGORIES = [
+    'Action', 'Aventure', 'Battle Royale', 'Compétitif', 'Course',
+    'FPS', 'Gestion', 'Monde ouvert', 'Multijoueur', 'Party Game',
+    'Plateforme', 'RPG', 'Rythme', 'Sandbox', 'Simulation',
+    'Sport', 'Stratégie', 'Survie', 'Tour par tour'
+];
+
+const PLATEFORMES = [
+    'Android', 'iOS', 'Mac', 'Nintendo Switch', 'PC',
+    'PS4', 'PS5', 'Wii U', 'Xbox One', 'Xbox Series'
+];
+
 export default function MyCollection() {
     const [userGames, setUserGames] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,6 +26,9 @@ export default function MyCollection() {
     const [expandedGame, setExpandedGame] = useState(null);
     const [reviews, setReviews] = useState({});
     const [loadingReviews, setLoadingReviews] = useState({});
+    const [selectedCategorie, setSelectedCategorie] = useState('');
+    const [selectedPlateforme, setSelectedPlateforme] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
 
     const userId = getCurrentUserId();
 
@@ -51,10 +66,13 @@ export default function MyCollection() {
         loadReviews(gameId);
     };
 
-    const filtered = userGames.filter(ug =>
-        ug.game.nom.toLowerCase().includes(search.toLowerCase()) ||
-        ug.game.categories?.some(c => c.toLowerCase().includes(search.toLowerCase()))
-    );
+    const gamesFiltres = userGames.filter(ug => {
+        const matchSearch = ug.game.nom.toLowerCase().includes(search.toLowerCase());
+        const matchCategorie = selectedCategorie === '' || ug.game.categories?.includes(selectedCategorie);
+        const matchPlateforme = selectedPlateforme === '' || ug.game.plateformes?.includes(selectedPlateforme);
+        const matchStatus = selectedStatus === '' || ug.status === selectedStatus;
+        return matchSearch && matchCategorie && matchPlateforme && matchStatus;
+    });
 
     if (loading) return (
         <div className="flex items-center justify-center py-20">
@@ -74,19 +92,34 @@ export default function MyCollection() {
             </div>
 
             {/* Barre de recherche */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
                 <Search size={16} className="text-text-muted" />
                 <input
                     type="text"
                     placeholder="Rechercher un jeu, une catégorie..."
                     value={search}
                     onChange={e => setSearch(e.target.value)}
-                    className="input pl-9 w-full max-w-md"
+                    className="input w-full max-w-md"
                 />
+                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedCategorie} onChange={e => setSelectedCategorie(e.target.value)}>
+                    <option value=''>Toutes les catégories</option>
+                    {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                </select>
+                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedPlateforme} onChange={e => setSelectedPlateforme(e.target.value)}>
+                    <option value=''>Toutes les plateformes</option>
+                    {PLATEFORMES.map(plat => <option key={plat} value={plat}>{plat}</option>)}
+                </select>
+                <select className='border p-2 [&>option]:text-white [&>option]:bg-black' value={selectedStatus} onChange={e => setSelectedStatus(e.target.value)}>
+                    <option value=''>Tous les statuts</option>
+                    <option value='pascommence'>Pas commencé</option>
+                    <option value='wishlist'>Wish list</option>
+                    <option value='encours'>En cours</option>
+                    <option value='termine'>Terminé</option>
+                </select>
             </div>
 
             {/* Résultats vides */}
-            {filtered.length === 0 && (
+            {gamesFiltres.length === 0 && (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
                     <p className="text-text-muted">Aucun jeu trouvé</p>
                     {search && (
@@ -99,7 +132,7 @@ export default function MyCollection() {
 
             {/* Grille de jeux */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map(ug => {
+                {gamesFiltres.map(ug => {
                     const gameReviews = reviews[ug.game.id] || [];
                     const avgNote = gameReviews.length
                         ? (gameReviews.reduce((acc, r) => acc + r.note, 0) / gameReviews.length).toFixed(1)
@@ -147,6 +180,24 @@ export default function MyCollection() {
                                         <Star size={13} />
                                         Avis
                                     </button>
+                                    <select
+                                    className="border p-2 [&>option]:text-white [&>option]:bg-black"
+                                    value={ug.status ?? 'pascommence'}
+                                    onChange={e => {
+                                        const newStatus = e.target.value;
+                                        api.put(`/users/${userId}/games/${ug.id}`, { status: newStatus })
+                                            .then(() => {
+                                                setUserGames(prev => prev.map(g => 
+                                                    g.id === ug.id ? { ...g, status: newStatus } : g
+                                                ));
+                                            });
+                                    }}
+                                    >
+                                        <option value="pascommence">Pas commencé</option>
+                                        <option value="whishlist">Whish list</option>
+                                        <option value="encours">En cours</option>
+                                        <option value="termine">Terminé</option>
+                                    </select>
                                 </div>
 
                                 {/* Toggle avis */}

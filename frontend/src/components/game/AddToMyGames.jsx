@@ -8,17 +8,15 @@ import Button from '../ui/Button';
 export default function AddToLibrary({ gameId }) {
     const [userGameId, setUserGameId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!isAuthenticated()) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setLoading(false);
             return;
         }
-
         const userId = getCurrentUserId();
-
         api.get(`/users/${userId}/games`)
             .then(res => {
                 const found = res.data.find(ug => ug.game.id === gameId);
@@ -33,23 +31,25 @@ export default function AddToLibrary({ gameId }) {
             navigate('/login');
             return;
         }
-
+        setActionLoading(true);
         const userId = getCurrentUserId();
-        
-
-        if (userGameId) {
-            await api.delete(`/users/${userId}/games/${userGameId}`);
-            setUserGameId(null);
-        } else {
-            const res = await api.post(`/users/${userId}/games`, { game_id: gameId });
-            setUserGameId(res.data.id);
+        try {
+            if (userGameId) {
+                await api.delete(`/users/${userId}/games/${userGameId}`);
+                setUserGameId(null);
+            } else {
+                const res = await api.post(`/users/${userId}/games`, { game_id: gameId });
+                setUserGameId(res.data.id);
+            }
+        } finally {
+            setActionLoading(false);
         }
     };
 
     if (loading) return null;
 
     return (
-        <Button variant="outlineSecondary" onClick={handleClick}>
+        <Button variant="outlineSecondary" onClick={handleClick} disabled={actionLoading}>
             <Heart
                 size={18}
                 fill={userGameId ? 'currentColor' : 'none'}
@@ -57,6 +57,5 @@ export default function AddToLibrary({ gameId }) {
             />
             {userGameId ? 'Retirer de mes jeux' : 'Ajouter à mes jeux'}
         </Button>
-        
     );
 }
