@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCurrentUserId, getCurrentUser } from '../api/auth';
 
@@ -39,7 +39,7 @@ const CreateUpdateGame = () => {
 
     useEffect(() => {
         const gameId = id ?? '0';
-        axios.get(`http://localhost:8000/api/game/createupdate/${gameId}`)
+        api.get(`/game/createupdate/${gameId}`)
             .then(res => {
                 const data = res.data;
                 if (id && data.jeu.userid && data.jeu.userid !== currentUserId && !isAdmin) {
@@ -82,7 +82,7 @@ const CreateUpdateGame = () => {
         if (image) formData.append('image', image);
 
         const gameId = id ?? '0';
-        axios.post(`http://localhost:8000/api/game/createupdate/${gameId}`, formData)
+        api.post(`/game/createupdate/${gameId}`, formData)
             .then(res => {
                 if (res.data.success) {
                     navigate('/games');

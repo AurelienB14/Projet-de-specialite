@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
+import { isAuthenticated } from '../api/auth';
+import api from '../api/api';
+import { getCurrentUserId } from "../api/auth";
+
 import axios from 'axios';
-import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import Button from '../components/ui/Button'
 
 import Note from '../components/ui/Note'
 import AddToLibrary from '../components/game/AddToMyGames';
@@ -25,6 +29,25 @@ const Games = () => {
     const [selectedCategorie, setSelectedCategorie] = useState('');
     const [selectedPlateforme, setSelectedPlateforme] = useState('');
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    const [userGames, setUserGames] = useState([]);
+
+
+    const isAdmin = user?.roles?.includes('ROLE_ADMIN');
+
+    useEffect(() => {
+        if (!isAuthenticated()) return;
+        api.get('/me')
+            .then(res => setUser(res.data))
+            .catch(() => { });
+    }, []);
+    useEffect(() => {
+    const userId = getCurrentUserId();
+    if (userId) {
+        api.get(`/users/${userId}/games`)
+            .then(res => setUserGames(res.data));
+    }
+}, []);
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/games')
@@ -47,11 +70,8 @@ const Games = () => {
     return (
         <div>
 
-            <div className='flex justify-center m-[25px]'>
-                <Link to={`/createupdategame`}>
-                    <button className='w-[100px] h-[40px] border-[2px] rounded-lg border-black bg-green-500 cursor-pointer'>Ajouter</button>
-                </Link>
-            </div>
+
+
             <div className='flex gap-4 justify-center m-[25px] flex-wrap'>
                 <input
                     className='input'
@@ -70,8 +90,14 @@ const Games = () => {
                         <option key={plat} value={plat}>{plat}</option>
                     ))}
                 </select>
+                {isAdmin && (
+                    <div className='flex justify-center'>
+                        <Button variant='outlineSecondary' href='/createupdategame'>
+                            Ajouter un jeu                    </Button>
+                    </div>
+                )}
             </div>
-            <div className="grid grid-cols-3 gap-[25px] flex-wrap justify-center w-full">
+            <div className="grid grid-cols-3 gap-9 flex-wrap justify-center w-full">
                 {gamesFiltres.map(game => (
                     <div
                         className="card-img hover:scale-105 transition-all duration-200 relative flex flex-col gap-4 cursor-pointer"
@@ -82,7 +108,7 @@ const Games = () => {
                             className='absolute top-2 right-2'
                             onClick={e => e.stopPropagation()}
                         >
-                            <AddToLibrary gameId={game.id} variant='icon' />
+                            <AddToLibrary gameId={game.id} variant='icon' userGames={userGames} onUpdate={setUserGames} />
                         </div>
 
                         <div className='px-4 py-2'>
